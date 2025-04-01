@@ -1,0 +1,4 @@
+repository "SEPProjekt/SEPProjekt@1375692374071@cloud"
+  path "/"
+    br "/main"
+    co "/main"
