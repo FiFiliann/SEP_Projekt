@@ -12,10 +12,10 @@ public class spawn : MonoBehaviour
     {
         if (rychlost == 0)
         {
-            rychlost = 5;
+            rychlost = 15;
 
-            if (coz) { rychlost = 5;  }
-            else { rychlost = -5;  }
+            if (coz) { rychlost = 15;  }
+            else { rychlost = -15;  }
         }
     }
 
