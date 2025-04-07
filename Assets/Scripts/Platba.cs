@@ -10,6 +10,7 @@ public class Platba : MonoBehaviour
     public string _duvod;
     string[] duvodString = {"potrava","noviny","nájemné","dluh","podíl" };
     int[] cenaInt = {50,100,150,200,500};
+    int[] sazky = new int[4];
     private void Start()
     {
         manager = GameObject.Find("GameManager").GetComponent<manager>();

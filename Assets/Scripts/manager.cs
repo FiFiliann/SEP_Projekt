@@ -1,3 +1,4 @@
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,36 +8,56 @@ using UnityEngine.UI;
 public class manager : MonoBehaviour
 {    
     public GameObject GameMenu;
-    //BytMenu//
+    //Menu//
     public GameObject[] BytMenuVyber;
-    public GameObject[] Buttons;
+    public GameObject[] UI;
     public GameObject BytMenu;
     public GameObject[] BytButtons;
+
     //Podvod//
     public bool[] koupenaDovednosti;
+
     //Platby//
     public GameObject novaplatba;
     public Transform platbyContent;
-    /* */public GameObject[] PlatbyDohromady = new GameObject[5];
+    public GameObject[] PlatbyDohromady = new GameObject[5];
+
+    //OponentiIkonka//
+    public GameObject OponentIkonka;
+    public Transform OponentIkonkaContent;
+    public bool PrichodDoNoveSceny = true;
+    public GameObject[] OponentiDohromady = new GameObject[5];
+    public int[] sazky = new int[4];
+    public int secteni = 0;
+    public int nejvyssiSazka = 0;
+    public Podvod podvod;
+
     //ZmenaSceny//
     public GameObject[] background;
     public GameObject opona;
     public int staraScena = 0;
     public int novaScena = 0;
-    public bool packa = false;
     public int rychlost = 0;
+    public bool packa = false;
+
     //Promìné//
     public string datum = ".1.1998";
     public int den = 2;
     public int reputace = 1069;
     public int penize = 100;
-    //-//
+
+    //Karty//
+    public Texture[] KartySrdce = new Texture[13];
+    public Texture[] KartyKary = new Texture[13];
+    public Texture[] KartyPiky = new Texture[13];
+    public Texture[] KartyKrize = new Texture[13];
+
     private void Start()
     {
         opona = GameObject.Find("Stmivacka");
         opona.transform.position = new Vector3(0, 12, 0);
         background[staraScena].SetActive(true);
-        platbyContent = GameObject.Find("PlatbyContent").GetComponent<Transform>();
+
         for (int i = 0; i < koupenaDovednosti.Length; i++)  {koupenaDovednosti[i] = false;}
         for (int i = 0; i < BytMenuVyber.Length; i++) { BytMenuVyber[i].SetActive(false); }
         BytMenuPromene();
@@ -44,7 +65,13 @@ public class manager : MonoBehaviour
     void Update()
     {
         opona.transform.position += Vector3.down * Time.deltaTime * rychlost;
-        if (opona.transform.position.y <= -12) { opona.transform.position = new Vector3(0, 12, 0); rychlost = 0; packa = true; }
+        if (opona.transform.position.y <= -12) 
+        {
+            opona.transform.position = new Vector3(0, 12, 0); rychlost = 0; packa = true; 
+                if (novaScena != 0)
+                {VytvoreniOponentu();}
+        }
+
         if (packa)
         {
             if (opona.transform.position.y <= 0)
@@ -59,12 +86,15 @@ public class manager : MonoBehaviour
                     BytMenu.SetActive(false);
                 }
                 ButtonAkce();
+
                 background[staraScena].SetActive(false);
                 background[novaScena].SetActive(true);
                 staraScena = novaScena;
                 packa = false;
             }
         }
+        //porovnanaviSazek();
+       //Debug.Log(sazky[0]);
     }
     public void ZmenaSceny(int a)
     {
@@ -83,12 +113,15 @@ public class manager : MonoBehaviour
     {
         GameMenu.SetActive(true);
     }
-    public void ButtonAkce()
+    public void ButtonAkce() // skrytí/odkrytí tlaèítek podle scény
     {
-        if (novaScena != 0) { Buttons[0].SetActive(true); Buttons[1].SetActive(true); Buttons[2].SetActive(false); }
-        else { Buttons[0].SetActive(true); Buttons[1].SetActive(false); Buttons[2].SetActive(true); }
+        if (novaScena != 0) 
+        {
+            UI[0].SetActive(true); UI[1].SetActive(true); UI[2].SetActive(true); UI[3].SetActive(false); UI[4].SetActive(false);
+        }
+        else { UI[0].SetActive(false); UI[1].SetActive(false); UI[2].SetActive(false); UI[3].SetActive(true); UI[4].SetActive(true); }
     }
-    public void MenuButtony(int a)
+    public void MenuButtony(int a) // zjistí, které tlaèítko v bytovém menu jde stisknout
     {
         for (int i = 0; i < BytMenuVyber.Length; i++)
         {
@@ -96,7 +129,7 @@ public class manager : MonoBehaviour
             else { BytMenuVyber[i].SetActive(false); BytButtons[i].GetComponent<Button>().interactable = true; }
         }
     }
-    public void VytvoreniPlatby()
+    public void VytvoreniPlatby() //vytvoøení nové platby
     {
         for (int i = 0; i < PlatbyDohromady.Length; i++)
         {
@@ -108,7 +141,53 @@ public class manager : MonoBehaviour
             }
         }
     }
-    public void BytMenuPromene()
+    public void VytvoreniOponentu() //vytvoøení nového Oponenta
+    {                
+        if(PrichodDoNoveSceny)
+        {
+            OponentiDohromady[0] = Instantiate(OponentIkonka, OponentIkonkaContent);
+            OponentiDohromady[0].name = "OponentIkonka" + 1;
+            for (int i = 1; i < OponentiDohromady.Length; i++)
+            {
+                int random = Random.Range(0, 2);
+                if (random == 0) 
+                {
+                    for (int j = 1; j < OponentiDohromady.Length; j++)
+                    {
+                        if (OponentiDohromady[j] == null)
+                        {
+                            OponentiDohromady[j] = Instantiate(OponentIkonka, OponentIkonkaContent);
+                            OponentiDohromady[j].name = "OponentIkonka" + (j+1); 
+                            Thread.Sleep(2000);
+                            j = OponentiDohromady.Length;
+                        }
+                    }
+                }            
+            }
+            SecteniSazek();
+            porovnanaviSazek();
+        }
+    }
+    public void SecteniSazek()
+    {
+        for(int i = 0; i < sazky.Length;i++)
+        {
+            secteni += sazky[i];
+        }
+        Debug.Log(secteni);
+    }
+    public void porovnanaviSazek()
+    {
+        nejvyssiSazka = sazky[0];
+        for (int i = 0; i < sazky.Length; i++)
+        {
+            if (nejvyssiSazka < sazky[i])
+            { nejvyssiSazka = sazky[i]; }            
+
+        }
+        Debug.Log(nejvyssiSazka);
+    }
+    public void BytMenuPromene() //vypsání zmìny variabilit v menu
     {
         GameObject.Find("Penize").GetComponent<TextMeshProUGUI>().text = penize.ToString() + " KÈ";
         GameObject.Find("Datum").GetComponent<TextMeshProUGUI>().text = den.ToString() + datum;
