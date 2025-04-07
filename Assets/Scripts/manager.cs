@@ -117,9 +117,9 @@ public class manager : MonoBehaviour
     {
         if (novaScena != 0) 
         {
-            UI[0].SetActive(true); UI[1].SetActive(true); UI[2].SetActive(true); UI[3].SetActive(false); UI[4].SetActive(false);
+            UI[0].SetActive(true); UI[1].SetActive(true); UI[2].SetActive(true); UI[3].SetActive(false); UI[4].SetActive(false); UI[5].SetActive(true);
         }
-        else { UI[0].SetActive(false); UI[1].SetActive(false); UI[2].SetActive(false); UI[3].SetActive(true); UI[4].SetActive(true); }
+        else { UI[0].SetActive(false); UI[1].SetActive(false); UI[2].SetActive(false); UI[3].SetActive(true); UI[4].SetActive(true); UI[5].SetActive(false); }
     }
     public void MenuButtony(int a) // zjistí, které tlaèítko v bytovém menu jde stisknout
     {
