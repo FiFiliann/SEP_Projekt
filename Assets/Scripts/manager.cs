@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Threading;
 using TMPro;
 using UnityEngine;
@@ -69,7 +70,7 @@ public class manager : MonoBehaviour
         {
             opona.transform.position = new Vector3(0, 12, 0); rychlost = 0; packa = true; 
                 if (novaScena != 0)
-                {VytvoreniOponentu();}
+                { StartCoroutine(VytvoreniOponenta()); }
         }
 
         if (packa)
@@ -141,7 +142,7 @@ public class manager : MonoBehaviour
             }
         }
     }
-    public void VytvoreniOponentu() //vytvoøení nového Oponenta
+    /*public void VytvoreniOponentu() //vytvoøení nového Oponenta
     {                
         if(PrichodDoNoveSceny)
         {
@@ -157,12 +158,42 @@ public class manager : MonoBehaviour
                         if (OponentiDohromady[j] == null)
                         {
                             OponentiDohromady[j] = Instantiate(OponentIkonka, OponentIkonkaContent);
-                            OponentiDohromady[j].name = "OponentIkonka" + (j+1); 
-                            Thread.Sleep(2000);
+                            OponentiDohromady[j].name = "OponentIkonka" + (j+1);
+                            //Thread.Sleep(2000);
                             j = OponentiDohromady.Length;
                         }
                     }
                 }            
+            }
+            SecteniSazek();
+            porovnanaviSazek();
+        }
+    }*/
+
+    IEnumerator VytvoreniOponenta()
+    {
+        if (PrichodDoNoveSceny)
+        {
+            OponentiDohromady[0] = Instantiate(OponentIkonka, OponentIkonkaContent);
+            yield return new WaitForSeconds(2);
+            OponentiDohromady[0].name = "OponentIkonka" + 1;
+            for (int i = 1; i < OponentiDohromady.Length; i++)
+            {
+                int random = Random.Range(0, 2);
+                if (random == 0)
+                {
+                    for (int j = 1; j < OponentiDohromady.Length; j++)
+                    {
+                        if (OponentiDohromady[j] == null)
+                        {
+                            OponentiDohromady[j] = Instantiate(OponentIkonka, OponentIkonkaContent);
+                            OponentiDohromady[j].name = "OponentIkonka" + (j + 1);
+                            //Thread.Sleep(2000);
+                            yield return new WaitForSeconds(2);
+                            j = OponentiDohromady.Length;
+                        }
+                    }
+                }
             }
             SecteniSazek();
             porovnanaviSazek();
