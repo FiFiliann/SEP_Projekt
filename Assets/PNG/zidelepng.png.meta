@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      zidelepng_0: 2016096033464135714
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
