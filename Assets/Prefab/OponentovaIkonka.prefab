@@ -368,6 +368,14 @@ MonoBehaviour:
   OponentJmeno: {fileID: 6545450316292723578}
   OponentCelkovePenize: {fileID: 2824534095661218449}
   OponentSazka: {fileID: 8863048007442737912}
+  OponentIkonka: {fileID: 8491440478316411159}
+  OponentSprity:
+  - {fileID: -2127022108625016169, guid: 2d19434f361f8cc49af1815e1b914c53, type: 3}
+  - {fileID: -7509340760466936099, guid: 4d578d85c2cdd874bba9962ce59a7977, type: 3}
+  - {fileID: -2198819775516967048, guid: a45a8c19130d99b488b3510c346a8c92, type: 3}
+  - {fileID: -7683712266205930671, guid: a2fb385159dffb642b7e9546f4555854, type: 3}
+  - {fileID: 408127208591357193, guid: 96ecb60e0a03b1a4fb8b553235857c16, type: 3}
+  Ikonka: 0
   jmena:
   - Stuart
   - Billy
@@ -435,7 +443,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

@@ -31,7 +31,7 @@ public class manager : MonoBehaviour
     public int[] sazky = new int[4];
     public int secteni = 0;
     public int nejvyssiSazka = 0;
-    public Podvod podvod;
+   // public OponentovaIkonka OpIkonka;
 
     //ZmenaSceny//
     public GameObject[] background;
@@ -56,6 +56,8 @@ public class manager : MonoBehaviour
     private void Start()
     {
         opona = GameObject.Find("Stmivacka");
+        //OpIkonka = GameObject.Find("GameManager").GetComponent<oPO>();
+
         opona.transform.position = new Vector3(0, 12, 0);
         background[staraScena].SetActive(true);
 
@@ -142,33 +144,6 @@ public class manager : MonoBehaviour
             }
         }
     }
-    /*public void VytvoreniOponentu() //vytvoøení nového Oponenta
-    {                
-        if(PrichodDoNoveSceny)
-        {
-            OponentiDohromady[0] = Instantiate(OponentIkonka, OponentIkonkaContent);
-            OponentiDohromady[0].name = "OponentIkonka" + 1;
-            for (int i = 1; i < OponentiDohromady.Length; i++)
-            {
-                int random = Random.Range(0, 2);
-                if (random == 0) 
-                {
-                    for (int j = 1; j < OponentiDohromady.Length; j++)
-                    {
-                        if (OponentiDohromady[j] == null)
-                        {
-                            OponentiDohromady[j] = Instantiate(OponentIkonka, OponentIkonkaContent);
-                            OponentiDohromady[j].name = "OponentIkonka" + (j+1);
-                            //Thread.Sleep(2000);
-                            j = OponentiDohromady.Length;
-                        }
-                    }
-                }            
-            }
-            SecteniSazek();
-            porovnanaviSazek();
-        }
-    }*/
 
     IEnumerator VytvoreniOponenta()
     {
@@ -188,7 +163,6 @@ public class manager : MonoBehaviour
                         {
                             OponentiDohromady[j] = Instantiate(OponentIkonka, OponentIkonkaContent);
                             OponentiDohromady[j].name = "OponentIkonka" + (j + 1);
-                            //Thread.Sleep(2000);
                             yield return new WaitForSeconds(2);
                             j = OponentiDohromady.Length;
                         }
@@ -216,6 +190,17 @@ public class manager : MonoBehaviour
             { nejvyssiSazka = sazky[i]; }            
 
         }
+        
+//OpIkonka.dovysovani = true;
+        for (int i = 0; i < sazky.Length; i++)
+        {
+            if (nejvyssiSazka > sazky[i])
+            {
+                //OpIkonka.SazkaRandom();
+            }
+        }
+        //OpIkonka.dovysovani = false;
+
         Debug.Log(nejvyssiSazka);
     }
     public void BytMenuPromene() //vypsání zmìny variabilit v menu
