@@ -4,6 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using System;
+
 
 
 public class manager : MonoBehaviour
@@ -31,7 +34,10 @@ public class manager : MonoBehaviour
     public int[] sazky = new int[4];
     public int secteni = 0;
     public int nejvyssiSazka = 0;
-   // public OponentovaIkonka OpIkonka;
+    public bool zacatekSazeni = true;
+    // Hrac Sazky//
+    public int hracSazka;
+    public TMP_InputField SazkaInput;
 
     //ZmenaSceny//
     public GameObject[] background;
@@ -45,7 +51,7 @@ public class manager : MonoBehaviour
     public string datum = ".1.1998";
     public int den = 2;
     public int reputace = 1069;
-    public int penize = 100;
+    public int penize = 1000;
 
     //Karty//
     public Texture[] KartySrdce = new Texture[13];
@@ -96,8 +102,7 @@ public class manager : MonoBehaviour
                 packa = false;
             }
         }
-        //porovnanaviSazek();
-       //Debug.Log(sazky[0]);
+
     }
     public void ZmenaSceny(int a)
     {
@@ -120,7 +125,18 @@ public class manager : MonoBehaviour
     {
         if (novaScena != 0) 
         {
-            UI[0].SetActive(true); UI[1].SetActive(true); UI[2].SetActive(true); UI[3].SetActive(false); UI[4].SetActive(false); UI[5].SetActive(true);
+            UI[0].SetActive(true); UI[1].SetActive(true); UI[2].SetActive(true); GameObject.Find("HracovaSazka").GetComponent<TextMeshProUGUI>().text = penize + "Kè"; UI[3].SetActive(false); UI[4].SetActive(false); UI[5].SetActive(true);
+            
+            for (int j = 0; j < OponentiDohromady.Length; j++)
+            {
+                    Destroy(GameObject.Find("OponentIkonka" + (j+1)));
+                    sazky[j] = 0;
+            }
+            nejvyssiSazka = 0;
+            secteni = 0;
+            GameObject.Find("CelkovaSazka").GetComponent<TextMeshProUGUI>().text = "nej: " + nejvyssiSazka + "  celkem: " + secteni;
+            GameObject.Find("SazkaInputText").GetComponent<TextMeshProUGUI>().text = "";
+
         }
         else { UI[0].SetActive(false); UI[1].SetActive(false); UI[2].SetActive(false); UI[3].SetActive(true); UI[4].SetActive(true); UI[5].SetActive(false); }
     }
@@ -154,7 +170,7 @@ public class manager : MonoBehaviour
             OponentiDohromady[0].name = "OponentIkonka" + 1;
             for (int i = 1; i < OponentiDohromady.Length; i++)
             {
-                int random = Random.Range(0, 2);
+                int random = UnityEngine.Random.Range(0, 2);
                 if (random == 0)
                 {
                     for (int j = 1; j < OponentiDohromady.Length; j++)
@@ -169,39 +185,45 @@ public class manager : MonoBehaviour
                     }
                 }
             }
-            SecteniSazek();
+            GameObject.Find("CelkovaSazka").GetComponent<TextMeshProUGUI>().text = "nej: "+nejvyssiSazka + "  celkem: "+ secteni;
             porovnanaviSazek();
         }
     }
-    public void SecteniSazek()
-    {
-        for(int i = 0; i < sazky.Length;i++)
-        {
-            secteni += sazky[i];
-        }
-        Debug.Log(secteni);
-    }
+
     public void porovnanaviSazek()
     {
-        nejvyssiSazka = sazky[0];
+        secteni = 0;
+        if (zacatekSazeni) {nejvyssiSazka = sazky[0]; zacatekSazeni = false; }
         for (int i = 0; i < sazky.Length; i++)
         {
             if (nejvyssiSazka < sazky[i])
             { nejvyssiSazka = sazky[i]; }            
-
         }
-        
-//OpIkonka.dovysovani = true;
+
+        //OpIkonka.dovysovani = true;
         for (int i = 0; i < sazky.Length; i++)
         {
-            if (nejvyssiSazka > sazky[i])
+            if (OponentiDohromady[i] != null)
+                {            
+                     GameObject.Find($"OponentIkonka{i + 1}").GetComponent<OponentovaIkonka>().SazkaRandom();
+                }
+            else { i = sazky.Length; }
+        }
+        secteni += hracSazka;
+        GameObject.Find("CelkovaSazka").GetComponent<TextMeshProUGUI>().text = "nej: " + nejvyssiSazka + "  celkem: " + secteni; 
+    }
+    public void VlozeniSazky()
+    {
+        if (Int32.TryParse(SazkaInput.text, out int j))
+        {
+            if(j > 0 && j >= nejvyssiSazka)
             {
-                //OpIkonka.SazkaRandom();
+                hracSazka = j;
+                if(hracSazka > nejvyssiSazka)
+                { nejvyssiSazka = hracSazka; porovnanaviSazek();}
+                else {UI[2].SetActive(false); zacatekSazeni = true; }
             }
         }
-        //OpIkonka.dovysovani = false;
-
-        Debug.Log(nejvyssiSazka);
     }
     public void BytMenuPromene() //vypsání zmìny variabilit v menu
     {

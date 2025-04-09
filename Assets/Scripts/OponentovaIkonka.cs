@@ -9,7 +9,7 @@ public class OponentovaIkonka : MonoBehaviour
     public TextMeshProUGUI OponentCelkovePenize;
     public TextMeshProUGUI OponentSazka;
     public Image OponentIkonka;
-    public Sprite[] OponentSprity = new Sprite[5];
+    public Sprite[] OponentSprity = new Sprite[6];
     public int Ikonka;
     //public Texture OponentObrazek;
     public string[] jmena = { "Stuart", "Billy", "Jan", "Lukáš", "Kenny", "Petr", };
@@ -25,10 +25,10 @@ public class OponentovaIkonka : MonoBehaviour
         OponentIkonka = transform.Find("OponentVzhled").GetComponent<Image>();
 
         Penize = CelkovePenizeRandom();
-        OponentCelkovePenize.text = Penize + "";
+        OponentCelkovePenize.text = "Peníze: " +Penize + "";
 
-        Sazka = SazkaRandom();
-        OponentSazka.text = Sazka + "";
+        SazkaRandom();
+
 
         OponentJmeno.text = JmenoRandom();
 
@@ -40,32 +40,36 @@ public class OponentovaIkonka : MonoBehaviour
 
     public int IkonkaRandom()
     {      
-        return Random.Range(0, 4);;
+        return Random.Range(1, 5);;
     }
 
     public int CelkovePenizeRandom()
     {
         
-        return Random.Range(0, 1000);;
+        return Random.Range(400, 800);;
     }
-    public int SazkaRandom()
+    public void SazkaRandom()
     {
-        if (!dovysovani)
+        if(!dovysovani)
         {
-            return Random.Range(0, Penize);;
+            Sazka = Random.Range(0, Penize); dovysovani = true;
+            OponentSazka.text = "Sázka: " + Sazka + "";
+            manager.secteni += Sazka;
         }
-        else {
-            int i = Random.Range(0, 2);
-            if (i == 1)
+        else
+        {
+            if(manager.nejvyssiSazka != Sazka)
             {
-                OponentSazka.text = Sazka + "";
-                return Random.Range(manager.nejvyssiSazka, Penize ); 
+                int i = Random.Range(0, 8);
+                if(manager.nejvyssiSazka < Penize && i>2)
+                {                  
+                        Sazka = manager.nejvyssiSazka;
+                        OponentSazka.text = "Sázka: " + Sazka + "";
+                        manager.secteni += Sazka;
+                }
+                else{ Sazka = 0; OponentSazka.text = "Vynechává";}
             }
-            else 
-            {
-                OponentSazka.text = Sazka + "";
-                return 0; 
-            }
+            else { manager.secteni += Sazka;}
         }
     }
     public string JmenoRandom()
@@ -80,7 +84,6 @@ public class OponentovaIkonka : MonoBehaviour
             if (manager.sazky[i] == 0) 
             {
                 manager.sazky[i] = Sazka;
-                //Debug.Log(manager.sazky[i]);
                 i = manager.sazky.Length;
             }
         }                

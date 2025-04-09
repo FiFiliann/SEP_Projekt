@@ -335,7 +335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.745283, g: 0.745283, b: 0.745283, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -375,6 +375,7 @@ MonoBehaviour:
   - {fileID: -2198819775516967048, guid: a45a8c19130d99b488b3510c346a8c92, type: 3}
   - {fileID: -7683712266205930671, guid: a2fb385159dffb642b7e9546f4555854, type: 3}
   - {fileID: 408127208591357193, guid: 96ecb60e0a03b1a4fb8b553235857c16, type: 3}
+  - {fileID: -6763425820890381549, guid: 023832d0da2bcc644867009eb7bdeff7, type: 3}
   Ikonka: 0
   jmena:
   - Stuart
@@ -385,6 +386,7 @@ MonoBehaviour:
   - Petr
   Penize: 0
   Sazka: 0
+  dovysovani: 0
 --- !u!1 &8541868748987485064
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,7 +445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
