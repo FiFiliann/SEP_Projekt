@@ -59,6 +59,10 @@ public class manager : MonoBehaviour
     public Texture[] KartyPiky = new Texture[13];
     public Texture[] KartyKrize = new Texture[13];
 
+    // Zmeny, oponenti
+    public GameObject objectToInstantiate;
+    public int numberOfObjects = 6;
+
     private void Start()
     {
         opona = GameObject.Find("Stmivacka");
@@ -185,6 +189,16 @@ public class manager : MonoBehaviour
                     }
                 }
             }
+
+            //Zmeny 
+            for (int i = 1; i<numberOfObjects; i++)
+            {
+                Vector3 position = new Vector3(i * 2, 0, 0);
+                Quaternion rotation = Quaternion.identity;
+                GameObject newObj = Instantiate(objectToInstantiate, position, rotation);
+            }
+
+
             GameObject.Find("CelkovaSazka").GetComponent<TextMeshProUGUI>().text = "nej: "+nejvyssiSazka + "  celkem: "+ secteni;
             porovnanaviSazek();
         }
