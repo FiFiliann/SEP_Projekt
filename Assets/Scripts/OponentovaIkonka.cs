@@ -40,7 +40,7 @@ public class OponentovaIkonka : MonoBehaviour
 
     public int IkonkaRandom()
     {      
-        return Random.Range(1, 5);;
+        return Random.Range(1, OponentSprity.Length);;
     }
 
     public int CelkovePenizeRandom()

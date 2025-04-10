@@ -13,9 +13,6 @@ public class spawn : MonoBehaviour
         if (rychlost == 0)
         {
             rychlost = 15;
-
-            if (coz) { rychlost = 15;  }
-            else { rychlost = -15;  }
         }
     }
 
@@ -24,11 +21,11 @@ public class spawn : MonoBehaviour
         gameObject.transform.position += Vector3.right * Time.deltaTime * rychlost;
         if(coz)
         {
-            if (gameObject.transform.position.x >= -3.9f) { rychlost = 0;coz = false;  } 
+            if (gameObject.transform.position.x >= -3.9f) { rychlost = 0;  } 
         }
         else
         {
-            if (gameObject.transform.position.x <= -14.5f) { rychlost = 0;coz = true; }
+            if (gameObject.transform.position.x <= -14.5f) { rychlost = 0; }
         }
     }
 }

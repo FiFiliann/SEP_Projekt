@@ -138,11 +138,11 @@ public class manager : MonoBehaviour
             }
             nejvyssiSazka = 0;
             secteni = 0;
+            MenuButtony(10);
             GameObject.Find("CelkovaSazka").GetComponent<TextMeshProUGUI>().text = "nej: " + nejvyssiSazka + "  celkem: " + secteni;
-            GameObject.Find("SazkaInputText").GetComponent<TextMeshProUGUI>().text = "";
-
+            SazkaInput.text = "";
         }
-        else { UI[0].SetActive(false); UI[1].SetActive(false); UI[2].SetActive(false); UI[3].SetActive(true); UI[4].SetActive(true); UI[5].SetActive(false); }
+        else { VytvoreniPlatby(); UI[0].SetActive(false); UI[1].SetActive(false); UI[2].SetActive(false); UI[3].SetActive(true); UI[4].SetActive(true); UI[5].SetActive(false); }
     }
     public void MenuButtony(int a) // zjistí, které tlaèítko v bytovém menu jde stisknout
     {
