@@ -16,7 +16,7 @@ public class Podvod : MonoBehaviour , IPointerEnterHandler, IPointerExitHandler
     public string nazevText;
     void Start()
     {
-        manager = GameObject.Find("GameManager").GetComponent<manager>();    
+        manager = GameObject.Find("GameManager").GetComponent<manager>();
         popisOkenko.SetActive(false);
         ObsahNazev.GetComponent<TextMeshProUGUI>().text = nazevText;
         ObsahPopisu.GetComponent<TextMeshProUGUI>().text = popisText;

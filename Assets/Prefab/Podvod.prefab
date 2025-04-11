@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 6849758368800453105}
   - component: {fileID: 6105667487475954865}
   m_Layer: 5
-  m_Name: PopisText
+  m_Name: Popis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -388,7 +388,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -4.653015, y: 2.3599854}
+  m_AnchoredPosition: {x: -4.7, y: 2.05}
   m_SizeDelta: {x: -9.814, y: -5.4861}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4101139236076387349
@@ -503,5 +503,5 @@ MonoBehaviour:
   ObsahNazev: {fileID: 2154086761710907641}
   cisloButonu: 0
   potrebnaReputace: 3
-  popisText: "tahle schopnost ti d\xE1 kartu do ruk\xE1vu"
-  nazevText: "Karta v ruk\xE1vu"
+  popisText: 
+  nazevText: 

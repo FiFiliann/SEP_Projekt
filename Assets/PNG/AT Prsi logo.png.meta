@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      AT Prsi logo_0: -9124799940408661107
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

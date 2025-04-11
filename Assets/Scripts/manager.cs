@@ -66,8 +66,6 @@ public class manager : MonoBehaviour
     private void Start()
     {
         opona = GameObject.Find("Stmivacka");
-        //OpIkonka = GameObject.Find("GameManager").GetComponent<oPO>();
-
         opona.transform.position = new Vector3(0, 12, 0);
         background[staraScena].SetActive(true);
 
@@ -114,8 +112,7 @@ public class manager : MonoBehaviour
     }
     public void ExitGame()
     {
-        Application.Quit();        
-
+        Application.Quit();
     }
     public void ExitMainMenu()
     {
@@ -129,8 +126,8 @@ public class manager : MonoBehaviour
     {
         if (novaScena != 0) 
         {
-            UI[0].SetActive(true); UI[1].SetActive(true); UI[2].SetActive(true); GameObject.Find("HracovaSazka").GetComponent<TextMeshProUGUI>().text = penize + "Kè"; UI[3].SetActive(false); UI[4].SetActive(false); UI[5].SetActive(true);
-            
+            UI[0].SetActive(false); UI[1].SetActive(true); 
+            GameObject.Find("HracovaSazka").GetComponent<TextMeshProUGUI>().text = penize + "Kè";          
             for (int j = 0; j < OponentiDohromady.Length; j++)
             {
                     Destroy(GameObject.Find("OponentIkonka" + (j+1)));
@@ -142,7 +139,7 @@ public class manager : MonoBehaviour
             GameObject.Find("CelkovaSazka").GetComponent<TextMeshProUGUI>().text = "nej: " + nejvyssiSazka + "  celkem: " + secteni;
             SazkaInput.text = "";
         }
-        else { VytvoreniPlatby(); UI[0].SetActive(false); UI[1].SetActive(false); UI[2].SetActive(false); UI[3].SetActive(true); UI[4].SetActive(true); UI[5].SetActive(false); }
+        else { VytvoreniPlatby(); UI[0].SetActive(true); UI[1].SetActive(false); }
     }
     public void MenuButtony(int a) // zjistí, které tlaèítko v bytovém menu jde stisknout
     {
@@ -214,7 +211,6 @@ public class manager : MonoBehaviour
             { nejvyssiSazka = sazky[i]; }            
         }
 
-        //OpIkonka.dovysovani = true;
         for (int i = 0; i < sazky.Length; i++)
         {
             if (OponentiDohromady[i] != null)
@@ -235,7 +231,7 @@ public class manager : MonoBehaviour
                 hracSazka = j;
                 if(hracSazka > nejvyssiSazka)
                 { nejvyssiSazka = hracSazka; porovnanaviSazek();}
-                else {UI[2].SetActive(false); zacatekSazeni = true; }
+                else { GameObject.Find("PodavaniSazek").SetActive(false); zacatekSazeni = true; }
             }
         }
     }
