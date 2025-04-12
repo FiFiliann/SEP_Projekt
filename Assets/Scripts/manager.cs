@@ -12,6 +12,7 @@ using System;
 public class manager : MonoBehaviour
 {    
     public GameObject GameMenu;
+    public spawn spawn;
     //Menu//
     public GameObject[] BytMenuVyber;
     public GameObject[] UI;
@@ -30,8 +31,8 @@ public class manager : MonoBehaviour
     public GameObject OponentIkonka;
     public Transform OponentIkonkaContent;
     public bool PrichodDoNoveSceny = true;
-    public GameObject[] OponentiDohromady = new GameObject[5];
-    public int[] sazky = new int[4];
+    public GameObject[] OponentiDohromady = new GameObject[7];
+    public int[] sazky = new int[7];
     public int secteni = 0;
     public int nejvyssiSazka = 0;
     public bool zacatekSazeni = true;
@@ -139,7 +140,7 @@ public class manager : MonoBehaviour
             GameObject.Find("CelkovaSazka").GetComponent<TextMeshProUGUI>().text = "nej: " + nejvyssiSazka + "  celkem: " + secteni;
             SazkaInput.text = "";
         }
-        else { VytvoreniPlatby(); UI[0].SetActive(true); UI[1].SetActive(false); }
+        else { VytvoreniPlatby(); UI[0].SetActive(true); UI[1].SetActive(false); spawn.coz = true; }
     }
     public void MenuButtony(int a) // zjistí, které tlaèítko v bytovém menu jde stisknout
     {
@@ -171,7 +172,7 @@ public class manager : MonoBehaviour
             OponentiDohromady[0].name = "OponentIkonka" + 1;
             for (int i = 1; i < OponentiDohromady.Length; i++)
             {
-                int random = UnityEngine.Random.Range(0, 2);
+                int random = 0;//UnityEngine.Random.Range(0, 2);
                 if (random == 0)
                 {
                     for (int j = 1; j < OponentiDohromady.Length; j++)

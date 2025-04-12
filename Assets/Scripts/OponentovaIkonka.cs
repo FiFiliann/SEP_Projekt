@@ -9,7 +9,7 @@ public class OponentovaIkonka : MonoBehaviour
     public TextMeshProUGUI OponentCelkovePenize;
     public TextMeshProUGUI OponentSazka;
     public Image OponentIkonka;
-    public Sprite[] OponentSprity = new Sprite[6];
+    public Sprite[] OponentSprity = new Sprite[10];
     public int Ikonka;
     //public Texture OponentObrazek;
     public string[] jmena = { "Stuart", "Billy", "Jan", "Lukáš", "Kenny", "Petr", };
@@ -23,6 +23,7 @@ public class OponentovaIkonka : MonoBehaviour
         OponentCelkovePenize = transform.Find("OponentoviPenize").GetComponent<TextMeshProUGUI>();
         OponentSazka = transform.Find("OponentovaSazka").GetComponent<TextMeshProUGUI>();
         OponentIkonka = transform.Find("OponentVzhled").GetComponent<Image>();
+
 
         Penize = CelkovePenizeRandom();
         OponentCelkovePenize.text = "Peníze: " +Penize + "";
@@ -66,8 +67,9 @@ public class OponentovaIkonka : MonoBehaviour
                         Sazka = manager.nejvyssiSazka;
                         OponentSazka.text = "Sázka: " + Sazka + "";
                         manager.secteni += Sazka;
+                        transform.GetComponent<Image>().material.color = new Color(255, 255, 0);
                 }
-                else{ Sazka = 0; OponentSazka.text = "Vynechává";}
+                else{ Sazka = 0; OponentSazka.text = "Vynechává"; transform.GetComponent<Image>().material.color = new Color(255, 0, 0); }
             }
             else { manager.secteni += Sazka;}
         }
