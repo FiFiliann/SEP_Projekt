@@ -67,9 +67,9 @@ public class OponentovaIkonka : MonoBehaviour
                         Sazka = manager.nejvyssiSazka;
                         OponentSazka.text = "Sázka: " + Sazka + "";
                         manager.secteni += Sazka;
-                        transform.GetComponent<Image>().material.color = new Color(255, 255, 0);
+                        //transform.GetComponent<Image>().material.color = new Color(255, 255, 0);
                 }
-                else{ Sazka = 0; OponentSazka.text = "Vynechává"; transform.GetComponent<Image>().material.color = new Color(255, 0, 0); }
+                else{ Sazka = 0; OponentSazka.text = "Vynechává";  }//transform.GetComponent<Image>().material.color = new Color(255, 0, 0);
             }
             else { manager.secteni += Sazka;}
         }
