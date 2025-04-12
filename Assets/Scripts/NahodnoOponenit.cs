@@ -1,47 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class OpponentSpawner : MonoBehaviour
 {
-    public GameObject[] opponentPrefabs; // Seznam všech možných oponentù
-    public Transform[] spawnPoints; // Místa, kde se oponenti objeví
-    private List<int> usedIndexes = new List<int>(); // Seznam použitých indexù
+    public GameObject[] opponentPrefabs; // Pokud chceš rùzné postavy, jinak jen GameObject opponentPrefab;
+    public Transform[] spawnPoints;
 
     void Start()
     {
-        if (spawnPoints.Length < 5)
-        {
-            Debug.LogError("Nedostatek spawn pointù! Potøebuješ alespoò 5.");
-            return;
-        }
+        Shuffle(spawnPoints);         // Zamíchá pozice
+        Shuffle(opponentPrefabs);     // (Volitelné) zamíchá i výbìr postav
 
-        SpawnRandomOpponents();
+        SpawnOpponents();
     }
 
-    void SpawnRandomOpponents()
+    void SpawnOpponents()
     {
-        List<int> availableOpponents = new List<int>();
-        for (int i = 0; i < opponentPrefabs.Length; i++)
+        int count = Mathf.Min(spawnPoints.Length, opponentPrefabs.Length);
+
+        for (int i = 0; i < count; i++)
         {
-            availableOpponents.Add(i);
+            Instantiate(opponentPrefabs[i], spawnPoints[i].position, spawnPoints[i].rotation);
         }
+    }
 
-        for (int i = 0; i < 5; i++) // Spawn 5 oponentù
+    void Shuffle<T>(T[] array)
+    {
+        for (int i = array.Length - 1; i > 0; i--)
         {
-            int randomOpponentIndex = availableOpponents[Random.Range(0, availableOpponents.Count)];
-            availableOpponents.Remove(randomOpponentIndex); // Zabráníme opakování stejného oponenta
-
-            int randomSpawnIndex;
-            do
-            {
-                randomSpawnIndex = Random.Range(0, spawnPoints.Length);
-            } while (usedIndexes.Contains(randomSpawnIndex)); // Zabráníme opakování stejného místa
-
-            usedIndexes.Add(randomSpawnIndex); // Uložíme použitou pozici
-
-            GameObject chosenOpponent = Instantiate(opponentPrefabs[randomOpponentIndex], spawnPoints[randomSpawnIndex].position, Quaternion.identity);
-            Debug.Log("Spawnován oponent: " + chosenOpponent.name);
+            int randomIndex = Random.Range(0, i + 1);
+            T temp = array[i];
+            array[i] = array[randomIndex];
+            array[randomIndex] = temp;
         }
     }
 }
+
