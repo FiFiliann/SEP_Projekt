@@ -20,6 +20,7 @@ public class OpponentSpawner : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             Instantiate(opponentPrefabs[i], spawnPoints[i].position, spawnPoints[i].rotation);
+            Debug.Log("Spawning: " + opponentPrefabs[i].name + " at " + spawnPoints[i].position);
         }
     }
 
@@ -33,5 +34,6 @@ public class OpponentSpawner : MonoBehaviour
             array[randomIndex] = temp;
         }
     }
+    
 }
 
