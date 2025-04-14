@@ -36,6 +36,7 @@ public class manager : MonoBehaviour
     public int secteni = 0;
     public int nejvyssiSazka = 0;
     public bool zacatekSazeni = true;
+    public GameObject sazeciOkenko;
     // Hrac Sazky//
     public int hracSazka;
     public TMP_InputField SazkaInput;
@@ -127,7 +128,7 @@ public class manager : MonoBehaviour
     {
         if (novaScena != 0) 
         {
-            UI[0].SetActive(false); UI[1].SetActive(true); 
+            UI[0].SetActive(false); UI[1].SetActive(true); sazeciOkenko.SetActive(true) /*BUDE SE HODIT DO BUDOUCNA*/;
             GameObject.Find("HracovaSazka").GetComponent<TextMeshProUGUI>().text = penize + "Kè";          
             for (int j = 0; j < OponentiDohromady.Length; j++)
             {
@@ -172,7 +173,7 @@ public class manager : MonoBehaviour
             OponentiDohromady[0].name = "OponentIkonka" + 1;
             for (int i = 1; i < OponentiDohromady.Length; i++)
             {
-                int random = 0;//UnityEngine.Random.Range(0, 2);
+                int random = UnityEngine.Random.Range(0, 2);
                 if (random == 0)
                 {
                     for (int j = 1; j < OponentiDohromady.Length; j++)
@@ -232,7 +233,7 @@ public class manager : MonoBehaviour
                 hracSazka = j;
                 if(hracSazka > nejvyssiSazka)
                 { nejvyssiSazka = hracSazka; porovnanaviSazek();}
-                else { GameObject.Find("PodavaniSazek").SetActive(false); zacatekSazeni = true; }
+                else { sazeciOkenko.SetActive(false); zacatekSazeni = true; }
             }
         }
     }

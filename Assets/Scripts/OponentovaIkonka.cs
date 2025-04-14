@@ -12,26 +12,26 @@ public class OponentovaIkonka : MonoBehaviour
     public Sprite[] OponentSprity = new Sprite[10];
     public int Ikonka;
     //public Texture OponentObrazek;
-    public string[] jmena = { "Stuart", "Billy", "Jan", "Lukáš", "Kenny", "Petr", };
+    //public string[] jmena = { "Stuart", "Billy", "Jan", "Lukáš", "Kenny", "Petr", };
     public int Penize;
     public int Sazka;
     public bool dovysovani = false;
     void Start()
     {
         manager = GameObject.Find("GameManager").GetComponent<manager>();
-        OponentJmeno = transform.Find("OponentovoJmeno").GetComponent<TextMeshProUGUI>();
+        //OponentJmeno = transform.Find("OponentovoJmeno").GetComponent<TextMeshProUGUI>();
         OponentCelkovePenize = transform.Find("OponentoviPenize").GetComponent<TextMeshProUGUI>();
         OponentSazka = transform.Find("OponentovaSazka").GetComponent<TextMeshProUGUI>();
         OponentIkonka = transform.Find("OponentVzhled").GetComponent<Image>();
 
 
         Penize = CelkovePenizeRandom();
-        OponentCelkovePenize.text = "Peníze: " +Penize + "";
+        OponentCelkovePenize.text = Penize + ",-";
 
         SazkaRandom();
 
 
-        OponentJmeno.text = JmenoRandom();
+        //OponentJmeno.text = JmenoRandom();
 
         Ikonka = IkonkaRandom();
         OponentIkonka.GetComponent<Image>().sprite = OponentSprity[Ikonka];
@@ -54,7 +54,7 @@ public class OponentovaIkonka : MonoBehaviour
         if(!dovysovani)
         {
             Sazka = Random.Range(0, Penize); dovysovani = true;
-            OponentSazka.text = "Sázka: " + Sazka + "";
+            OponentSazka.text =Sazka + ",-";
             manager.secteni += Sazka;
         }
         else
@@ -65,20 +65,22 @@ public class OponentovaIkonka : MonoBehaviour
                 if(manager.nejvyssiSazka < Penize && i>2)
                 {                  
                         Sazka = manager.nejvyssiSazka;
-                        OponentSazka.text = "Sázka: " + Sazka + "";
+                        OponentSazka.text =Sazka + "";
                         manager.secteni += Sazka;
                         //transform.GetComponent<Image>().material.color = new Color(255, 255, 0);
                 }
-                else{ Sazka = 0; OponentSazka.text = "Vynechává";  }//transform.GetComponent<Image>().material.color = new Color(255, 0, 0);
+                else{ Sazka = 0; OponentSazka.text = "OUT";  }//transform.GetComponent<Image>().material.color = new Color(255, 0, 0);
             }
             else { manager.secteni += Sazka;}
         }
     }
+    /*
     public string JmenoRandom()
     {
         int i = Random.Range(0, jmena.Length);   
         return jmena[i];
     }
+    */
     public void Sazky()
     {
         for(int i = 0; i < manager.sazky.Length; i++)
