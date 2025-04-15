@@ -10,8 +10,9 @@ public class OponentovaIkonka : MonoBehaviour
     public TextMeshProUGUI OponentSazka;
     public Image OponentIkonka;
     public Sprite[] OponentSprity = new Sprite[10];
-    public GameObject opponentPrefabs; // Pokud chceš rùzné postavy, jinak jen GameObject opponentPrefab;
+    public Image opponentPrefabs; // Pokud chceš rùzné postavy, jinak jen GameObject opponentPrefab;
     public Transform[] spawnPoints;
+    public Transform OponentiPozice;
     public int Ikonka;
     //public Texture OponentObrazek;
     public int Penize;
@@ -23,23 +24,31 @@ public class OponentovaIkonka : MonoBehaviour
         OponentCelkovePenize = transform.Find("OponentoviPenize").GetComponent<TextMeshProUGUI>();
         OponentSazka = transform.Find("OponentovaSazka").GetComponent<TextMeshProUGUI>();
         OponentIkonka = transform.Find("OponentVzhled").GetComponent<Image>();
-
+        opponentPrefabs = transform.Find("OponentVzhled").GetComponent<Image>();
+        OponentiPozice = GameObject.Find("OponentiPozice").GetComponent<Transform>();
 
         Penize = CelkovePenizeRandom();
         OponentCelkovePenize.text = Penize + ",-";
-
         SazkaRandom();
 
         Ikonka = IkonkaRandom();
         OponentIkonka.GetComponent<Image>().sprite = OponentSprity[Ikonka];
-
+        StartI();
         Sazky();
     }
-    public void StartI(int i)
+    public void StartI()
     {
-        Instantiate(opponentPrefabs, spawnPoints[i].position, spawnPoints[i].rotation);
+        for (int j = 0; j < manager.OponentiDohromady.Length; j++)
+        {
+            if (manager.OponentiDohromady[j] == null)
+            {
+                Instantiate(opponentPrefabs, spawnPoints[j].position, spawnPoints[j].rotation, OponentiPozice);
+                opponentPrefabs.name = "OponentUStolu" + (j + 1);
+                opponentPrefabs.GetComponent<Image>().sprite = OponentSprity[Ikonka];
+                j = manager.OponentiDohromady.Length;
+            }
+        }
     }
-
     public int IkonkaRandom()
     {      
         return Random.Range(1, OponentSprity.Length);;

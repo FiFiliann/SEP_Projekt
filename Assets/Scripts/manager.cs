@@ -182,7 +182,6 @@ public class manager : MonoBehaviour
                     {
                         if (OponentiDohromady[j] == null)
                         {
-                            oponentUStolu.StartI(j);
                             OponentiDohromady[j] = Instantiate(OponentIkonka, OponentIkonkaContent);
                             OponentiDohromady[j].name = "OponentIkonka" + (j + 1);
                             yield return new WaitForSeconds(2);
