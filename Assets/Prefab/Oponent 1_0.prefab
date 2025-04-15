@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1012680782042468735}
   - component: {fileID: 3890134946174213234}
+  - component: {fileID: 8984933877264525680}
   m_Layer: 0
   m_Name: Oponent 1_0
   m_TagString: Untagged
@@ -26,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 319682344158319999}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.21430887, y: 0.48810402, z: -636.5665}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -2.5673, y: 3.1068, z: -636.5665}
+  m_LocalScale: {x: 0.4578, y: 0.4578, z: 0.4578}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -87,3 +88,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8984933877264525680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319682344158319999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 746d634590639bf4ca0eccd8e72d595e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  opponentPrefabs: {fileID: 0}
+  spawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  i: 0

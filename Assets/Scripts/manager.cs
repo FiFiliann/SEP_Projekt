@@ -13,6 +13,7 @@ public class manager : MonoBehaviour
 {    
     public GameObject GameMenu;
     public spawn spawn;
+    public OpponentSpawner oponenti;
     //Menu//
     public GameObject[] BytMenuVyber;
     public GameObject[] UI;
@@ -62,7 +63,6 @@ public class manager : MonoBehaviour
     public Texture[] KartyKrize = new Texture[13];
 
     // Zmeny, oponenti
-    public GameObject objectToInstantiate;
     public int numberOfObjects = 6;
 
     private void Start()
@@ -168,6 +168,7 @@ public class manager : MonoBehaviour
     {
         if (PrichodDoNoveSceny)
         {
+            
             OponentiDohromady[0] = Instantiate(OponentIkonka, OponentIkonkaContent);
             yield return new WaitForSeconds(2);
             OponentiDohromady[0].name = "OponentIkonka" + 1;
@@ -180,6 +181,7 @@ public class manager : MonoBehaviour
                     {
                         if (OponentiDohromady[j] == null)
                         {
+                            oponenti.StartI(j);
                             OponentiDohromady[j] = Instantiate(OponentIkonka, OponentIkonkaContent);
                             OponentiDohromady[j].name = "OponentIkonka" + (j + 1);
                             yield return new WaitForSeconds(2);
@@ -189,13 +191,7 @@ public class manager : MonoBehaviour
                 }
             }
 
-            //Zmeny 
-            for (int i = 1; i<numberOfObjects; i++)
-            {
-                Vector3 position = new Vector3(i * 2, 0, 0);
-                Quaternion rotation = Quaternion.identity;
-                GameObject newObj = Instantiate(objectToInstantiate, position, rotation);
-            }
+            
 
 
             GameObject.Find("CelkovaSazka").GetComponent<TextMeshProUGUI>().text = "nej: "+nejvyssiSazka + "  celkem: "+ secteni;
