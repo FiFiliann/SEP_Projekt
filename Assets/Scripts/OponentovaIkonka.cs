@@ -42,7 +42,7 @@ public class OponentovaIkonka : MonoBehaviour
         {
             if (manager.OponentiDohromady[j] == null)
             {
-                Instantiate(opponentPrefabs, spawnPoints[j].position, spawnPoints[j].rotation, OponentiPozice);
+                Instantiate(opponentPrefabs, spawnPoints[j-1].position, spawnPoints[j-1].rotation, OponentiPozice);
                 opponentPrefabs.name = "OponentUStolu" + (j + 1);
                 opponentPrefabs.GetComponent<Image>().sprite = OponentSprity[Ikonka];
                 j = manager.OponentiDohromady.Length;
@@ -79,18 +79,11 @@ public class OponentovaIkonka : MonoBehaviour
                         manager.secteni += Sazka;
                         //transform.GetComponent<Image>().material.color = new Color(255, 255, 0);
                 }
-                else{ Sazka = 0; OponentSazka.text = "OUT";  }//transform.GetComponent<Image>().material.color = new Color(255, 0, 0);
+                else{ Sazka = 0; OponentSazka.text = "OUT";  } //transform.GetComponent<Image>().material.color = new Color(255, 0, 0);
             }
             else { manager.secteni += Sazka;}
         }
     }
-    /*
-    public string JmenoRandom()
-    {
-        int i = Random.Range(0, jmena.Length);   
-        return jmena[i];
-    }
-    */
     public void Sazky()
     {
         for(int i = 0; i < manager.sazky.Length; i++)

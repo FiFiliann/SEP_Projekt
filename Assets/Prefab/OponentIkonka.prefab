@@ -108,13 +108,14 @@ MonoBehaviour:
   - {fileID: 4653148452755108702, guid: 3cf9055486a62d74596ddb5f5c5544be, type: 3}
   - {fileID: -1963909652831746515, guid: 951a5ebb18f31164a827a77d7faf6ea1, type: 3}
   - {fileID: -4390902567344959319, guid: d44d2bcc43ec3d44eb69287bf5ded2d7, type: 3}
-  opponentPrefabs: {fileID: 319682344158319999, guid: 1a0687e6a171bab4c81d0889fe87c5c9, type: 3}
+  opponentPrefabs: {fileID: 7128903737313419731, guid: 4191e2f888454ca4e8e277fdd8c382a6, type: 3}
   spawnPoints:
   - {fileID: 7499172564718253961, guid: 4f670657b93add24a9b7e0c747160b6e, type: 3}
   - {fileID: 1022579188148631006, guid: c60d02bf667d86f49a9250eefd3d0154, type: 3}
   - {fileID: 4861510713716338133, guid: b1d32e6572bf8124c8a3bd4ebb6f38aa, type: 3}
   - {fileID: 2354818728778032037, guid: 9cb5202c7c2038048ae5f17a22eee025, type: 3}
   - {fileID: 6142545476005218868, guid: f3f40567d8e6bd849a72f8fcc7941596, type: 3}
+  OponentiPozice: {fileID: 0}
   Ikonka: 0
   Penize: 0
   Sazka: 0
