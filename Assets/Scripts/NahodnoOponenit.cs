@@ -2,24 +2,25 @@ using UnityEngine;
 
 public class OpponentSpawner : MonoBehaviour
 {
-    public GameObject[] opponentPrefabs; // Pokud chceš rùzné postavy, jinak jen GameObject opponentPrefab;
+    public GameObject opponentPrefabs; // Pokud chceš rùzné postavy, jinak jen GameObject opponentPrefab;
     public Transform[] spawnPoints;
 
-    void Start()
+    public void StartI(int i)
     {
-        Shuffle(spawnPoints);         // Zamíchá pozice
-        Shuffle(opponentPrefabs);     // (Volitelné) zamíchá i výbìr postav
+        Shuffle(spawnPoints);      
+        Instantiate(opponentPrefabs, spawnPoints[i].position, spawnPoints[i].rotation);
+        
 
-        SpawnOpponents();
+        //SpawnOpponents();
     }
 
     void SpawnOpponents()
     {
-        int count = Mathf.Min(spawnPoints.Length, opponentPrefabs.Length);
+        //int count = Mathf.Min(spawnPoints.Length, opponentPrefabs.);
 
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < spawnPoints.Length; i++)
         {
-            Instantiate(opponentPrefabs[i], spawnPoints[i].position, spawnPoints[i].rotation);
+            Instantiate(opponentPrefabs, spawnPoints[i].position, spawnPoints[i].rotation);
         }
     }
 
