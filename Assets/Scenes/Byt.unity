@@ -611,6 +611,7 @@ MonoBehaviour:
   nejvyssiSazka: 0
   zacatekSazeni: 1
   sazeciOkenko: {fileID: 1983259629}
+  oponentUStolu: {fileID: 0}
   hracSazka: 0
   SazkaInput: {fileID: 1076263028}
   background:
@@ -684,7 +685,6 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 874c5c9a9164aa8499fd8191b87ee90a, type: 3}
   - {fileID: 2800000, guid: e0d0e83c8e69197418dffe4338e7e3e8, type: 3}
   - {fileID: 2800000, guid: c66b8a4ac32448d418ac347e69ee9d52, type: 3}
-  objectToInstantiate: {fileID: 368180273}
   numberOfObjects: 6
 --- !u!4 &120449549
 Transform:

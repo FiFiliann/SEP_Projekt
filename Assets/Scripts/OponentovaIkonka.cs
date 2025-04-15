@@ -10,16 +10,16 @@ public class OponentovaIkonka : MonoBehaviour
     public TextMeshProUGUI OponentSazka;
     public Image OponentIkonka;
     public Sprite[] OponentSprity = new Sprite[10];
+    public GameObject opponentPrefabs; // Pokud chceš rùzné postavy, jinak jen GameObject opponentPrefab;
+    public Transform[] spawnPoints;
     public int Ikonka;
     //public Texture OponentObrazek;
-    //public string[] jmena = { "Stuart", "Billy", "Jan", "Lukáš", "Kenny", "Petr", };
     public int Penize;
     public int Sazka;
     public bool dovysovani = false;
     void Start()
     {
         manager = GameObject.Find("GameManager").GetComponent<manager>();
-        //OponentJmeno = transform.Find("OponentovoJmeno").GetComponent<TextMeshProUGUI>();
         OponentCelkovePenize = transform.Find("OponentoviPenize").GetComponent<TextMeshProUGUI>();
         OponentSazka = transform.Find("OponentovaSazka").GetComponent<TextMeshProUGUI>();
         OponentIkonka = transform.Find("OponentVzhled").GetComponent<Image>();
@@ -30,13 +30,14 @@ public class OponentovaIkonka : MonoBehaviour
 
         SazkaRandom();
 
-
-        //OponentJmeno.text = JmenoRandom();
-
         Ikonka = IkonkaRandom();
         OponentIkonka.GetComponent<Image>().sprite = OponentSprity[Ikonka];
 
         Sazky();
+    }
+    public void StartI(int i)
+    {
+        Instantiate(opponentPrefabs, spawnPoints[i].position, spawnPoints[i].rotation);
     }
 
     public int IkonkaRandom()

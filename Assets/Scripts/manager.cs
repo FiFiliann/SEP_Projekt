@@ -13,7 +13,7 @@ public class manager : MonoBehaviour
 {    
     public GameObject GameMenu;
     public spawn spawn;
-    public OpponentSpawner oponenti;
+
     //Menu//
     public GameObject[] BytMenuVyber;
     public GameObject[] UI;
@@ -37,7 +37,8 @@ public class manager : MonoBehaviour
     public int secteni = 0;
     public int nejvyssiSazka = 0;
     public bool zacatekSazeni = true;
-    public GameObject sazeciOkenko;
+    public GameObject sazeciOkenko;    
+    public OponentovaIkonka oponentUStolu;
     // Hrac Sazky//
     public int hracSazka;
     public TMP_InputField SazkaInput;
@@ -181,7 +182,7 @@ public class manager : MonoBehaviour
                     {
                         if (OponentiDohromady[j] == null)
                         {
-                            oponenti.StartI(j);
+                            oponentUStolu.StartI(j);
                             OponentiDohromady[j] = Instantiate(OponentIkonka, OponentIkonkaContent);
                             OponentiDohromady[j].name = "OponentIkonka" + (j + 1);
                             yield return new WaitForSeconds(2);
