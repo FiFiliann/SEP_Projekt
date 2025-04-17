@@ -5,12 +5,11 @@ using UnityEngine.UI;
 public class OponentovaIkonka : MonoBehaviour
 {
     public manager manager;
-    public TextMeshProUGUI OponentJmeno;
     public TextMeshProUGUI OponentCelkovePenize;
     public TextMeshProUGUI OponentSazka;
     public Image OponentIkonka;
     public Sprite[] OponentSprity = new Sprite[10];
-    public Image opponentPrefabs; // Pokud chceš rùzné postavy, jinak jen GameObject opponentPrefab;
+    public GameObject opponentPrefabs; // Pokud chceš rùzné postavy, jinak jen GameObject opponentPrefab;
     public Transform[] spawnPoints;
     public Transform OponentiPozice;
     public int Ikonka;
@@ -24,40 +23,36 @@ public class OponentovaIkonka : MonoBehaviour
         OponentCelkovePenize = transform.Find("OponentoviPenize").GetComponent<TextMeshProUGUI>();
         OponentSazka = transform.Find("OponentovaSazka").GetComponent<TextMeshProUGUI>();
         OponentIkonka = transform.Find("OponentVzhled").GetComponent<Image>();
-        opponentPrefabs = transform.Find("OponentVzhled").GetComponent<Image>();
         OponentiPozice = GameObject.Find("OponentiPozice").GetComponent<Transform>();
 
-        Penize = CelkovePenizeRandom();
-        OponentCelkovePenize.text = Penize + ",-";
+        Penize = CelkovePenizeRandom(); OponentCelkovePenize.text = Penize + ",-";
         SazkaRandom();
-
-        Ikonka = IkonkaRandom();
-        OponentIkonka.GetComponent<Image>().sprite = OponentSprity[Ikonka];
+        Ikonka = IkonkaRandom(); OponentIkonka.GetComponent<Image>().sprite = OponentSprity[Ikonka];
         StartI();
         Sazky();
     }
     public void StartI()
     {
-        for (int j = 0; j < manager.OponentiDohromady.Length; j++)
+        for (int j = 0; j < manager.OponentiUStolu.Length; j++)
         {
-            if (manager.OponentiDohromady[j] == null)
+            if (manager.OponentiUStolu[j] == null)
             {
-                Instantiate(opponentPrefabs, spawnPoints[j-1].position, spawnPoints[j-1].rotation, OponentiPozice);
-                opponentPrefabs.name = "OponentUStolu" + (j + 1);
-                opponentPrefabs.GetComponent<Image>().sprite = OponentSprity[Ikonka];
-                j = manager.OponentiDohromady.Length;
+                manager.OponentiUStolu[j] = Instantiate(opponentPrefabs, spawnPoints[j].position, spawnPoints[j].rotation, OponentiPozice);
+                manager.OponentiUStolu[j].GetComponent<Image>().sprite = OponentSprity[Ikonka];
+                manager.OponentiUStolu[j].name = "Oponent" +j;
+                j = manager.OponentiDohromady.Length;                
             }
         }
     }
     public int IkonkaRandom()
     {      
-        return Random.Range(1, OponentSprity.Length);;
+        return Random.Range(1, OponentSprity.Length);
     }
 
     public int CelkovePenizeRandom()
     {
         
-        return Random.Range(400, 800);;
+        return Random.Range(400, 800);
     }
     public void SazkaRandom()
     {

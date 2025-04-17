@@ -33,12 +33,15 @@ public class manager : MonoBehaviour
     public Transform OponentIkonkaContent;
     public bool PrichodDoNoveSceny = true;
     public GameObject[] OponentiDohromady = new GameObject[7];
+    public GameObject[] OponentiUStolu = new GameObject[7];
+
     public int[] sazky = new int[7];
     public int secteni = 0;
     public int nejvyssiSazka = 0;
     public bool zacatekSazeni = true;
     public GameObject sazeciOkenko;    
     public OponentovaIkonka oponentUStolu;
+
     // Hrac Sazky//
     public int hracSazka;
     public TMP_InputField SazkaInput;
@@ -133,8 +136,10 @@ public class manager : MonoBehaviour
             GameObject.Find("HracovaSazka").GetComponent<TextMeshProUGUI>().text = penize + "Kè";          
             for (int j = 0; j < OponentiDohromady.Length; j++)
             {
-                    Destroy(GameObject.Find("OponentIkonka" + (j+1)));
-                    sazky[j] = 0;
+                Destroy(OponentiDohromady[j]);
+                Destroy(OponentiUStolu[j]);
+
+                sazky[j] = 0;
             }
             nejvyssiSazka = 0;
             secteni = 0;
@@ -168,11 +173,11 @@ public class manager : MonoBehaviour
     IEnumerator VytvoreniOponenta()
     {
         if (PrichodDoNoveSceny)
-        {
-            
+        {     
             OponentiDohromady[0] = Instantiate(OponentIkonka, OponentIkonkaContent);
             yield return new WaitForSeconds(2);
-            OponentiDohromady[0].name = "OponentIkonka" + 1;
+            OponentiDohromady[0].name = "OponentIkonka1";
+
             for (int i = 1; i < OponentiDohromady.Length; i++)
             {
                 int random = UnityEngine.Random.Range(0, 2);
@@ -184,6 +189,7 @@ public class manager : MonoBehaviour
                         {
                             OponentiDohromady[j] = Instantiate(OponentIkonka, OponentIkonkaContent);
                             OponentiDohromady[j].name = "OponentIkonka" + (j + 1);
+
                             yield return new WaitForSeconds(2);
                             j = OponentiDohromady.Length;
                         }

@@ -93,7 +93,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
-  OponentJmeno: {fileID: 0}
   OponentCelkovePenize: {fileID: 8338933060543706767}
   OponentSazka: {fileID: 9141202217528330174}
   OponentIkonka: {fileID: 4040136796956479373}
@@ -108,7 +107,7 @@ MonoBehaviour:
   - {fileID: 4653148452755108702, guid: 3cf9055486a62d74596ddb5f5c5544be, type: 3}
   - {fileID: -1963909652831746515, guid: 951a5ebb18f31164a827a77d7faf6ea1, type: 3}
   - {fileID: -4390902567344959319, guid: d44d2bcc43ec3d44eb69287bf5ded2d7, type: 3}
-  opponentPrefabs: {fileID: 7128903737313419731, guid: 4191e2f888454ca4e8e277fdd8c382a6, type: 3}
+  opponentPrefabs: {fileID: 385631411785936586, guid: 4191e2f888454ca4e8e277fdd8c382a6, type: 3}
   spawnPoints:
   - {fileID: 7499172564718253961, guid: 4f670657b93add24a9b7e0c747160b6e, type: 3}
   - {fileID: 1022579188148631006, guid: c60d02bf667d86f49a9250eefd3d0154, type: 3}

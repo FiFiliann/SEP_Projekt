@@ -12,7 +12,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     private bool packa;
     private void Start()
     {
-        GameObject startovniBod = Instantiate(start);
+        GameObject startovniBod = Instantiate(start, gameObject.transform);
         startovniBod.transform.position = this.transform.position;       
     }
     private void Update()
