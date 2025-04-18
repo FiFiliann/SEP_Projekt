@@ -46,6 +46,8 @@ public class manager : MonoBehaviour
     public int hracSazka;
     public TMP_InputField SazkaInput;
 
+    //Hra//
+    public string VrchniKarta;
     //ZmenaSceny//
     public GameObject[] background;
     public GameObject opona;
