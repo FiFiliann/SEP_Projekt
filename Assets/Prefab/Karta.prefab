@@ -28,7 +28,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1330085125092669727}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 38.06}
+  m_LocalPosition: {x: 0, y: 0, z: 11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -0.8752136, y: -1.4799957}
+  m_AnchoredPosition: {x: 0, y: 3}
   m_SizeDelta: {x: 2.2, y: 2.69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8041769639549264652
@@ -90,8 +90,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
-  start: {fileID: 5751225093062729077, guid: 9d9d7f99b5d54354ca8b5fb7ce26d064, type: 3}
-  konec: {fileID: 0}
+  HracovaRuka: {fileID: 5751225093062729077, guid: 9d9d7f99b5d54354ca8b5fb7ce26d064, type: 3}
+  OdhazovaciBalicek: {fileID: 0}
+  LizaciBalicek: {fileID: 0}
+  lizaniKaret: {fileID: 0}
   Kolo: 0
   znacka: 7X
 --- !u!61 &3792412502678656842

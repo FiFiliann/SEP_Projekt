@@ -7,36 +7,46 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
 {
     //public Image karta;
     public manager manager;
-    public GameObject start;
-    public GameObject konec;
+    public GameObject HracovaRuka;
+    public GameObject OdhazovaciBalicek;
+    public GameObject LizaciBalicek;
+    public LizaniKaret lizaniKaret;
     public bool Kolo = false;
     private float cas = 0;
     public string znacka = "7X";
     private bool packa = false;
+    private bool packb = false;
+
     private bool a = true;
     private void Start()
     {
+        lizaniKaret = GameObject.Find("HracovaRuka").GetComponent<LizaniKaret>();
         manager = GameObject.Find("GameManager").GetComponent<manager>();
-
-        konec = GameObject.Find("OdhozeneKarty");
+        OdhazovaciBalicek = GameObject.Find("OdhozeneKarty");
+        LizaciBalicek = GameObject.Find("LizaciBalicek");
     }
     private void Update()
     {
         if(packa)
         {            
             cas += Time.deltaTime;
-            this.transform.position = Vector3.Lerp(start.transform.position,  konec.transform.position, cas);
-            this.transform.localScale = Vector3.Lerp(start.transform.localScale, konec.transform.localScale, cas);
-            if (cas > 1) { packa = false; a = false; Kolo = true; }
+            this.transform.position = Vector3.Lerp(HracovaRuka.transform.position, OdhazovaciBalicek.transform.position, cas);
+            this.transform.localScale = Vector3.Lerp(HracovaRuka.transform.localScale, OdhazovaciBalicek.transform.localScale, cas);
+            if (cas > 1) { packa = false; a = false; Kolo = true;  cas = 0; }
+        }
+        if(packb)
+        {
+            cas += Time.deltaTime;
+            this.transform.position = Vector3.Lerp(GameObject.Find("LizaciBalicek").transform.position, HracovaRuka.transform.position, cas);
+            this.transform.localScale = Vector3.Lerp(GameObject.Find("LizaciBalicek").transform.localScale, HracovaRuka.transform.localScale, cas);
+            if (cas > 1) { packa = false; cas = 0; }
         }
     }
     public void OnPointerDown(PointerEventData eventData)
-    {
-        
+    {     
         gameObject.transform.SetParent(GameObject.Find("Stul").transform,true);
-        GameObject startovniBod = Instantiate(start, gameObject.transform);
-        startovniBod.transform.position = this.transform.position;
-        start = startovniBod;
+        Instantiate(HracovaRuka, gameObject.transform);
+        HracovaRuka.transform.position = this.transform.position;
         packa = true;
     }
     public void OnPointerEnter(PointerEventData eventData)
@@ -54,4 +64,12 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             gameObject.transform.position -= new Vector3(0, 0.5f, 0);
         }
     }
+    /*
+    public void LizaciBalicekDoRukyHrace()
+    {
+        Instantiate(HracovaRuka, gameObject.transform);
+        HracovaRuka.transform.position = GameObject.Find("HracovaRuka").transform.position; 
+        gameObject.transform.position = GameObject.Find("LizaciBalicek").transform.position;
+        packb = true;
+    }*/
 }
