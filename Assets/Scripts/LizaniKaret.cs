@@ -1,29 +1,30 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using NUnit.Framework;
 using System;
+using UnityEditor.Sprites;
 using UnityEngine;
 
 public class LizaniKaret : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public GameObject HracovaKarta;
-    public GameObject LizaciBalicek;
-
-    public Karta karta;
-
-    public void Start()
+    public GameObject KartaGo;
+    GameObject a;
+    GameObject coze;
+    private void Update()
     {
-        LizaciBalicek = GameObject.Find("LizaciBalicek");
-
+        if (a != null && a.GetComponent<Karta>().packb == false)
+        {
+            Destroy(coze); Destroy(a); Instantiate(KartaGo, GameObject.Find("HracovaRuka").transform);
+        }
     }
     public void KartaProHrace()
     {
-        Instantiate(HracovaKarta, gameObject);
-        //HracovaKarta.transform.position = new Vector3(0, 3, 11);
+        a = Instantiate(KartaGo, GameObject.Find("LizaciBalicek").transform);
+        coze = Instantiate(KartaGo, GameObject.Find("HracovaRuka").transform);
+        a.GetComponent<Karta>().packb = true;
+        a.GetComponent<Karta>().HracovaRukaPolohaProKartu = coze;
+        //coze.GetComponent<SpriteRenderer>().material.color = new Color(0,0,0,0);
         //HracovaKarta.transform.position = GameObject.Find("LizaciBalicek").transform.position;
     }
 
-    private void Instantiate(GameObject hracovaKarta, GameObject hracovaRuka)
-    {
-        throw new NotImplementedException();
-    }
 }

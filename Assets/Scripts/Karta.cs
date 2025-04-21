@@ -8,14 +8,15 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     //public Image karta;
     public manager manager;
     public GameObject HracovaRuka;
+    public GameObject HracovaRukaPolohaProKartu;
     public GameObject OdhazovaciBalicek;
     public GameObject LizaciBalicek;
     public LizaniKaret lizaniKaret;
     public bool Kolo = false;
     private float cas = 0;
     public string znacka = "7X";
-    private bool packa = false;
-    private bool packb = false;
+    public bool packa = false;
+    public bool packb = false;
 
     private bool a = true;
     private void Start()
@@ -27,21 +28,22 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     }
     private void Update()
     {
-        if(packa)
+        if(packa)//z ruky hráèe do odhazovacího balíèku
         {            
             cas += Time.deltaTime;
             this.transform.position = Vector3.Lerp(HracovaRuka.transform.position, OdhazovaciBalicek.transform.position, cas);
             this.transform.localScale = Vector3.Lerp(HracovaRuka.transform.localScale, OdhazovaciBalicek.transform.localScale, cas);
             if (cas > 1) { packa = false; a = false; Kolo = true;  cas = 0; }
         }
-        if(packb)
+        if (packb && HracovaRukaPolohaProKartu != null)//Z lizacího balíèku do ruky hráèe
         {
             cas += Time.deltaTime;
-            this.transform.position = Vector3.Lerp(GameObject.Find("LizaciBalicek").transform.position, HracovaRuka.transform.position, cas);
-            this.transform.localScale = Vector3.Lerp(GameObject.Find("LizaciBalicek").transform.localScale, HracovaRuka.transform.localScale, cas);
-            if (cas > 1) { packa = false; cas = 0; }
+            this.transform.position = Vector3.Lerp(GameObject.Find("LizaciBalicek").transform.position, HracovaRukaPolohaProKartu.transform.position, cas);
+            this.transform.localScale = Vector3.Lerp(GameObject.Find("LizaciBalicek").transform.localScale, HracovaRukaPolohaProKartu.transform.localScale, cas);
+            if (cas > 1) { packb = false; cas = 0; }
         }
     }
+
     public void OnPointerDown(PointerEventData eventData)
     {     
         gameObject.transform.SetParent(GameObject.Find("Stul").transform,true);
@@ -64,12 +66,4 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             gameObject.transform.position -= new Vector3(0, 0.5f, 0);
         }
     }
-    /*
-    public void LizaciBalicekDoRukyHrace()
-    {
-        Instantiate(HracovaRuka, gameObject.transform);
-        HracovaRuka.transform.position = GameObject.Find("HracovaRuka").transform.position; 
-        gameObject.transform.position = GameObject.Find("LizaciBalicek").transform.position;
-        packb = true;
-    }*/
 }

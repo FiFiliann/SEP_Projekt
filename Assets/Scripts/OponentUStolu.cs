@@ -35,14 +35,14 @@ public class OponentUStolu : MonoBehaviour ,IPointerEnterHandler, IPointerExitHa
     }
     private void Update()
     {
-        if (packa)
+        if (packa)//z oponentovy ruky do odhazovazíco balíèku
         {
             cas += Time.deltaTime;
             OdhozenaKarta.transform.position = Vector3.Lerp(start.transform.position, konec.transform.position, cas);
             OdhozenaKarta.transform.localScale = Vector3.Lerp(start.transform.localScale, konec.transform.localScale, cas);
             if (cas > 1) { packa = false; cas = 0;}
         }
-        if (packb)
+        if (packb)//z lízacího balíèku do oponentovi ruky
         {
             cas += Time.deltaTime;
             OdhozenaKarta.transform.position = Vector3.Lerp(LizaciBalicek.transform.position, OponentuvBalicek.transform.position, cas);
@@ -52,20 +52,20 @@ public class OponentUStolu : MonoBehaviour ,IPointerEnterHandler, IPointerExitHa
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        /*
+        /*//z oponentovy ruky do odhazovazíco balíèku
         if(OdhozenaKarta != null) { Destroy(OdhozenaKarta); }
         OdhozenaKarta = Instantiate(Karta, Stul.transform);
         OdhozenaKarta.transform.position = this.transform.position;
         packa = true;
-        */
+        //*/
 
 
-        //
+        //z lízacího balíèku do oponentovi ruky
         OdhozenaKarta = Instantiate(Karta, LizaciBalicek.transform);
         OdhozenaKarta.transform.position = LizaciBalicek.transform.position;
         OdhozenaKarta.transform.localScale = new Vector3(0.1f,0.1f,0);
         packb = true;
-        //
+        //*/
     }
 
     private GameObject Instantiate(GameObject karta, GameObject oponentuvBalicek)
@@ -84,15 +84,3 @@ public class OponentUStolu : MonoBehaviour ,IPointerEnterHandler, IPointerExitHa
             gameObject.transform.position -= new Vector3(0, 0.5f, 0);
     }
 }
-/*
-void Shuffle<T>(T[] array)
-{
-    for (int i = array.Length - 1; i > 0; i--)
-    {
-        int randomIndex = Random.Range(0, i + 1);
-        T temp = array[i];
-        array[i] = array[randomIndex];
-        array[randomIndex] = temp;
-    }
-}
-*/
