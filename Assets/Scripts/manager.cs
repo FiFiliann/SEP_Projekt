@@ -7,8 +7,6 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 
-
-
 public class manager : MonoBehaviour
 {    
     public GameObject GameMenu;
@@ -112,7 +110,6 @@ public class manager : MonoBehaviour
                 packa = false;
             }
         }
-
     }
     public void ZmenaSceny(int a)
     {
@@ -200,10 +197,6 @@ public class manager : MonoBehaviour
                     }
                 }
             }
-
-            
-
-
             GameObject.Find("CelkovaSazka").GetComponent<TextMeshProUGUI>().text = "nej: "+nejvyssiSazka + "  celkem: "+ secteni;
             porovnanaviSazek();
         }
@@ -250,7 +243,7 @@ public class manager : MonoBehaviour
         if (reputace > 0)
         {
             reputace -= 1;
-            GameObject.Find("Reputace").GetComponent<TextMeshProUGUI>().text = reputace.ToString();
+            //GameObject.Find("Reputace").GetComponent<TextMeshProUGUI>().text = reputace.ToString();
         }
     }
 
