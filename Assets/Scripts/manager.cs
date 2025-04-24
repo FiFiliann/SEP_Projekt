@@ -7,11 +7,11 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 
-
-
 public class manager : MonoBehaviour
 {    
     public GameObject GameMenu;
+    public spawn spawn;
+
     //Menu//
     public GameObject[] BytMenuVyber;
     public GameObject[] UI;
@@ -30,15 +30,22 @@ public class manager : MonoBehaviour
     public GameObject OponentIkonka;
     public Transform OponentIkonkaContent;
     public bool PrichodDoNoveSceny = true;
-    public GameObject[] OponentiDohromady = new GameObject[5];
-    public int[] sazky = new int[4];
+    public GameObject[] OponentiDohromady = new GameObject[7];//
+    public GameObject[] OponentiUStolu = new GameObject[7];
+
+    public int[] sazky = new int[7];
     public int secteni = 0;
     public int nejvyssiSazka = 0;
     public bool zacatekSazeni = true;
+    public GameObject sazeciOkenko;    
+    public OponentovaIkonka oponentUStolu;
+
     // Hrac Sazky//
     public int hracSazka;
     public TMP_InputField SazkaInput;
 
+    //Hra//
+    public string VrchniKarta;
     //ZmenaSceny//
     public GameObject[] background;
     public GameObject opona;
@@ -60,7 +67,6 @@ public class manager : MonoBehaviour
     public Texture[] KartyKrize = new Texture[13];
 
     // Zmeny, oponenti
-    public GameObject objectToInstantiate;
     public int numberOfObjects = 6;
 
     private void Start()
@@ -104,7 +110,6 @@ public class manager : MonoBehaviour
                 packa = false;
             }
         }
-
     }
     public void ZmenaSceny(int a)
     {
@@ -126,12 +131,14 @@ public class manager : MonoBehaviour
     {
         if (novaScena != 0) 
         {
-            UI[0].SetActive(false); UI[1].SetActive(true); 
+            UI[0].SetActive(false); UI[1].SetActive(true); sazeciOkenko.SetActive(true) /*BUDE SE HODIT DO BUDOUCNA*/;
             GameObject.Find("HracovaSazka").GetComponent<TextMeshProUGUI>().text = penize + "Kè";          
             for (int j = 0; j < OponentiDohromady.Length; j++)
             {
-                    Destroy(GameObject.Find("OponentIkonka" + (j+1)));
-                    sazky[j] = 0;
+                Destroy(OponentiDohromady[j]);
+                Destroy(OponentiUStolu[j]);
+
+                sazky[j] = 0;
             }
             nejvyssiSazka = 0;
             secteni = 0;
@@ -139,7 +146,7 @@ public class manager : MonoBehaviour
             GameObject.Find("CelkovaSazka").GetComponent<TextMeshProUGUI>().text = "nej: " + nejvyssiSazka + "  celkem: " + secteni;
             SazkaInput.text = "";
         }
-        else { VytvoreniPlatby(); UI[0].SetActive(true); UI[1].SetActive(false); }
+        else { VytvoreniPlatby(); UI[0].SetActive(true); UI[1].SetActive(false); spawn.coz = true; }
     }
     public void MenuButtony(int a) // zjistí, které tlaèítko v bytovém menu jde stisknout
     {
@@ -165,10 +172,12 @@ public class manager : MonoBehaviour
     IEnumerator VytvoreniOponenta()
     {
         if (PrichodDoNoveSceny)
-        {
+        {     
             OponentiDohromady[0] = Instantiate(OponentIkonka, OponentIkonkaContent);
+            ZvetseniPodezreni(); //Zmeny zvýšení podežøení pøi vytvoøení oponenta.
             yield return new WaitForSeconds(2);
-            OponentiDohromady[0].name = "OponentIkonka" + 1;
+            OponentiDohromady[0].name = "OponentIkonka1";
+
             for (int i = 1; i < OponentiDohromady.Length; i++)
             {
                 int random = UnityEngine.Random.Range(0, 2);
@@ -179,23 +188,15 @@ public class manager : MonoBehaviour
                         if (OponentiDohromady[j] == null)
                         {
                             OponentiDohromady[j] = Instantiate(OponentIkonka, OponentIkonkaContent);
+                            ZvetseniPodezreni(); //Zmeny, zvýšení podežøení pøi vytvoøení oponenta.
                             OponentiDohromady[j].name = "OponentIkonka" + (j + 1);
+
                             yield return new WaitForSeconds(2);
                             j = OponentiDohromady.Length;
                         }
                     }
                 }
             }
-
-            //Zmeny 
-            for (int i = 1; i<numberOfObjects; i++)
-            {
-                Vector3 position = new Vector3(i * 2, 0, 0);
-                Quaternion rotation = Quaternion.identity;
-                GameObject newObj = Instantiate(objectToInstantiate, position, rotation);
-            }
-
-
             GameObject.Find("CelkovaSazka").GetComponent<TextMeshProUGUI>().text = "nej: "+nejvyssiSazka + "  celkem: "+ secteni;
             porovnanaviSazek();
         }
@@ -231,10 +232,21 @@ public class manager : MonoBehaviour
                 hracSazka = j;
                 if(hracSazka > nejvyssiSazka)
                 { nejvyssiSazka = hracSazka; porovnanaviSazek();}
-                else { GameObject.Find("PodavaniSazek").SetActive(false); zacatekSazeni = true; }
+                else { sazeciOkenko.SetActive(false); zacatekSazeni = true; }
             }
         }
     }
+
+
+    public void ZvetseniPodezreni() //zvìtšení podezøení
+    {
+        if (reputace > 0)
+        {
+            reputace -= 1;
+            //GameObject.Find("Reputace").GetComponent<TextMeshProUGUI>().text = reputace.ToString();
+        }
+    }
+
     public void BytMenuPromene() //vypsání zmìny variabilit v menu
     {
         GameObject.Find("Penize").GetComponent<TextMeshProUGUI>().text = penize.ToString() + " KÈ";
