@@ -174,7 +174,6 @@ public class manager : MonoBehaviour
         if (PrichodDoNoveSceny)
         {     
             OponentiDohromady[0] = Instantiate(OponentIkonka, OponentIkonkaContent);
-            ZvetseniPodezreni(); //Zmeny zvýšení podežøení pøi vytvoøení oponenta.
             yield return new WaitForSeconds(2);
             OponentiDohromady[0].name = "OponentIkonka1";
 
@@ -188,7 +187,6 @@ public class manager : MonoBehaviour
                         if (OponentiDohromady[j] == null)
                         {
                             OponentiDohromady[j] = Instantiate(OponentIkonka, OponentIkonkaContent);
-                            ZvetseniPodezreni(); //Zmeny, zvýšení podežøení pøi vytvoøení oponenta.
                             OponentiDohromady[j].name = "OponentIkonka" + (j + 1);
 
                             yield return new WaitForSeconds(2);
@@ -238,14 +236,9 @@ public class manager : MonoBehaviour
     }
 
 
-    public void ZvetseniPodezreni() //zvìtšení podezøení
-    {
-        if (reputace > 0)
-        {
-            reputace -= 1;
-            //GameObject.Find("Reputace").GetComponent<TextMeshProUGUI>().text = reputace.ToString();
-        }
-    }
+
+
+
 
     public void BytMenuPromene() //vypsání zmìny variabilit v menu
     {
