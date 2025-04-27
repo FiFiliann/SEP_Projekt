@@ -821,7 +821,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1411447661500109606, guid: 82f9ab6fe9694764086301d76514284f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.52347
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1865795225106782456, guid: 82f9ab6fe9694764086301d76514284f, type: 3}
       propertyPath: m_Color.b
@@ -2111,7 +2111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 0
-  m_ReferencePixelsPerUnit: 100
+  m_ReferencePixelsPerUnit: 4
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
@@ -2750,7 +2750,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1411447661500109606, guid: 82f9ab6fe9694764086301d76514284f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.52347
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1865795225106782456, guid: 82f9ab6fe9694764086301d76514284f, type: 3}
       propertyPath: m_Color.b
@@ -4301,7 +4301,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1142409259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4708,7 +4708,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1411447661500109606, guid: 82f9ab6fe9694764086301d76514284f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.52347
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1865795225106782456, guid: 82f9ab6fe9694764086301d76514284f, type: 3}
       propertyPath: m_Color.b
@@ -7353,7 +7353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1411447661500109606, guid: 82f9ab6fe9694764086301d76514284f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.52347
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1865795225106782456, guid: 82f9ab6fe9694764086301d76514284f, type: 3}
       propertyPath: m_Color.b
