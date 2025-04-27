@@ -54,7 +54,7 @@ public class manager : MonoBehaviour
     public int rychlost = 0;
     public bool packa = false;
 
-    //Promìné//
+    //Promï¿½nï¿½//
     public string datum = ".1.1998";
     public int den = 2;
     public int reputace = 1069;
@@ -121,12 +121,12 @@ public class manager : MonoBehaviour
     {
         GameMenu.SetActive(true);
     }
-    public void ButtonAkce() // skrytí/odkrytí tlaèítek podle scény
+    public void ButtonAkce() // skrytï¿½/odkrytï¿½ tlaï¿½ï¿½tek podle scï¿½ny
     {
         if (novaScena != 0) 
         {
             UI[0].SetActive(false); UI[1].SetActive(true); sazeciOkenko.SetActive(true) /*BUDE SE HODIT DO BUDOUCNA*/;
-            GameObject.Find("HracovaSazka").GetComponent<TextMeshProUGUI>().text = penize + "Kè";          
+            GameObject.Find("HracovaSazka").GetComponent<TextMeshProUGUI>().text = penize + "Kï¿½";          
             for (int j = 0; j < OponentiDohromady.Length; j++)
             {
                 Destroy(OponentiDohromady[j]);
@@ -142,7 +142,7 @@ public class manager : MonoBehaviour
         }
         else { VytvoreniPlatby(); UI[0].SetActive(true); UI[1].SetActive(false); spawn.coz = true; }
     }
-    public void MenuButtony(int a) // zjistí, které tlaèítko v bytovém menu jde stisknout
+    public void MenuButtony(int a) // zjistï¿½, kterï¿½ tlaï¿½ï¿½tko v bytovï¿½m menu jde stisknout
     {
         for (int i = 0; i < BytMenuVyber.Length; i++)
         {
@@ -150,7 +150,7 @@ public class manager : MonoBehaviour
             else { BytMenuVyber[i].SetActive(false); BytButtons[i].GetComponent<Button>().interactable = true; }
         }
     }
-    public void VytvoreniPlatby() //vytvoøení nové platby
+    public void VytvoreniPlatby() //vytvoï¿½enï¿½ novï¿½ platby
     {
         for (int i = 0; i < PlatbyDohromady.Length; i++)
         {
@@ -168,7 +168,7 @@ public class manager : MonoBehaviour
         if (PrichodDoNoveSceny)
         {     
             OponentiDohromady[0] = Instantiate(OponentIkonka, OponentIkonkaContent);
-            ZvetseniPodezreni(); //Zmeny zvýšení podežøení pøi vytvoøení oponenta.
+            ZvetseniPodezreni(); //Zmeny zvï¿½ï¿½enï¿½ podeï¿½ï¿½enï¿½ pï¿½i vytvoï¿½enï¿½ oponenta.
             yield return new WaitForSeconds(0.5f);
             OponentiDohromady[0].name = "OponentIkonka1";
 
@@ -182,7 +182,6 @@ public class manager : MonoBehaviour
                         if (OponentiDohromady[j] == null)
                         {
                             OponentiDohromady[j] = Instantiate(OponentIkonka, OponentIkonkaContent);
-                            ZvetseniPodezreni(); //Zmeny, zvýšení podežøení pøi vytvoøení oponenta.
                             OponentiDohromady[j].name = "OponentIkonka" + (j + 1);
 
                             yield return new WaitForSeconds(0.5f);
@@ -232,18 +231,13 @@ public class manager : MonoBehaviour
     }
 
 
-    public void ZvetseniPodezreni() //zvìtšení podezøení
-    {
-        if (reputace > 0)
-        {
-            reputace -= 1;
-            //GameObject.Find("Reputace").GetComponent<TextMeshProUGUI>().text = reputace.ToString();
-        }
-    }
 
-    public void BytMenuPromene() //vypsání zmìny variabilit v menu
+
+
+
+    public void BytMenuPromene() //vypsï¿½nï¿½ zmï¿½ny variabilit v menu
     {
-        GameObject.Find("Penize").GetComponent<TextMeshProUGUI>().text = penize.ToString() + " KÈ";
+        GameObject.Find("Penize").GetComponent<TextMeshProUGUI>().text = penize.ToString() + " Kï¿½";
         GameObject.Find("Datum").GetComponent<TextMeshProUGUI>().text = den.ToString() + datum;
         GameObject.Find("Reputace").GetComponent<TextMeshProUGUI>().text = reputace.ToString();
     }
