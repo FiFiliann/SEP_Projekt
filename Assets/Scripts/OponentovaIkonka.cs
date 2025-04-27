@@ -23,7 +23,7 @@ public class OponentovaIkonka : MonoBehaviour
         OponentCelkovePenize = transform.Find("OponentoviPenize").GetComponent<TextMeshProUGUI>();
         OponentSazka = transform.Find("OponentovaSazka").GetComponent<TextMeshProUGUI>();
         OponentIkonka = transform.Find("OponentVzhled").GetComponent<Image>();
-        OponentiPozice = GameObject.Find("OponentiPozice").GetComponent<Transform>();
+        OponentiPozice = GameObject.Find("ZidleProOponenty").GetComponent<Transform>();
 
         Penize = CelkovePenizeRandom(); OponentCelkovePenize.text = Penize + ",-";
         SazkaRandom();

@@ -60,12 +60,6 @@ public class manager : MonoBehaviour
     public int reputace = 1069;
     public int penize = 1000;
 
-    //Karty//
-    public Texture[] KartySrdce = new Texture[13];
-    public Texture[] KartyKary = new Texture[13];
-    public Texture[] KartyPiky = new Texture[13];
-    public Texture[] KartyKrize = new Texture[13];
-
     // Zmeny, oponenti
     public int numberOfObjects = 6;
 
@@ -175,12 +169,12 @@ public class manager : MonoBehaviour
         {     
             OponentiDohromady[0] = Instantiate(OponentIkonka, OponentIkonkaContent);
             ZvetseniPodezreni(); //Zmeny zvýšení podežøení pøi vytvoøení oponenta.
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(0.5f);
             OponentiDohromady[0].name = "OponentIkonka1";
 
             for (int i = 1; i < OponentiDohromady.Length; i++)
             {
-                int random = UnityEngine.Random.Range(0, 2);
+                int random = 0;// UnityEngine.Random.Range(0, 2);
                 if (random == 0)
                 {
                     for (int j = 1; j < OponentiDohromady.Length; j++)
@@ -191,7 +185,7 @@ public class manager : MonoBehaviour
                             ZvetseniPodezreni(); //Zmeny, zvýšení podežøení pøi vytvoøení oponenta.
                             OponentiDohromady[j].name = "OponentIkonka" + (j + 1);
 
-                            yield return new WaitForSeconds(2);
+                            yield return new WaitForSeconds(0.5f);
                             j = OponentiDohromady.Length;
                         }
                     }

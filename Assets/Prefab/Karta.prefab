@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -5374526602618065655, guid: d78b92c83d58a6c4db59826ee31de210, type: 3}
+  m_Sprite: {fileID: -935873782612985506, guid: 82742bb4f640e0a4abf9650bf683d99e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -90,12 +90,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
-  HracovaRuka: {fileID: 5751225093062729077, guid: 9d9d7f99b5d54354ca8b5fb7ce26d064, type: 3}
+  PoziceVHracoveRuce: {fileID: 2834807857617238819, guid: fe505e1737a101e4fa9ed29c36f3ebf1, type: 3}
+  HracovaRukaPolohaProKartu: {fileID: 0}
   OdhazovaciBalicek: {fileID: 0}
   LizaciBalicek: {fileID: 0}
-  lizaniKaret: {fileID: 0}
+  OponentovaRuka: {fileID: 0}
+  kartaInfo: 
   Kolo: 0
   znacka: 7X
+  obrazek: {fileID: 0}
+  Hrac_OdhazovaciBalicek: 0
+  LizaciBalicek_Hrac: 0
+  Oponent_OdhazovaciBalicek: 0
+  LizaciBalicek_Oponent: 0
 --- !u!61 &3792412502678656842
 BoxCollider2D:
   m_ObjectHideFlags: 0
