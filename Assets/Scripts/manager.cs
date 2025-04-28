@@ -63,6 +63,11 @@ public class manager : MonoBehaviour
     // Zmeny, oponenti
     public int numberOfObjects = 6;
 
+    //Podezreni
+    public Slider PodezreniSlider;
+    public float PodezreniValue = 0f;
+    public int MaxOponenti = 5; 
+
     private void Start()
     {
         opona = GameObject.Find("Stmivacka");
@@ -72,6 +77,11 @@ public class manager : MonoBehaviour
         for (int i = 0; i < koupenaDovednosti.Length; i++)  {koupenaDovednosti[i] = false;}
         for (int i = 0; i < BytMenuVyber.Length; i++) { BytMenuVyber[i].SetActive(false); }
         BytMenuPromene();
+
+        //Inicializace slideru
+        PodezreniSlider.value = PodezreniValue;
+        PodezreniSlider.minValue = 0f;
+        PodezreniSlider.maxValue = 1f;
     }
     void Update()
     {
@@ -104,6 +114,46 @@ public class manager : MonoBehaviour
                 packa = false;
             }
         }
+
+        // Kontrola, jestli podezření dosáhlo maxima
+        if (PodezreniSlider.value >= 1f)
+        {
+            Debug.Log("Chytili tě!");
+            OdebratReputaci();
+        }
+    }
+
+    public void ZvysitPodezreni()
+    {
+        // Výpočet zvýšení podezření
+        int pocetOponentu = Mathf.Clamp(OponentiUStolu.Length, 1, MaxOponenti); // Počet oponentů (1-5)
+        float zvyseni = (5f * pocetOponentu) / 100f;
+
+        // Zvýšení hodnoty podezření
+        PodezreniValue += zvyseni;
+        PodezreniSlider.value = PodezreniValue;
+    }
+
+    public void SnizitPodezreni()
+    {
+        // Snížení podezření a zvýšení reputace
+        PodezreniValue = Mathf.Max(0f, PodezreniValue - 0.1f); // Snížení podezření o 0.1
+        PodezreniSlider.value = PodezreniValue;
+
+        reputace += 10; // Přidání reputace
+        BytMenuPromene(); // Aktualizace UI
+    }
+
+    private void OdebratReputaci()
+    {
+        // Odečtení reputace na základě počtu oponentů
+        int pocetOponentu = Mathf.Clamp(OponentiUStolu.Length, 1, MaxOponenti);
+        reputace -= pocetOponentu;
+
+        PodezreniValue = 0f; // Reset podezření
+        PodezreniSlider.value = PodezreniValue;
+
+        BytMenuPromene();
     }
     public void ZmenaSceny(int a)
     {
@@ -168,7 +218,6 @@ public class manager : MonoBehaviour
         if (PrichodDoNoveSceny)
         {     
             OponentiDohromady[0] = Instantiate(OponentIkonka, OponentIkonkaContent);
-            ZvetseniPodezreni(); //Zmeny zv��en� pode��en� p�i vytvo�en� oponenta.
             yield return new WaitForSeconds(0.5f);
             OponentiDohromady[0].name = "OponentIkonka1";
 
@@ -229,7 +278,6 @@ public class manager : MonoBehaviour
             }
         }
     }
-
 
 
 
