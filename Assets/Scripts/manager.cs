@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
+using Mono.Cecil.Cil;
 
 public class manager : MonoBehaviour
 {    
@@ -283,7 +284,10 @@ public class manager : MonoBehaviour
                 hracSazka = j;
                 if(hracSazka > nejvyssiSazka)
                 { nejvyssiSazka = hracSazka; porovnanaviSazek();}
-                else { sazeciOkenko.SetActive(false); zacatekSazeni = true; }
+                else {
+                    GameObject.Find("LizaciBalicek").GetComponent<LizaniKaret>().PocatekHry();
+                    sazeciOkenko.SetActive(false); zacatekSazeni = true; 
+                }
             }
         }
     }

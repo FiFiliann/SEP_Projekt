@@ -15,7 +15,7 @@ public class OponentUStolu : MonoBehaviour ,IPointerEnterHandler, IPointerExitHa
     public GameObject LizaciBalicek;
     public Karta kartasc;
     public LizaniKaret LizKaret;
-    List<string> OponentKarty = new List<string>();
+    public List<string> OponentKarty = new List<string>();
     private void Start()
     {
         if (gameObject.name == "Oponent3" || gameObject.name == "Oponent4")
@@ -37,25 +37,14 @@ public class OponentUStolu : MonoBehaviour ,IPointerEnterHandler, IPointerExitHa
         OdhozenaKarta.transform.localScale = new Vector3(1f,1f, 0);
         OdhozenaKarta.GetComponent<Karta>().OponentovaRuka = OponentovaRuka;
         OdhozenaKarta.GetComponent<Karta>().Oponent_OdhazovaciBalicek = true;
-        
-       
-        //z lízacího balíèku do oponentovi ruky
-        /*
-            OdhozenaKarta = Instantiate(Karta, LizaciBalicek.transform);
-            OdhozenaKarta.transform.position = LizaciBalicek.transform.position;
-            OdhozenaKarta.transform.localScale = new Vector3(0.1f,0.1f,0);
-            OdhozenaKarta.GetComponent<Karta>().LizaciBalicek_Oponent = true; 
-            OdhozenaKarta.GetComponent<Karta>().OponentovaRuka = OponentovaRuka; 
-        */
-
     }
 
-
+/*
     private GameObject Instantiate(GameObject karta, GameObject oponentuvBalicek)
     {
         throw new NotImplementedException();
     }
-
+*/
     public void OnPointerEnter(PointerEventData eventData)
     {
             gameObject.transform.position += new Vector3(0, 0.5f, 0);

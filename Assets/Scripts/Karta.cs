@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+ï»¿using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -13,18 +13,22 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     public GameObject LizaciBalicek;
     public GameObject OponentovaRuka;
     public LizaniKaret LizKaret;
-    public string kartaInfo;
+
+    public string ZnackaKarty;
+    public int CisloKarty;
+
     //public LizaniKaret lizaniKaret;
     public bool Kolo = false;
     private float cas = 0;
-    public Image obrazek;    
+    //public Image obrazek;    
 
     public bool Hrac_OdhazovaciBalicek = false;
     public bool LizaciBalicek_Hrac = false;
     public bool Oponent_OdhazovaciBalicek = false;
     public bool LizaciBalicek_Oponent = false;
+    public bool LizaciBalicek_OdhazovaciBalicek = false;
 
-    private bool a = true;
+    public bool a = true;
     private void Start()
     {
         //lizaniKaret = GameObject.Find("HracovaRuka").GetComponent<LizaniKaret>();
@@ -32,47 +36,67 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
         OdhazovaciBalicek = GameObject.Find("OdhozovaciBalicek");
         LizKaret = GameObject.Find("LizaciBalicek").GetComponent<LizaniKaret>();
         LizaciBalicek = GameObject.Find("LizaciBalicek");
-        gameObject.GetComponent<Image>().sprite = LizKaret.KartySrdce[1];
+        Obrazek();
+        //gameObject.GetComponent<Image>().sprite = LizKaret.KartySrdce[3];
     }
     private void Update()
     {
-        if(Hrac_OdhazovaciBalicek)//z ruky hráèe do odhazovacího balíèku
+        if(Hrac_OdhazovaciBalicek)//z ruky hrÃ¡Äe do odhazovacÃ­ho balÃ­Äku
         {            
-            cas += Time.deltaTime*1.2f;
+            cas += Time.deltaTime*1.5f;
             this.transform.position = Vector3.Lerp(PoziceVHracoveRuce.transform.position, OdhazovaciBalicek.transform.position, cas);
             this.transform.localScale = Vector3.Lerp(PoziceVHracoveRuce.transform.localScale, OdhazovaciBalicek.transform.localScale, cas);
-            if (cas > 1) { Hrac_OdhazovaciBalicek = false; a = false; Kolo = true;  cas = 0;}
+            if (cas > 1) { Hrac_OdhazovaciBalicek = false; a = false; Kolo = true;LizKaret.posledniKartaOdhazovaciBalicek = ZnackaKarty + CisloKarty;  cas = 0;}
         }
-        if (LizaciBalicek_Hrac && HracovaRukaPolohaProKartu != null)//Z lizacího balíèku do ruky hráèe
+        if (LizaciBalicek_Hrac && HracovaRukaPolohaProKartu != null)//Z lizacÃ­ho balÃ­Äku do ruky hrÃ¡Äe
         {
-            cas += Time.deltaTime;
+            cas += Time.deltaTime * 1.5f;
             this.transform.position = Vector3.Lerp(LizaciBalicek.transform.position, HracovaRukaPolohaProKartu.transform.position, cas);
             this.transform.localScale = Vector3.Lerp(LizaciBalicek.transform.localScale, HracovaRukaPolohaProKartu.transform.localScale, cas);
-            if (cas > 1) { LizaciBalicek_Hrac = false; cas = 0;        Debug.Log(kartaInfo);
- }
+            if (cas > 1) { LizaciBalicek_Hrac = false; cas = 0;        Debug.Log(ZnackaKarty + "" + CisloKarty);}
         }
-        
-        if (Oponent_OdhazovaciBalicek)//z oponentovy ruky do odhazovazíco balíèku
+     
+        if (Oponent_OdhazovaciBalicek)//z oponentovy ruky do odhazovazÃ­co balÃ­Äku
         {
-            cas += Time.deltaTime;
+            cas += Time.deltaTime * 1.5f;
             this.transform.position = Vector3.Lerp(OponentovaRuka.transform.position, OdhazovaciBalicek.transform.position, cas);
             this.transform.localScale = Vector3.Lerp(OponentovaRuka.transform.localScale, OdhazovaciBalicek.transform.localScale, cas);
             if (cas > 1) { Oponent_OdhazovaciBalicek = false; cas = 0; }
         }
 
-        if (LizaciBalicek_Oponent)//z lízacího balíèku do oponentovi ruky
+        if (LizaciBalicek_Oponent)//z lÃ­zacÃ­ho balÃ­Äku do oponentovi ruky
         {
-            cas += Time.deltaTime;
+            cas += Time.deltaTime * 1.5f;
             this.transform.position = Vector3.Lerp(LizaciBalicek.transform.position, OponentovaRuka.transform.position, cas);
             this.transform.localScale = Vector3.Lerp(LizaciBalicek.transform.localScale, OponentovaRuka.transform.localScale, cas);
-            if (cas > 1) { LizaciBalicek_Oponent = false; cas = 0; gameObject.SetActive(false); }
+            if (cas > 1) { LizaciBalicek_Oponent = false; cas = 0; Destroy(gameObject); }
         }
-        
+
+        if (LizaciBalicek_OdhazovaciBalicek)//z oponentovy ruky do odhazovazÃ­co balÃ­Äku
+        {
+            cas += Time.deltaTime * 1.5f;
+            this.transform.position = Vector3.Lerp(LizaciBalicek.transform.position, OdhazovaciBalicek.transform.position, cas);
+            this.transform.localScale = Vector3.Lerp(LizaciBalicek.transform.localScale, OdhazovaciBalicek.transform.localScale, cas);
+            if (cas > 1) { LizaciBalicek_OdhazovaciBalicek = false; cas = 0; }
+        }
+    }
+
+    public void Obrazek()
+    {
+        switch(ZnackaKarty)
+        {
+            case "â™£": gameObject.GetComponent<Image>().sprite = LizKaret.KartyKrize[CisloKarty-1]; break;
+            case "â™¦": gameObject.GetComponent<Image>().sprite = LizKaret.KartyKary[CisloKarty-1]; break;
+            case "â™¥": gameObject.GetComponent<Image>().sprite = LizKaret.KartySrdce[CisloKarty - 1]; break;
+            case "â™ ": gameObject.GetComponent<Image>().sprite = LizKaret.KartyPiky[CisloKarty- 1]; break;
+            case "J": gameObject.GetComponent<Image>().sprite = LizKaret.KartySpecialni[CisloKarty - 1];break;
+            default:break;             
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {     
-        if(!LizaciBalicek_Hrac)
+        if(LizaciBalicek_Hrac)
         {
             gameObject.transform.SetParent(OdhazovaciBalicek.transform,true);
             Instantiate(PoziceVHracoveRuce, gameObject.transform);
