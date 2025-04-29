@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor.Sprites;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ public class LizaniKaret : MonoBehaviour
 {
     public List<string> balicek = new List<string>();
     public GameObject KartaGo;
+    public GameObject KartaNeviditelna;
+
     public GameObject a;
     GameObject coze;
     public HracRuka hracRuka;
@@ -21,13 +24,15 @@ public class LizaniKaret : MonoBehaviour
     public Sprite[] KartyPiky = new Sprite[13];
     public Sprite[] KartyKrize = new Sprite[13];
     public Sprite[] KartySpecialni = new Sprite[2];
+
     public string posledniKartaOdhazovaciBalicek;
+    public string ZnackaOdhozenaKarta;
+    public int CisloOdhozenaKarta;
 
     private void Start()
     {
         hracRuka = GameObject.Find("HracovaRuka").GetComponent<HracRuka>();
         manager = GameObject.Find("GameManager").GetComponent<manager>();
-
         if (true)
         {
             balicek.Add("♣1");
@@ -109,18 +114,18 @@ public class LizaniKaret : MonoBehaviour
         if (a == null)
         {           
             a = Instantiate(KartaGo, GameObject.Find("LizaciBalicek").transform);
-            coze = Instantiate(KartaGo, GameObject.Find("HracovaRuka").transform);
+            coze = Instantiate(KartaNeviditelna, GameObject.Find("HracovaRuka").transform);
             PrideleniKarty(a);
         }
     }
     public void PrideleniKarty(GameObject i)
     {
         i.GetComponent<Karta>().LizaciBalicek_Hrac = true;
-        i.GetComponent<Karta>().HracovaRukaPolohaProKartu = coze;       
+        i.GetComponent<Karta>().HracovaRukaPolohaProKartu = coze;
         i.GetComponent<Karta>().ZnackaKarty = balicek[0].Substring(0, 1);        
         if (balicek[0].Length == 2) { i.GetComponent<Karta>().CisloKarty = int.Parse(balicek[0].Substring(1, 1)); }
         else { i.GetComponent<Karta>().CisloKarty = int.Parse(balicek[0].Substring(1, 2)); }
-        
+       
     }
     public void PocatekHry()
     {        
@@ -136,7 +141,7 @@ public class LizaniKaret : MonoBehaviour
     }
     public IEnumerator StartKartaOdhozeni()
     {
-        GameObject j = Instantiate(KartaGo, GameObject.Find("LizaciBalicek").transform);
+        GameObject j = Instantiate(KartaGo, GameObject.Find("OdhozovaciBalicek").transform);
         PrideleniKarty(j);
         j.GetComponent<Karta>().LizaciBalicek_Hrac = false;
         j.GetComponent<Karta>().a = false;
@@ -151,20 +156,20 @@ public class LizaniKaret : MonoBehaviour
         {
             for (int j = 0; j < manager.OponentiUStolu.Length; j++)
             {
-                if (manager.OponentiUStolu[j] != null)
+                if (manager.OponentiUStolu[j] != null && manager.OponentiUStolu[j].GetComponent<OponentUStolu>().Hraje == true)
                 {
                     GameObject a = Instantiate(KartaGo, GameObject.Find("LizaciBalicek").transform);
                     PrideleniKarty(a);
                     a.GetComponent<Karta>().LizaciBalicek_Hrac = false;
                     a.GetComponent<Karta>().a = false;
                     a.GetComponent<Karta>().LizaciBalicek_Oponent = true;
-                    a.GetComponent<Karta>().ZnackaKarty = "J";
-                    a.GetComponent<Karta>().CisloKarty = 3;
+                    a.GetComponent<Karta>().ZnackaKarty = "J"; a.GetComponent<Karta>().CisloKarty = 3; // OTOČENÁ KARTA
+                    a.GetComponent<Karta>().OponentovaRuka = manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OponentRuka;
+
                     manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OponentKarty.Add(balicek[0]);
                     manager.OponentiUStolu[j].GetComponent<OponentUStolu>().PocetKaret.text = manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OponentKarty.Count + "";
 
                     balicek.RemoveAt(0);
-                    a.GetComponent<Karta>().OponentovaRuka = manager.OponentiUStolu[j];
                     yield return new WaitForSeconds(0.5f);
                 }
             }

@@ -90,13 +90,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PocetKaret: {fileID: 495634250726727148}
-  OponentovaRuka: {fileID: 486057825909918903}
-  OdhazovaciBalicek: {fileID: 0}
   Karta: {fileID: 1330085125092669727, guid: 20758ba3ede8db34ca4832ff0af4158a, type: 3}
   OdhozenaKarta: {fileID: 0}
-  Stul: {fileID: 0}
   LizaciBalicek: {fileID: 0}
+  OponentRuka: {fileID: 2630879444346191700}
+  KartyGUI: {fileID: 5944993178916497477}
   kartasc: {fileID: 0}
+  LizKaret: {fileID: 0}
+  OponentKarty: []
+  Hraje: 0
+  CisloOponenta: 0
 --- !u!1 &486057825909918903
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,7 +413,7 @@ RectTransform:
   m_GameObject: {fileID: 2630879444346191700}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.99, z: 0.52}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7859167190467603813}
