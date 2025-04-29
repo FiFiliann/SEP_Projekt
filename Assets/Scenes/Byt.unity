@@ -635,6 +635,8 @@ MonoBehaviour:
   PodezreniSlider: {fileID: 1765765692}
   PodezreniValue: 0
   MaxOponenti: 5
+  ReputaceSlider: {fileID: 0}
+  ReputaceValue: 0
 --- !u!4 &120449549
 Transform:
   m_ObjectHideFlags: 0
@@ -2582,7 +2584,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6.8789, y: 3.192}
+  m_AnchoredPosition: {x: -6.8789, y: 3.375}
   m_SizeDelta: {x: 2.1816, y: 0.5884}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &626989489

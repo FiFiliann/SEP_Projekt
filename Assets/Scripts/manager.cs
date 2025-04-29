@@ -67,7 +67,11 @@ public class manager : MonoBehaviour
     //Podezreni
     public Slider PodezreniSlider;
     public float PodezreniValue = 0f;
-    public int MaxOponenti = 5; 
+    public int MaxOponenti = 5;
+
+    //Reputace
+    public Slider ReputaceSlider;
+    public float ReputaceValue = 0f;
 
     private void Start()
     {
@@ -79,10 +83,15 @@ public class manager : MonoBehaviour
         for (int i = 0; i < BytMenuVyber.Length; i++) { BytMenuVyber[i].SetActive(false); }
         BytMenuPromene();
 
-        //Inicializace slideru
+        //Inicializace slideru podezreni
         PodezreniSlider.value = PodezreniValue;
         PodezreniSlider.minValue = 0f;
-        PodezreniSlider.maxValue = 1f;
+        PodezreniSlider.maxValue = 5f;
+
+        // Inicializace slideru reputace
+        ReputaceSlider.value = ReputaceValue;
+        ReputaceSlider.minValue = 0f;
+        ReputaceSlider.maxValue = 5f;
     }
     void Update()
     {
