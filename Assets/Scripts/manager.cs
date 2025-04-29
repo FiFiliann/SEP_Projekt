@@ -55,7 +55,7 @@ public class manager : MonoBehaviour
     public int rychlost = 0;
     public bool packa = false;
 
-    //Promìné//
+    //Promï¿½nï¿½//
     public string datum = ".1.1998";
     public int den = 2;
     public int reputace = 1069;
@@ -63,6 +63,11 @@ public class manager : MonoBehaviour
 
     // Zmeny, oponenti
     public int numberOfObjects = 6;
+
+    //Podezreni
+    public Slider PodezreniSlider;
+    public float PodezreniValue = 0f;
+    public int MaxOponenti = 5; 
 
     private void Start()
     {
@@ -73,6 +78,11 @@ public class manager : MonoBehaviour
         for (int i = 0; i < koupenaDovednosti.Length; i++)  {koupenaDovednosti[i] = false;}
         for (int i = 0; i < BytMenuVyber.Length; i++) { BytMenuVyber[i].SetActive(false); }
         BytMenuPromene();
+
+        //Inicializace slideru
+        PodezreniSlider.value = PodezreniValue;
+        PodezreniSlider.minValue = 0f;
+        PodezreniSlider.maxValue = 1f;
     }
     void Update()
     {
@@ -105,6 +115,46 @@ public class manager : MonoBehaviour
                 packa = false;
             }
         }
+
+        // Kontrola, jestli podezÅ™enÃ­ dosÃ¡hlo maxima
+        if (PodezreniSlider.value >= 1f)
+        {
+            Debug.Log("Chytili tÄ›!");
+            OdebratReputaci();
+        }
+    }
+
+    public void ZvysitPodezreni()
+    {
+        // VÃ½poÄet zvÃ½Å¡enÃ­ podezÅ™enÃ­
+        int pocetOponentu = Mathf.Clamp(OponentiUStolu.Length, 1, MaxOponenti); // PoÄet oponentÅ¯ (1-5)
+        float zvyseni = (5f * pocetOponentu) / 100f;
+
+        // ZvÃ½Å¡enÃ­ hodnoty podezÅ™enÃ­
+        PodezreniValue += zvyseni;
+        PodezreniSlider.value = PodezreniValue;
+    }
+
+    public void SnizitPodezreni()
+    {
+        // SnÃ­Å¾enÃ­ podezÅ™enÃ­ a zvÃ½Å¡enÃ­ reputace
+        PodezreniValue = Mathf.Max(0f, PodezreniValue - 0.1f); // SnÃ­Å¾enÃ­ podezÅ™enÃ­ o 0.1
+        PodezreniSlider.value = PodezreniValue;
+
+        reputace += 10; // PÅ™idÃ¡nÃ­ reputace
+        BytMenuPromene(); // Aktualizace UI
+    }
+
+    private void OdebratReputaci()
+    {
+        // OdeÄtenÃ­ reputace na zÃ¡kladÄ› poÄtu oponentÅ¯
+        int pocetOponentu = Mathf.Clamp(OponentiUStolu.Length, 1, MaxOponenti);
+        reputace -= pocetOponentu;
+
+        PodezreniValue = 0f; // Reset podezÅ™enÃ­
+        PodezreniSlider.value = PodezreniValue;
+
+        BytMenuPromene();
     }
     public void ZmenaSceny(int a)
     {
@@ -122,12 +172,12 @@ public class manager : MonoBehaviour
     {
         GameMenu.SetActive(true);
     }
-    public void ButtonAkce() // skrytí/odkrytí tlaèítek podle scény
+    public void ButtonAkce() // skrytï¿½/odkrytï¿½ tlaï¿½ï¿½tek podle scï¿½ny
     {
         if (novaScena != 0) 
         {
             UI[0].SetActive(false); UI[1].SetActive(true); sazeciOkenko.SetActive(true) /*BUDE SE HODIT DO BUDOUCNA*/;
-            GameObject.Find("HracovaSazka").GetComponent<TextMeshProUGUI>().text = penize + "Kè";          
+            GameObject.Find("HracovaSazka").GetComponent<TextMeshProUGUI>().text = penize + "Kï¿½";          
             for (int j = 0; j < OponentiDohromady.Length; j++)
             {
                 Destroy(OponentiDohromady[j]);
@@ -143,7 +193,7 @@ public class manager : MonoBehaviour
         }
         else { VytvoreniPlatby(); UI[0].SetActive(true); UI[1].SetActive(false); spawn.coz = true; }
     }
-    public void MenuButtony(int a) // zjistí, které tlaèítko v bytovém menu jde stisknout
+    public void MenuButtony(int a) // zjistï¿½, kterï¿½ tlaï¿½ï¿½tko v bytovï¿½m menu jde stisknout
     {
         for (int i = 0; i < BytMenuVyber.Length; i++)
         {
@@ -151,7 +201,7 @@ public class manager : MonoBehaviour
             else { BytMenuVyber[i].SetActive(false); BytButtons[i].GetComponent<Button>().interactable = true; }
         }
     }
-    public void VytvoreniPlatby() //vytvoøení nové platby
+    public void VytvoreniPlatby() //vytvoï¿½enï¿½ novï¿½ platby
     {
         for (int i = 0; i < PlatbyDohromady.Length; i++)
         {
@@ -169,7 +219,6 @@ public class manager : MonoBehaviour
         if (PrichodDoNoveSceny)
         {     
             OponentiDohromady[0] = Instantiate(OponentIkonka, OponentIkonkaContent);
-            ZvetseniPodezreni(); //Zmeny zvıšení podeøení pøi vytvoøení oponenta.
             yield return new WaitForSeconds(0.5f);
             OponentiDohromady[0].name = "OponentIkonka1";
 
@@ -183,7 +232,6 @@ public class manager : MonoBehaviour
                         if (OponentiDohromady[j] == null)
                         {
                             OponentiDohromady[j] = Instantiate(OponentIkonka, OponentIkonkaContent);
-                            ZvetseniPodezreni(); //Zmeny, zvıšení podeøení pøi vytvoøení oponenta.
                             OponentiDohromady[j].name = "OponentIkonka" + (j + 1);
 
                             yield return new WaitForSeconds(0.5f);
@@ -236,18 +284,12 @@ public class manager : MonoBehaviour
     }
 
 
-    public void ZvetseniPodezreni() //zvìtšení podezøení
-    {
-        if (reputace > 0)
-        {
-            reputace -= 1;
-            //GameObject.Find("Reputace").GetComponent<TextMeshProUGUI>().text = reputace.ToString();
-        }
-    }
 
-    public void BytMenuPromene() //vypsání zmìny variabilit v menu
+
+
+    public void BytMenuPromene() //vypsï¿½nï¿½ zmï¿½ny variabilit v menu
     {
-        GameObject.Find("Penize").GetComponent<TextMeshProUGUI>().text = penize.ToString() + " KÈ";
+        GameObject.Find("Penize").GetComponent<TextMeshProUGUI>().text = penize.ToString() + " Kï¿½";
         GameObject.Find("Datum").GetComponent<TextMeshProUGUI>().text = den.ToString() + datum;
         GameObject.Find("Reputace").GetComponent<TextMeshProUGUI>().text = reputace.ToString();
     }
