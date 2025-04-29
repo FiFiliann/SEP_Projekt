@@ -41,14 +41,18 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             cas += Time.deltaTime*1.5f;
             this.transform.position = Vector3.Lerp(PoziceVHracoveRuce.transform.position, OdhazovaciBalicek.transform.position, cas);
             this.transform.localScale = Vector3.Lerp(PoziceVHracoveRuce.transform.localScale, OdhazovaciBalicek.transform.localScale, cas);
-            if (cas > 1) { Hrac_OdhazovaciBalicek = false; a = false; Kolo = true;LizKaret.posledniKartaOdhazovaciBalicek = ZnackaKarty + CisloKarty; Odhozena = true; cas = 0;}
+            if (cas > 1) 
+            { 
+                Hrac_OdhazovaciBalicek = false; a = false; Kolo = true;LizKaret.CisloOdhozenaKarta = CisloKarty; LizKaret.ZnackaOdhozenaKarta = ZnackaKarty ; Odhozena = true; cas = 0;
+                LizKaret.KoloOponenti();
+            }
         }
         if (LizaciBalicek_Hrac && HracovaRukaPolohaProKartu != null)//Z lizacího balíčku do ruky hráče
         {
             cas += Time.deltaTime * 1.5f;
             this.transform.position = Vector3.Lerp(LizaciBalicek.transform.position, HracovaRukaPolohaProKartu.transform.position, cas);
             this.transform.localScale = Vector3.Lerp(LizaciBalicek.transform.localScale, HracovaRukaPolohaProKartu.transform.localScale, cas);
-            if (cas > 1) { LizaciBalicek_Hrac = false; cas = 0;        Debug.Log(ZnackaKarty + "" + CisloKarty);}
+            if (cas > 1) { LizaciBalicek_Hrac = false; cas = 0; LizKaret.KonecAnimace(); }
         }
      
         if (Oponent_OdhazovaciBalicek)//z oponentovy ruky do odhazovazíco balíčku
@@ -101,6 +105,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
                     Instantiate(PoziceVHracoveRuce, gameObject.transform);
                     PoziceVHracoveRuce.transform.position = this.transform.position;
                     Hrac_OdhazovaciBalicek = true;
+                    LizKaret.Kolo();
                 }
             }
         }

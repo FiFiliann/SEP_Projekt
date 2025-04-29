@@ -238,7 +238,7 @@ public class manager : MonoBehaviour
             OponentIkonkaReset();
             for (int i = 0; i < OponentiDohromady.Length; i++)
             {
-                int random = UnityEngine.Random.Range(0, 2);    
+                int random = 0;// UnityEngine.Random.Range(0, 2);    
                 if (random == 0 || i == 0)
                 {
                     for (int j = 0; j < OponentiDohromady.Length; j++)

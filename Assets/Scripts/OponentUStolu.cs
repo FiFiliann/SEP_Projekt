@@ -41,13 +41,37 @@ public class OponentUStolu : MonoBehaviour ,IPointerEnterHandler, IPointerExitHa
         OdhozenaKarta.GetComponent<Karta>().OponentovaRuka = OponentRuka;
         OdhozenaKarta.GetComponent<Karta>().Oponent_OdhazovaciBalicek = true;
     }
-
-/*
-    private GameObject Instantiate(GameObject karta, GameObject oponentuvBalicek)
+    public void OdhozeniKarty()
     {
-        throw new NotImplementedException();
+        for(int i = 0;i<OponentKarty.Count;i++)
+        {
+            if (OponentKarty[i].Substring(0, 1) == LizKaret.ZnackaOdhozenaKarta)
+            {
+                OdhozenaKarta = Instantiate(Karta, GameObject.Find("OdhozovaciBalicek").transform);
+
+                OdhozenaKarta.GetComponent<Karta>().ZnackaKarty = OponentKarty[i].Substring(0, 1);
+                if (OponentKarty[i].Length == 2)
+                {
+                    OdhozenaKarta.GetComponent<Karta>().CisloKarty = int.Parse(OponentKarty[i].Substring(1, 1));
+                    LizKaret.CisloOdhozenaKarta = int.Parse(OponentKarty[i].Substring(1, 1));
+                }
+                else
+                {
+                    OdhozenaKarta.GetComponent<Karta>().CisloKarty = int.Parse(OponentKarty[i].Substring(1, 2));
+                    LizKaret.CisloOdhozenaKarta = int.Parse(OponentKarty[i].Substring(1, 2));
+                }
+
+                OdhozenaKarta.transform.position = gameObject.transform.position;
+                OdhozenaKarta.transform.localScale = new Vector3(1f, 1f, 0);
+                OdhozenaKarta.GetComponent<Karta>().OponentovaRuka = OponentRuka;
+                OdhozenaKarta.GetComponent<Karta>().Oponent_OdhazovaciBalicek = true;
+                OponentKarty.RemoveAt(i);
+                PocetKaret.text = OponentKarty.Count + "";
+
+            }
+            else if(i >= OponentKarty.Count) {Debug.Log("Pøidání karty Oponentovi"); LizKaret.KartaOponent(CisloOponenta); }                          
+        }
     }
-*/
     public void SkrytKarty()
     {
         KartyGUI.SetActive(false);
