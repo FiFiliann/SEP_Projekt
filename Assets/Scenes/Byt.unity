@@ -613,6 +613,18 @@ MonoBehaviour:
   zacatekSazeni: 1
   sazeciOkenko: {fileID: 1983259629}
   oponentUStolu: {fileID: 0}
+  OponentSprityArray:
+  - {fileID: 851715192469537648, guid: 2d19434f361f8cc49af1815e1b914c53, type: 3}
+  - {fileID: -7509340760466936099, guid: 4d578d85c2cdd874bba9962ce59a7977, type: 3}
+  - {fileID: -2198819775516967048, guid: a45a8c19130d99b488b3510c346a8c92, type: 3}
+  - {fileID: -7683712266205930671, guid: a2fb385159dffb642b7e9546f4555854, type: 3}
+  - {fileID: 1843717532767231219, guid: 96ecb60e0a03b1a4fb8b553235857c16, type: 3}
+  - {fileID: -6763425820890381549, guid: 023832d0da2bcc644867009eb7bdeff7, type: 3}
+  - {fileID: 7559008821013221968, guid: 645acb1608477e2499abea53ed83dd9e, type: 3}
+  - {fileID: -9220553304182546214, guid: d7d51f7173cffdc4c92dd09b0b831926, type: 3}
+  - {fileID: -1963909652831746515, guid: 951a5ebb18f31164a827a77d7faf6ea1, type: 3}
+  - {fileID: -4390902567344959319, guid: d44d2bcc43ec3d44eb69287bf5ded2d7, type: 3}
+  OponentSprityList: []
   hracSazka: 0
   SazkaInput: {fileID: 1076263028}
   VrchniKarta: 
@@ -634,8 +646,8 @@ MonoBehaviour:
   numberOfObjects: 6
   PodezreniSlider: {fileID: 1765765692}
   PodezreniValue: 0
-  MaxOponenti: 5
-  ReputaceSlider: {fileID: 0}
+  pocetOponentu: 0
+  ReputaceSlider: {fileID: 221637237}
   ReputaceValue: 0
 --- !u!4 &120449549
 Transform:
@@ -2312,6 +2324,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1506947040}
   - {fileID: 1628732774}
   - {fileID: 626989488}
   - {fileID: 1382379242}
@@ -5128,7 +5141,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2075375137}
+  - {fileID: 1179444449}
   m_Father: {fileID: 1959186820}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -5150,7 +5165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   balicek: []
   KartaGo: {fileID: 1330085125092669727, guid: 20758ba3ede8db34ca4832ff0af4158a, type: 3}
-  KartaNeviditelna: {fileID: 1330085125092669727, guid: 53a3788a18e19e944a8f3cef43c4d20d, type: 3}
+  KartaNeviditelna: {fileID: 1330085125092669727, guid: 778f27a5fe6fbfd44ad16774ea2fa5e6, type: 3}
   a: {fileID: 0}
   hracRuka: {fileID: 0}
   oponentUStolu: {fileID: 0}
@@ -5215,7 +5230,8 @@ MonoBehaviour:
   - {fileID: -1090427416683077779, guid: 4fe51980ea1ee994185e7a02c64023ac, type: 3}
   - {fileID: 5978229743750154016, guid: 0d6182a73af1f5142b8ae381e2839952, type: 3}
   - {fileID: -9133508320328580674, guid: 31c7a8d5955ee144db461092a8ad7d57, type: 3}
-  posledniKartaOdhazovaciBalicek: 
+  ZnackaOdhozenaKarta: 
+  CisloOdhozenaKarta: 0
 --- !u!114 &1155396551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5315,6 +5331,142 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6666283356628422583, guid: 82f9ab6fe9694764086301d76514284f, type: 3}
   m_PrefabInstance: {fileID: 1522934223}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1179444448
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1179444449}
+  - component: {fileID: 1179444451}
+  - component: {fileID: 1179444450}
+  m_Layer: 0
+  m_Name: LizaciBalicekPocetKaret
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1179444449
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179444448}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1155396549}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.0031001, y: 0}
+  m_SizeDelta: {x: 0.9551, y: 0.6994}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1179444450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179444448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 56
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 0.5
+  m_fontSizeBase: 0.5
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 1
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0.00000023841858, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1179444451
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179444448}
+  m_CullTransparentMesh: 1
 --- !u!1 &1180408942
 GameObject:
   m_ObjectHideFlags: 0
@@ -7927,6 +8079,81 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1497787650}
+  m_CullTransparentMesh: 1
+--- !u!1 &1506947039
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1506947040}
+  - component: {fileID: 1506947042}
+  - component: {fileID: 1506947041}
+  m_Layer: 5
+  m_Name: OdhozenaKartaZvetseni
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1506947040
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506947039}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 548744199}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 3.4725}
+  m_SizeDelta: {x: 1.9499, y: 2.5458}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1506947041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506947039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -9133508320328580674, guid: 31c7a8d5955ee144db461092a8ad7d57, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1506947042
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506947039}
   m_CullTransparentMesh: 1
 --- !u!1 &1512461932
 GameObject:
@@ -10584,7 +10811,6 @@ Transform:
   - {fileID: 1417624121}
   - {fileID: 346789633}
   - {fileID: 854567499}
-  - {fileID: 2075375137}
   - {fileID: 1155396549}
   m_Father: {fileID: 548744199}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11278,17 +11504,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2075375136}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -63}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1959186820}
+  m_Father: {fileID: 1155396549}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.38, y: -1.31}
-  m_SizeDelta: {x: 0.9607, y: 0.8722}
+  m_AnchoredPosition: {x: -0.0059001446, y: -0.5323}
+  m_SizeDelta: {x: 0.9607, y: 0.2607}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2075375138
 MonoBehaviour:

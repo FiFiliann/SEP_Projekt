@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
-    //public Image karta;
     public manager manager;
     public GameObject PoziceVHracoveRuce;
     public GameObject HracovaRukaPolohaProKartu;
@@ -16,28 +15,23 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
 
     public string ZnackaKarty;
     public int CisloKarty;
-    public int OdhozenaCisloKarty;
-    //public LizaniKaret lizaniKaret;
     public bool Kolo = false;
     private float cas = 0;
-    //public Image obrazek;    
 
     public bool Hrac_OdhazovaciBalicek = false;
     public bool LizaciBalicek_Hrac = false;
     public bool Oponent_OdhazovaciBalicek = false;
     public bool LizaciBalicek_Oponent = false;
     public bool LizaciBalicek_OdhazovaciBalicek = false;
-
+    private bool Odhozena = false;
     public bool a = true;
     private void Start()
     {
-        //lizaniKaret = GameObject.Find("HracovaRuka").GetComponent<LizaniKaret>();
         manager = GameObject.Find("GameManager").GetComponent<manager>();
         OdhazovaciBalicek = GameObject.Find("OdhozovaciBalicek");
         LizKaret = GameObject.Find("LizaciBalicek").GetComponent<LizaniKaret>();
         LizaciBalicek = GameObject.Find("LizaciBalicek");
         Obrazek();
-        //gameObject.GetComponent<Image>().sprite = LizKaret.KartySrdce[3];
     }
     private void Update()
     {
@@ -46,14 +40,20 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             cas += Time.deltaTime*1.5f;
             this.transform.position = Vector3.Lerp(PoziceVHracoveRuce.transform.position, OdhazovaciBalicek.transform.position, cas);
             this.transform.localScale = Vector3.Lerp(PoziceVHracoveRuce.transform.localScale, OdhazovaciBalicek.transform.localScale, cas);
-            if (cas > 1) { Hrac_OdhazovaciBalicek = false; a = false; Kolo = true;LizKaret.posledniKartaOdhazovaciBalicek = ZnackaKarty + CisloKarty;  cas = 0;}
+            if (cas > 1) 
+            { 
+                Hrac_OdhazovaciBalicek = false; a = false; Kolo = true;LizKaret.CisloOdhozenaKarta = CisloKarty; LizKaret.ZnackaOdhozenaKarta = ZnackaKarty ; Odhozena = true; cas = 0;
+                LizKaret.KoloOponenti();
+                GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = gameObject.GetComponent<Image>().sprite;
+
+            }
         }
         if (LizaciBalicek_Hrac && HracovaRukaPolohaProKartu != null)//Z lizacího balíčku do ruky hráče
         {
             cas += Time.deltaTime * 1.5f;
             this.transform.position = Vector3.Lerp(LizaciBalicek.transform.position, HracovaRukaPolohaProKartu.transform.position, cas);
             this.transform.localScale = Vector3.Lerp(LizaciBalicek.transform.localScale, HracovaRukaPolohaProKartu.transform.localScale, cas);
-            if (cas > 1) { LizaciBalicek_Hrac = false; cas = 0;        Debug.Log(ZnackaKarty + "" + CisloKarty);}
+            if (cas > 1) { LizaciBalicek_Hrac = false; cas = 0; LizKaret.KonecAnimace(); }
         }
      
         if (Oponent_OdhazovaciBalicek)//z oponentovy ruky do odhazovazíco balíčku
@@ -61,7 +61,8 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             cas += Time.deltaTime * 1.5f;
             this.transform.position = Vector3.Lerp(OponentovaRuka.transform.position, OdhazovaciBalicek.transform.position, cas);
             this.transform.localScale = Vector3.Lerp(OponentovaRuka.transform.localScale, OdhazovaciBalicek.transform.localScale, cas);
-            if (cas > 1) { Oponent_OdhazovaciBalicek = false; cas = 0; }
+            if (cas > 1) { Oponent_OdhazovaciBalicek = false; cas = 0; Odhozena = true; GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = gameObject.GetComponent<Image>().sprite;
+            }
         }
 
         if (LizaciBalicek_Oponent)//z lízacího balíčku do oponentovi ruky
@@ -77,7 +78,8 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             cas += Time.deltaTime * 1.5f;
             this.transform.position = Vector3.Lerp(LizaciBalicek.transform.position, OdhazovaciBalicek.transform.position, cas);
             this.transform.localScale = Vector3.Lerp(LizaciBalicek.transform.localScale, OdhazovaciBalicek.transform.localScale, cas);
-            if (cas > 1) { LizaciBalicek_OdhazovaciBalicek = false; cas = 0; }
+            if (cas > 1) { LizaciBalicek_OdhazovaciBalicek = false; cas = 0; Odhozena = true; GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = gameObject.GetComponent<Image>().sprite;
+            }
         }
     }
 
@@ -95,31 +97,42 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     }
 
     public void OnPointerDown(PointerEventData eventData)
-    {
-        if (ZnackaKarty == LizKaret.posledniKartaOdhazovaciBalicek.Substring(0, 1) || CisloKarty == int.Parse(LizKaret.posledniKartaOdhazovaciBalicek.Substring(1, 1)) || CisloKarty == int.Parse(LizKaret.posledniKartaOdhazovaciBalicek.Substring(1, 2)))
+    {    
+        if(!Odhozena)
         {
-            if(LizaciBalicek_Hrac)
+            if(ZnackaKarty == LizKaret.ZnackaOdhozenaKarta || CisloKarty == LizKaret.CisloOdhozenaKarta || ZnackaKarty == "J" || CisloKarty == 12 )
             {
-                gameObject.transform.SetParent(OdhazovaciBalicek.transform,true);
-                Instantiate(PoziceVHracoveRuce, gameObject.transform);
-                PoziceVHracoveRuce.transform.position = this.transform.position;
-                Hrac_OdhazovaciBalicek = true;
+                if(LizaciBalicek_Hrac)
+                {
+                    gameObject.transform.SetParent(OdhazovaciBalicek.transform,true);
+                    Instantiate(PoziceVHracoveRuce, gameObject.transform);
+                    PoziceVHracoveRuce.transform.position = this.transform.position;
+                    Hrac_OdhazovaciBalicek = true;
+                    LizKaret.Kolo();
+                }
             }
         }
+
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(a)
+        if(!Odhozena)
         {
-            gameObject.transform.position += new Vector3(0, 0.5f, 0);
+            if(a)
+            {
+                gameObject.transform.position += new Vector3(0, 0.5f, 0);
+            }
         }
-    }
 
+    }
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (a)
+        if(!Odhozena)
         {
-            gameObject.transform.position -= new Vector3(0, 0.5f, 0);
+            if (a)
+            {
+                gameObject.transform.position -= new Vector3(0, 0.5f, 0);
+            }
         }
     }
 }

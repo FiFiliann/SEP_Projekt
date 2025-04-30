@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 using Mono.Cecil.Cil;
+using Unity.VisualScripting;
 
 public class manager : MonoBehaviour
 {    
@@ -31,7 +32,7 @@ public class manager : MonoBehaviour
     public GameObject OponentIkonka;
     public Transform OponentIkonkaContent;
     public bool PrichodDoNoveSceny = true;
-    public GameObject[] OponentiDohromady = new GameObject[7];//
+    public GameObject[] OponentiDohromady = new GameObject[7];//for
     public GameObject[] OponentiUStolu = new GameObject[7];
 
     public int[] sazky = new int[7];
@@ -41,6 +42,8 @@ public class manager : MonoBehaviour
     public GameObject sazeciOkenko;    
     public OponentovaIkonka oponentUStolu;
 
+    public Sprite[] OponentSprityArray = new Sprite[10];
+    public List<Sprite> OponentSprityList = new List<Sprite>();
     // Hrac Sazky//
     public int hracSazka;
     public TMP_InputField SazkaInput;
@@ -67,7 +70,7 @@ public class manager : MonoBehaviour
     //Podezreni
     public Slider PodezreniSlider;
     public float PodezreniValue = 0f;
-    public int MaxOponenti = 5;
+    public int pocetOponentu = 0;
 
     //Reputace
     public Slider ReputaceSlider;
@@ -84,7 +87,8 @@ public class manager : MonoBehaviour
         BytMenuPromene();
 
         //Inicializace slideru podezreni
-        PodezreniSlider.value = PodezreniValue;
+        PodezreniSlider.value = 0f;
+        PodezreniSlider.value =+ ZvysitPodezreni();
         PodezreniSlider.minValue = 0f;
         PodezreniSlider.maxValue = 5f;
 
@@ -133,35 +137,41 @@ public class manager : MonoBehaviour
         }
     }
 
-    public void ZvysitPodezreni()
+    public float ZvysitPodezreni()
     {
-        // Výpočet zvýšení podezření
-        int pocetOponentu = Mathf.Clamp(OponentiUStolu.Length, 1, MaxOponenti); // Počet oponentů (1-5)
-        float zvyseni = (5f * pocetOponentu) / 100f;
+        // Výpočet zvýšení podezření // Počet oponentů (1-5)
+        //float zvyseni = (5f * pocetOponentu) / 100f;
 
         // Zvýšení hodnoty podezření
-        PodezreniValue += zvyseni;
-        PodezreniSlider.value = PodezreniValue;
+        //PodezreniValue += zvyseni;
+        //PodezreniSlider.value = PodezreniValue;
+
+        for(int i = 0; i < OponentiUStolu.Length; i++)
+        {
+            if (OponentiUStolu[i] != null)
+            {
+                pocetOponentu++;
+            }
+        }
+
+        return (5f * pocetOponentu) / 100f;
     }
 
     public void SnizitPodezreni()
     {
         // Snížení podezření a zvýšení reputace
-        PodezreniValue = Mathf.Max(0f, PodezreniValue - 0.1f); // Snížení podezření o 0.1
-        PodezreniSlider.value = PodezreniValue;
+        PodezreniSlider.value = Mathf.Max(0f, PodezreniValue - 0.1f);
 
-        reputace += 10; // Přidání reputace
         BytMenuPromene(); // Aktualizace UI
     }
 
     private void OdebratReputaci()
     {
         // Odečtení reputace na základě počtu oponentů
-        int pocetOponentu = Mathf.Clamp(OponentiUStolu.Length, 1, MaxOponenti);
-        reputace -= pocetOponentu;
+        //Zmeny
+        ReputaceSlider.value = ReputaceValue;
 
-        PodezreniValue = 0f; // Reset podezření
-        PodezreniSlider.value = PodezreniValue;
+        PodezreniSlider.value -= (5f * pocetOponentu) / 100f;
 
         BytMenuPromene();
     }
@@ -189,10 +199,8 @@ public class manager : MonoBehaviour
             GameObject.Find("HracovaSazka").GetComponent<TextMeshProUGUI>().text = penize + "K�";          
             for (int j = 0; j < OponentiDohromady.Length; j++)
             {
-                Destroy(OponentiDohromady[j]);
                 Destroy(OponentiUStolu[j]);
-
-                sazky[j] = 0;
+                Destroy(OponentiDohromady[j]);
             }
             nejvyssiSazka = 0;
             secteni = 0;
@@ -226,23 +234,21 @@ public class manager : MonoBehaviour
     IEnumerator VytvoreniOponenta()
     {
         if (PrichodDoNoveSceny)
-        {     
-            OponentiDohromady[0] = Instantiate(OponentIkonka, OponentIkonkaContent);
-            yield return new WaitForSeconds(0.5f);
-            OponentiDohromady[0].name = "OponentIkonka1";
-
-            for (int i = 1; i < OponentiDohromady.Length; i++)
+        {          
+            OponentIkonkaReset();
+            for (int i = 0; i < OponentiDohromady.Length; i++)
             {
-                int random = 0;// UnityEngine.Random.Range(0, 2);
-                if (random == 0)
+                int random = 0;// UnityEngine.Random.Range(0, 2);    
+                if (random == 0 || i == 0)
                 {
-                    for (int j = 1; j < OponentiDohromady.Length; j++)
+                    for (int j = 0; j < OponentiDohromady.Length; j++)
                     {
                         if (OponentiDohromady[j] == null)
                         {
                             OponentiDohromady[j] = Instantiate(OponentIkonka, OponentIkonkaContent);
                             OponentiDohromady[j].name = "OponentIkonka" + (j + 1);
-
+                            OponentiDohromady[j].GetComponent<OponentovaIkonka>().CisloOponenta = j;
+                            OponentiDohromady[j].GetComponent<OponentovaIkonka>().Ikonka = OponentIkonkaRandom();
                             yield return new WaitForSeconds(0.5f);
                             j = OponentiDohromady.Length;
                         }
@@ -252,6 +258,17 @@ public class manager : MonoBehaviour
             GameObject.Find("CelkovaSazka").GetComponent<TextMeshProUGUI>().text = "nej: "+nejvyssiSazka + "  celkem: "+ secteni;
             porovnanaviSazek();
         }
+    }
+    public void OponentIkonkaReset()
+    {
+        for (int j = 0; j < OponentSprityList.Count; j++) { OponentSprityList.RemoveAt(0); } //smazání celého listu
+        for (int j = 0; j < OponentSprityArray.Length; j++) { OponentSprityList.Add(OponentSprityArray[j]); } //obnovení celého listu
+    }
+    public int OponentIkonkaRandom()
+    {
+        int a = UnityEngine.Random.Range(1, OponentSprityList.Count);
+        OponentSprityList.RemoveAt(a);
+        return a;
     }
 
     public void porovnanaviSazek()
@@ -267,8 +284,8 @@ public class manager : MonoBehaviour
         for (int i = 0; i < sazky.Length; i++)
         {
             if (OponentiDohromady[i] != null)
-                {            
-                     GameObject.Find($"OponentIkonka{i + 1}").GetComponent<OponentovaIkonka>().SazkaRandom();
+                {
+                    OponentiDohromady[i].GetComponent<OponentovaIkonka>().SazkaRandom(i);
                 }
             else { i = sazky.Length; }
         }
@@ -291,10 +308,6 @@ public class manager : MonoBehaviour
             }
         }
     }
-
-
-
-
 
     public void BytMenuPromene() //vyps�n� zm�ny variabilit v menu
     {

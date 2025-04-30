@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +13,7 @@ public class OponentovaIkonka : MonoBehaviour
     public GameObject opponentPrefabs; // Pokud chceš rùzné postavy, jinak jen GameObject opponentPrefab;
     public Transform[] spawnPoints;
     public Transform OponentiPozice;
+    public int CisloOponenta;
     public int Ikonka;
     //public Texture OponentObrazek;
     public int Penize;
@@ -24,10 +26,9 @@ public class OponentovaIkonka : MonoBehaviour
         OponentSazka = transform.Find("OponentovaSazka").GetComponent<TextMeshProUGUI>();
         OponentIkonka = transform.Find("OponentVzhled").GetComponent<Image>();
         OponentiPozice = GameObject.Find("ZidleProOponenty").GetComponent<Transform>();
-
+        OponentIkonka.GetComponent<Image>().sprite = OponentSprity[Ikonka];
         Penize = CelkovePenizeRandom(); OponentCelkovePenize.text = Penize + ",-";
-        SazkaRandom();
-        Ikonka = IkonkaRandom(); OponentIkonka.GetComponent<Image>().sprite = OponentSprity[Ikonka];
+        SazkaRandom(0);
         StartI();
         Sazky();
     }
@@ -40,13 +41,11 @@ public class OponentovaIkonka : MonoBehaviour
                 manager.OponentiUStolu[j] = Instantiate(opponentPrefabs, spawnPoints[j].position, spawnPoints[j].rotation, OponentiPozice);
                 manager.OponentiUStolu[j].GetComponent<Image>().sprite = OponentSprity[Ikonka];
                 manager.OponentiUStolu[j].name = "Oponent" +j;
+                manager.OponentiUStolu[j].GetComponent<OponentUStolu>().CisloOponenta = CisloOponenta;
+
                 j = manager.OponentiDohromady.Length;                
             }
         }
-    }
-    public int IkonkaRandom()
-    {      
-        return Random.Range(1, OponentSprity.Length);
     }
 
     public int CelkovePenizeRandom()
@@ -54,7 +53,7 @@ public class OponentovaIkonka : MonoBehaviour
         
         return Random.Range(400, 800);
     }
-    public void SazkaRandom()
+    public void SazkaRandom(int i)
     {
         if(!dovysovani)
         {
@@ -66,15 +65,20 @@ public class OponentovaIkonka : MonoBehaviour
         {
             if(manager.nejvyssiSazka != Sazka)
             {
-                int i = Random.Range(0, 8);
-                if(manager.nejvyssiSazka < Penize && i>2)
+                int j = Random.Range(0, 8);
+                if(manager.nejvyssiSazka < Penize && j>2)
                 {                  
                         Sazka = manager.nejvyssiSazka;
                         OponentSazka.text =Sazka + "";
                         manager.secteni += Sazka;
-                        //transform.GetComponent<Image>().material.color = new Color(255, 255, 0);
+                        manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = true;
                 }
-                else{ Sazka = 0; OponentSazka.text = "OUT";  } //transform.GetComponent<Image>().material.color = new Color(255, 0, 0);
+                else
+                { 
+                    Sazka = 0; OponentSazka.text = "OUT";
+                    manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = false;
+                    manager.OponentiUStolu[i].GetComponent<OponentUStolu>().SkrytKarty();
+                }
             }
             else { manager.secteni += Sazka;}
         }
