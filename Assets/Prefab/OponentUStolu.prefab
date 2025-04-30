@@ -91,12 +91,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PocetKaret: {fileID: 495634250726727148}
   OponentovaRuka: {fileID: 486057825909918903}
-  OdhazovaciBalicek: {fileID: 0}
   Karta: {fileID: 1330085125092669727, guid: 20758ba3ede8db34ca4832ff0af4158a, type: 3}
   OdhozenaKarta: {fileID: 0}
   Stul: {fileID: 0}
   LizaciBalicek: {fileID: 0}
+  OponentRukaKarty: {fileID: 2630879444346191700}
   kartasc: {fileID: 0}
+  LizKaret: {fileID: 0}
+  OponentKarty: []
 --- !u!1 &486057825909918903
 GameObject:
   m_ObjectHideFlags: 0

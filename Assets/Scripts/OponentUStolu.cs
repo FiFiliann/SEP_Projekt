@@ -13,6 +13,7 @@ public class OponentUStolu : MonoBehaviour ,IPointerEnterHandler, IPointerExitHa
     public GameObject OdhozenaKarta;
     public GameObject Stul;
     public GameObject LizaciBalicek;
+    public GameObject OponentRukaKarty;
     public Karta kartasc;
     public LizaniKaret LizKaret;
     public List<string> OponentKarty = new List<string>();
@@ -22,6 +23,7 @@ public class OponentUStolu : MonoBehaviour ,IPointerEnterHandler, IPointerExitHa
         {
             gameObject.transform.localScale = new Vector3(-1, 1, 1); 
             PocetKaret.transform.localScale = new Vector3(-1, 1, 1);
+            OponentRukaKarty.transform.localScale = new Vector3(1, 1, 1);
         }
         Stul = GameObject.Find("Stul");
         LizaciBalicek = GameObject.Find("LizaciBalicek");
@@ -32,10 +34,10 @@ public class OponentUStolu : MonoBehaviour ,IPointerEnterHandler, IPointerExitHa
     public void OnPointerDown(PointerEventData eventData)
     {
         //z oponentovy ruky do odhazovazíco balíèku
-        OdhozenaKarta = Instantiate(Karta, Stul.transform);
+        OdhozenaKarta = Instantiate(Karta, GameObject.Find("OdhozovaciBalicek").transform);
         OdhozenaKarta.transform.position = gameObject.transform.position;
         OdhozenaKarta.transform.localScale = new Vector3(1f,1f, 0);
-        OdhozenaKarta.GetComponent<Karta>().OponentovaRuka = OponentovaRuka;
+        OdhozenaKarta.GetComponent<Karta>().OponentovaRuka = OponentRukaKarty;
         OdhozenaKarta.GetComponent<Karta>().Oponent_OdhazovaciBalicek = true;
     }
 

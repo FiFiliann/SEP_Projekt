@@ -11,6 +11,7 @@ public class LizaniKaret : MonoBehaviour
 {
     public List<string> balicek = new List<string>();
     public GameObject KartaGo;
+    public GameObject KartaNeviditelna;
     public GameObject a;
     GameObject coze;
     public HracRuka hracRuka;
@@ -109,7 +110,7 @@ public class LizaniKaret : MonoBehaviour
         if (a == null)
         {           
             a = Instantiate(KartaGo, GameObject.Find("LizaciBalicek").transform);
-            coze = Instantiate(KartaGo, GameObject.Find("HracovaRuka").transform);
+            coze = Instantiate(KartaNeviditelna, GameObject.Find("HracovaRuka").transform);
             PrideleniKarty(a);
         }
     }
@@ -136,7 +137,7 @@ public class LizaniKaret : MonoBehaviour
     }
     public IEnumerator StartKartaOdhozeni()
     {
-        GameObject j = Instantiate(KartaGo, GameObject.Find("LizaciBalicek").transform);
+        GameObject j = Instantiate(KartaGo, GameObject.Find("OdhozovaciBalicek").transform);
         PrideleniKarty(j);
         j.GetComponent<Karta>().LizaciBalicek_Hrac = false;
         j.GetComponent<Karta>().a = false;
@@ -160,11 +161,11 @@ public class LizaniKaret : MonoBehaviour
                     a.GetComponent<Karta>().LizaciBalicek_Oponent = true;
                     a.GetComponent<Karta>().ZnackaKarty = "J";
                     a.GetComponent<Karta>().CisloKarty = 3;
+                    a.GetComponent<Karta>().OponentovaRuka = manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OponentRukaKarty;
                     manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OponentKarty.Add(balicek[0]);
                     manager.OponentiUStolu[j].GetComponent<OponentUStolu>().PocetKaret.text = manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OponentKarty.Count + "";
 
                     balicek.RemoveAt(0);
-                    a.GetComponent<Karta>().OponentovaRuka = manager.OponentiUStolu[j];
                     yield return new WaitForSeconds(0.5f);
                 }
             }

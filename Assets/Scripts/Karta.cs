@@ -16,7 +16,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
 
     public string ZnackaKarty;
     public int CisloKarty;
-
+    public int OdhozenaCisloKarty;
     //public LizaniKaret lizaniKaret;
     public bool Kolo = false;
     private float cas = 0;
@@ -95,13 +95,16 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     }
 
     public void OnPointerDown(PointerEventData eventData)
-    {     
-        if(LizaciBalicek_Hrac)
+    {
+        if (ZnackaKarty == LizKaret.posledniKartaOdhazovaciBalicek.Substring(0, 1) || CisloKarty == int.Parse(LizKaret.posledniKartaOdhazovaciBalicek.Substring(1, 1)) || CisloKarty == int.Parse(LizKaret.posledniKartaOdhazovaciBalicek.Substring(1, 2)))
         {
-            gameObject.transform.SetParent(OdhazovaciBalicek.transform,true);
-            Instantiate(PoziceVHracoveRuce, gameObject.transform);
-            PoziceVHracoveRuce.transform.position = this.transform.position;
-            Hrac_OdhazovaciBalicek = true;
+            if(LizaciBalicek_Hrac)
+            {
+                gameObject.transform.SetParent(OdhazovaciBalicek.transform,true);
+                Instantiate(PoziceVHracoveRuce, gameObject.transform);
+                PoziceVHracoveRuce.transform.position = this.transform.position;
+                Hrac_OdhazovaciBalicek = true;
+            }
         }
     }
     public void OnPointerEnter(PointerEventData eventData)
