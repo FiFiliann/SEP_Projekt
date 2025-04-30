@@ -130,7 +130,6 @@ public class LizaniKaret : MonoBehaviour
         { 
             i.GetComponent<Karta>().CisloKarty = int.Parse(balicek[0].Substring(1, 2));
         }
-
     }
     public void PocatekHry()
     {        
@@ -212,7 +211,6 @@ public class LizaniKaret : MonoBehaviour
 
         manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OponentKarty.Add(balicek[0]);
         manager.OponentiUStolu[j].GetComponent<OponentUStolu>().PocetKaret.text = manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OponentKarty.Count + "";
-
         balicek.RemoveAt(0);
         transform.Find("LizaciBalicekPocetKaret").GetComponent<TextMeshProUGUI>().text = balicek.Count + "";
         yield return new WaitForSeconds(0.5f);

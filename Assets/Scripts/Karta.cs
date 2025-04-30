@@ -45,6 +45,8 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             { 
                 Hrac_OdhazovaciBalicek = false; a = false; Kolo = true;LizKaret.CisloOdhozenaKarta = CisloKarty; LizKaret.ZnackaOdhozenaKarta = ZnackaKarty ; Odhozena = true; cas = 0;
                 LizKaret.KoloOponenti();
+                GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = gameObject.GetComponent<Image>().sprite;
+
             }
         }
         if (LizaciBalicek_Hrac && HracovaRukaPolohaProKartu != null)//Z lizacího balíčku do ruky hráče
@@ -60,7 +62,8 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             cas += Time.deltaTime * 1.5f;
             this.transform.position = Vector3.Lerp(OponentovaRuka.transform.position, OdhazovaciBalicek.transform.position, cas);
             this.transform.localScale = Vector3.Lerp(OponentovaRuka.transform.localScale, OdhazovaciBalicek.transform.localScale, cas);
-            if (cas > 1) { Oponent_OdhazovaciBalicek = false; cas = 0; Odhozena = true; }
+            if (cas > 1) { Oponent_OdhazovaciBalicek = false; cas = 0; Odhozena = true; GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = gameObject.GetComponent<Image>().sprite;
+            }
         }
 
         if (LizaciBalicek_Oponent)//z lízacího balíčku do oponentovi ruky
@@ -76,7 +79,8 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             cas += Time.deltaTime * 1.5f;
             this.transform.position = Vector3.Lerp(LizaciBalicek.transform.position, OdhazovaciBalicek.transform.position, cas);
             this.transform.localScale = Vector3.Lerp(LizaciBalicek.transform.localScale, OdhazovaciBalicek.transform.localScale, cas);
-            if (cas > 1) { LizaciBalicek_OdhazovaciBalicek = false; cas = 0; Odhozena = true; }
+            if (cas > 1) { LizaciBalicek_OdhazovaciBalicek = false; cas = 0; Odhozena = true; GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = gameObject.GetComponent<Image>().sprite;
+            }
         }
     }
 
