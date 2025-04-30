@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class OponentUStolu : MonoBehaviour ,IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
+public class OponentUStolu : MonoBehaviour
 {
     public TextMeshProUGUI PocetKaret;
     public GameObject Karta;
@@ -31,15 +31,6 @@ public class OponentUStolu : MonoBehaviour ,IPointerEnterHandler, IPointerExitHa
         LizKaret = GameObject.Find("LizaciBalicek").GetComponent<LizaniKaret>();
         PocetKaret.text = OponentKarty.Count + "";
     }
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        //z oponentovy ruky do odhazovaz�co bal��ku
-        OdhozenaKarta = Instantiate(Karta, GameObject.Find("OdhozovaciBalicek").transform);
-        OdhozenaKarta.transform.position = gameObject.transform.position;
-        OdhozenaKarta.transform.localScale = new Vector3(1f,1f, 0);
-        OdhozenaKarta.GetComponent<Karta>().OponentovaRuka = OponentRuka;
-        OdhozenaKarta.GetComponent<Karta>().Oponent_OdhazovaciBalicek = true;
-    }
     public void OdhozeniKarty()
     {
         for(int i = 0;i<OponentKarty.Count;i++)
@@ -59,6 +50,7 @@ public class OponentUStolu : MonoBehaviour ,IPointerEnterHandler, IPointerExitHa
                 OdhozenaKarta.GetComponent<Karta>().Oponent_OdhazovaciBalicek = true;
                 OponentKarty.RemoveAt(i);
                 PocetKaret.text = OponentKarty.Count + "";
+                i = OponentKarty.Count;
             }
             else if(i >= OponentKarty.Count) {Debug.Log("P�id�n� karty Oponentovi"); LizKaret.KartaOponent(CisloOponenta); }                          
         }
@@ -66,15 +58,5 @@ public class OponentUStolu : MonoBehaviour ,IPointerEnterHandler, IPointerExitHa
     public void SkrytKarty()
     {
         KartyGUI.SetActive(false);
-    }
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-            gameObject.transform.position += new Vector3(0, 0.5f, 0);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-
-            gameObject.transform.position -= new Vector3(0, 0.5f, 0);
     }
 }

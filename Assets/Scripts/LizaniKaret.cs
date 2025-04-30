@@ -121,19 +121,11 @@ public class LizaniKaret : MonoBehaviour
         i.GetComponent<Karta>().LizaciBalicek_Hrac = true;
         i.GetComponent<Karta>().HracovaRukaPolohaProKartu = coze;
         i.GetComponent<Karta>().ZnackaKarty = balicek[0].Substring(0, 1);
-        if (balicek[0].Length == 2) 
-        { 
-            i.GetComponent<Karta>().CisloKarty = int.Parse(balicek[0].Substring(1, 1));
-        }
-        else 
-        { 
-            i.GetComponent<Karta>().CisloKarty = int.Parse(balicek[0].Substring(1, 2));
-        }
+        i.GetComponent<Karta>().CisloKarty = int.Parse(balicek[0].Substring(1, balicek[0].Length - 1));
     }
     public void PocatekHry()
     {        
         StartCoroutine(StartKartaOponent());        
-       // StartCoroutine(StartKartaOdhozeni());
     }
     public void KoloOponenti()
     {
@@ -212,7 +204,7 @@ public class LizaniKaret : MonoBehaviour
         manager.OponentiUStolu[j].GetComponent<OponentUStolu>().PocetKaret.text = manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OponentKarty.Count + "";
         balicek.RemoveAt(0);
         transform.Find("LizaciBalicekPocetKaret").GetComponent<TextMeshProUGUI>().text = balicek.Count + "";
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.5f);
     }
     public void RozmichaniKaret()
     {
