@@ -613,18 +613,19 @@ MonoBehaviour:
   zacatekSazeni: 1
   sazeciOkenko: {fileID: 1983259629}
   oponentUStolu: {fileID: 0}
-  OponentSprityArray:
+  OponentiNePouziteSprity:
   - {fileID: 851715192469537648, guid: 2d19434f361f8cc49af1815e1b914c53, type: 3}
   - {fileID: -7509340760466936099, guid: 4d578d85c2cdd874bba9962ce59a7977, type: 3}
   - {fileID: -2198819775516967048, guid: a45a8c19130d99b488b3510c346a8c92, type: 3}
   - {fileID: -7683712266205930671, guid: a2fb385159dffb642b7e9546f4555854, type: 3}
   - {fileID: 1843717532767231219, guid: 96ecb60e0a03b1a4fb8b553235857c16, type: 3}
   - {fileID: -6763425820890381549, guid: 023832d0da2bcc644867009eb7bdeff7, type: 3}
-  - {fileID: 7559008821013221968, guid: 645acb1608477e2499abea53ed83dd9e, type: 3}
+  - {fileID: -8929590776423009050, guid: 645acb1608477e2499abea53ed83dd9e, type: 3}
   - {fileID: -9220553304182546214, guid: d7d51f7173cffdc4c92dd09b0b831926, type: 3}
+  - {fileID: 4653148452755108702, guid: 3cf9055486a62d74596ddb5f5c5544be, type: 3}
   - {fileID: -1963909652831746515, guid: 951a5ebb18f31164a827a77d7faf6ea1, type: 3}
   - {fileID: -4390902567344959319, guid: d44d2bcc43ec3d44eb69287bf5ded2d7, type: 3}
-  OponentSprityList: []
+  OponentiPouziteSprity: []
   hracSazka: 0
   SazkaInput: {fileID: 1076263028}
   VrchniKarta: 
@@ -5145,6 +5146,7 @@ MonoBehaviour:
   - {fileID: -9133508320328580674, guid: 31c7a8d5955ee144db461092a8ad7d57, type: 3}
   ZnackaOdhozenaKarta: 
   CisloOdhozenaKarta: 0
+  HracovoKolo: 1
 --- !u!114 &1155396551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6232,7 +6234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 705697986}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 0
   m_MovementType: 1
   m_Elasticity: 0.1

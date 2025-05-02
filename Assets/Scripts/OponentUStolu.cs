@@ -17,7 +17,7 @@ public class OponentUStolu : MonoBehaviour
     public LizaniKaret LizKaret;
     public List<string> OponentKarty = new List<string>();
 
-    public bool Hraje = false;
+    public bool Hraje = true;
     public int CisloOponenta;
     private void Start()
     {

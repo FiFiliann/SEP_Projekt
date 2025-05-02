@@ -28,7 +28,7 @@ public class LizaniKaret : MonoBehaviour
     //public string posledniKartaOdhazovaciBalicek;
     public string ZnackaOdhozenaKarta;
     public int CisloOdhozenaKarta;
-
+    public bool HracovoKolo = true;
     private void Start()
     {
         hracRuka = GameObject.Find("HracovaRuka").GetComponent<HracRuka>();
@@ -109,7 +109,7 @@ public class LizaniKaret : MonoBehaviour
     }
     public void KartaProHrace()
     {
-        if (a == null)
+        if (a == null && HracovoKolo)
         {           
             a = Instantiate(KartaGo, GameObject.Find("LizaciBalicek").transform);
             coze = Instantiate(KartaNeviditelna, GameObject.Find("HracovaRuka").transform);
@@ -138,15 +138,24 @@ public class LizaniKaret : MonoBehaviour
             if (manager.OponentiUStolu[j] != null && manager.OponentiUStolu[j].GetComponent<OponentUStolu>().Hraje == true)
             {
                 manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OdhozeniKarty();
-                yield return new WaitForSeconds(0.5f);
+                if (!manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OponentKarty.Any()) 
+                { 
+                    j = manager.OponentiUStolu.Length; Vyhra();
+                    manager.sazeciOkenko.SetActive(true);
+                }
+                else
+                {
+                    yield return new WaitForSeconds(1f);
+                }
             }
         }
+        HracovoKolo = true;
     }
     public IEnumerator StartRukaHrace()
     {
 
             KartaProHrace();
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1f);
     
     }
     public IEnumerator StartKartaOdhozeni()
@@ -157,6 +166,8 @@ public class LizaniKaret : MonoBehaviour
         j.GetComponent<Karta>().a = false;
         j.GetComponent<Karta>().LizaciBalicek_OdhazovaciBalicek = true;
         ZnackaOdhozenaKarta = balicek[0].Substring(0, 1);
+        CisloOdhozenaKarta = int.Parse(balicek[0].Substring(1, balicek[0].Length-1));
+        /*
         if (balicek[0].Length == 2)
         {
             CisloOdhozenaKarta = int.Parse(balicek[0].Substring(1, 1));
@@ -165,6 +176,7 @@ public class LizaniKaret : MonoBehaviour
         {
             CisloOdhozenaKarta = int.Parse(balicek[0].Substring(1, 2));
         }
+        */
         balicek.RemoveAt(0);
         transform.Find("LizaciBalicekPocetKaret").GetComponent<TextMeshProUGUI>().text = balicek.Count + "";
         yield return new WaitForSeconds(0.5f);
@@ -216,6 +228,10 @@ public class LizaniKaret : MonoBehaviour
             balicek[vyberJedna] = balicek[vyberDva];
             balicek[vyberDva] = podrz;
         }
+    }
+    public void Vyhra()
+    {
+
     }
 
 }

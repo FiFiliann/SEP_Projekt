@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System;
 using Mono.Cecil.Cil;
 using Unity.VisualScripting;
+using System.Linq;
 
 public class manager : MonoBehaviour
 {    
@@ -42,8 +43,8 @@ public class manager : MonoBehaviour
     public GameObject sazeciOkenko;    
     public OponentovaIkonka oponentUStolu;
 
-    public Sprite[] OponentSprityArray = new Sprite[10];
-    public List<Sprite> OponentSprityList = new List<Sprite>();
+    public List<Sprite> OponentiNePouziteSprity = new List<Sprite>();
+    public List<Sprite> OponentiPouziteSprity = new List<Sprite>();
     // Hrac Sazky//
     public int hracSazka;
     public TMP_InputField SazkaInput;
@@ -248,7 +249,8 @@ public class manager : MonoBehaviour
                             OponentiDohromady[j] = Instantiate(OponentIkonka, OponentIkonkaContent);
                             OponentiDohromady[j].name = "OponentIkonka" + (j + 1);
                             OponentiDohromady[j].GetComponent<OponentovaIkonka>().CisloOponenta = j;
-                            OponentiDohromady[j].GetComponent<OponentovaIkonka>().Ikonka = OponentIkonkaRandom();
+                            OponentiDohromady[j].GetComponent<OponentovaIkonka>().OponentIkonka.GetComponent<Image>().sprite = OponentIkonkaRandom();
+
                             yield return new WaitForSeconds(0.5f);
                             j = OponentiDohromady.Length;
                         }
@@ -261,14 +263,14 @@ public class manager : MonoBehaviour
     }
     public void OponentIkonkaReset()
     {
-        for (int j = 0; j < OponentSprityList.Count; j++) { OponentSprityList.RemoveAt(0); } //smazání celého listu
-        for (int j = 0; j < OponentSprityArray.Length; j++) { OponentSprityList.Add(OponentSprityArray[j]); } //obnovení celého listu
+        for (int j = 0; j < OponentiPouziteSprity.Count; j++) { OponentiNePouziteSprity.Add(OponentiPouziteSprity[0]); OponentiPouziteSprity.RemoveAt(0); } //smazání celého listu
     }
-    public int OponentIkonkaRandom()
+    public Sprite OponentIkonkaRandom()
     {
-        int a = UnityEngine.Random.Range(1, OponentSprityList.Count);
-        OponentSprityList.RemoveAt(a);
-        return a;
+        int a = UnityEngine.Random.Range(0, OponentiNePouziteSprity.Count);
+        OponentiPouziteSprity.Add(OponentiNePouziteSprity[a]); 
+        OponentiNePouziteSprity.RemoveAt(a);
+        return OponentiPouziteSprity.LastOrDefault();
     }
 
     public void porovnanaviSazek()
