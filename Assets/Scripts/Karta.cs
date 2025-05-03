@@ -43,11 +43,11 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             if (cas > 1) 
             { 
                 Hrac_OdhazovaciBalicek = false; a = false; Kolo = true;LizKaret.CisloOdhozenaKarta = CisloKarty; LizKaret.ZnackaOdhozenaKarta = ZnackaKarty; cas = 0;
-                if (!LizKaret.balicek.Any())
+                if (!GameObject.Find("HracovaRuka").GetComponent<HracRuka>().HracKarty.Any())
                 {
                     manager.sazeciOkenko.SetActive(true);
                 }
-                LizKaret.KoloOponenti();
+                if (LizKaret.KonecZacatekRozdavani == true) { LizKaret.KoloOponenti(); }
                 GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = gameObject.GetComponent<Image>().sprite;              
             }
         }
@@ -56,7 +56,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             cas += Time.deltaTime * 1.5f;
             this.transform.position = Vector3.Lerp(LizaciBalicek.transform.position, HracovaRukaPolohaProKartu.transform.position, cas);
             this.transform.localScale = Vector3.Lerp(LizaciBalicek.transform.localScale, HracovaRukaPolohaProKartu.transform.localScale, cas);
-            if (cas > 1) { LizaciBalicek_Hrac = false; cas = 0; LizKaret.KonecAnimace(); LizKaret.KoloOponenti();}
+            if (cas > 1) { LizaciBalicek_Hrac = false; cas = 0; LizKaret.KonecAnimace(); if (LizKaret.KonecZacatekRozdavani == true) {LizKaret.KoloOponenti();} }
         }
      
         if (Oponent_OdhazovaciBalicek)//z oponentovy ruky do odhazovazíco balíčku
@@ -112,7 +112,6 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
                     PoziceVHracoveRuce.transform.position = this.transform.position;
                     Hrac_OdhazovaciBalicek = true;
                     LizKaret.HracovoKolo = false;
-                    LizKaret.Kolo();
                 }
             }
         }
