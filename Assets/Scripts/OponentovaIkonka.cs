@@ -25,8 +25,15 @@ public class OponentovaIkonka : MonoBehaviour
         OponentIkonka = transform.Find("OponentVzhled").GetComponent<Image>();
         OponentiPozice = GameObject.Find("ZidleProOponenty").GetComponent<Transform>();
         //OponentIkonka.GetComponent<Image>().sprite = OponentSprity[Ikonka];
+        
         Penize = CelkovePenizeRandom(); OponentCelkovePenize.text = Penize + ",-";
         StartI();
+        SazkaRandom(0);
+        Sazky();
+    }
+    public void VypsaniIkonky()
+    {
+        OponentCelkovePenize.text = Penize + ",-";
         SazkaRandom(0);
         Sazky();
     }

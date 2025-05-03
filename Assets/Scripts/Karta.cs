@@ -44,7 +44,9 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             { 
                 Hrac_OdhazovaciBalicek = false; a = false; Kolo = true;  cas = 0;
                 if(CisloKarty == 1 || CisloKarty == 7 || ZnackaKarty == "J") { LizKaret.EfektKarty = true; }
-                if(CisloKarty == 12) { LizKaret.ZnackaVyberPopUp.SetActive(true); }
+                if (CisloKarty == 13 && ZnackaKarty == "♠") { LizKaret.EfektKarty = true; }
+
+                if (CisloKarty == 12 || ZnackaKarty == "J") { LizKaret.ZnackaVyberPopUp.SetActive(true); }
                 else 
                 { 
                     LizKaret.CisloOdhozenaKarta = CisloKarty;LizKaret.ZnackaOdhozenaKarta = ZnackaKarty; 
@@ -54,6 +56,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
                 if (!GameObject.Find("HracovaRuka").GetComponent<HracRuka>().HracKarty.Any())
                 {
                     manager.sazeciOkenko.SetActive(true);
+                    StartCoroutine(manager.PridaniAOdstraneniOponenta());
                 }
                 GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = gameObject.GetComponent<Image>().sprite;
             }
@@ -122,6 +125,11 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
                     PoziceVHracoveRuce.transform.position = this.transform.position;
                     Hrac_OdhazovaciBalicek = true;
                     LizKaret.HracovoKolo = false;
+                    GameObject.Find("HracovaRuka").GetComponent<HracRuka>().HracKarty.RemoveAt(0);
+                    if (!GameObject.Find("HracovaRuka").GetComponent<HracRuka>().HracKarty.Any())
+                    {
+                        manager.sazeciOkenko.SetActive(true);
+                    }
                 }
             }
         }

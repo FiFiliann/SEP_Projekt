@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c1d510c3b3c2b734596b11b86a9ba320
+guid: 8e1968ef101dc7045ae918496576eca1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 9002902358118224587
-    second: Piky - 2_0
+      213: 8669658844437525002
+    second: sketch1746290150202_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Piky - 2_0
+      name: sketch1746290150202_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 200
-        height: 280
+        x: 72
+        y: 622
+        width: 981
+        height: 1036
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bc2d92bcefbb0fc70800000000000000
-      internalID: 9002902358118224587
+      spriteID: a02b58209c0d05870800000000000000
+      internalID: 8669658844437525002
       vertices: []
       indices: 
       edges: []
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      Piky - 2_0: 9002902358118224587
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

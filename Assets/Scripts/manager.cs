@@ -261,6 +261,50 @@ public class manager : MonoBehaviour
             porovnanaviSazek();
         }
     }
+    
+    public IEnumerator PridaniAOdstraneniOponenta()
+    {
+        yield return new WaitForSeconds(2f);
+
+        for (int i = 0; i < OponentiDohromady.Length; i++)
+        {
+            if (OponentiDohromady[i] != null)
+            {
+                OponentiDohromady[i].GetComponent<OponentovaIkonka>().VypsaniIkonky();
+            }
+        }
+        for (int i = 0; i < OponentiDohromady.Length; i++)
+        {
+            if (OponentiDohromady[i] != null)
+            {
+                int random = UnityEngine.Random.Range(0, 2);
+                if (random == 0 || i == 0)
+                {
+                    Destroy(OponentiDohromady[i]);
+                    yield return new WaitForSeconds(1f);
+                }
+            }
+        }
+        for (int i = 0; i < OponentiDohromady.Length; i++)
+        {
+            if (OponentiDohromady[i] == null)
+            {
+                int random = UnityEngine.Random.Range(0, 2);
+                if (random == 0 || i == 0)
+                {
+                    OponentiDohromady[i] = Instantiate(OponentIkonka, OponentIkonkaContent);                    
+                    OponentiDohromady[i].name = "OponentIkonka" + (i + 1);
+                    OponentiDohromady[i].GetComponent<OponentovaIkonka>().CisloOponenta = i;
+                    OponentiDohromady[i].GetComponent<OponentovaIkonka>().OponentIkonka.GetComponent<Image>().sprite = OponentIkonkaRandom();
+
+                    yield return new WaitForSeconds(1f);
+                    i = OponentiDohromady.Length;
+                }
+            }
+        }
+        GameObject.Find("CelkovaSazka").GetComponent<TextMeshProUGUI>().text = "nej: " + nejvyssiSazka + "  celkem: " + secteni;
+        porovnanaviSazek();
+    }
     public void OponentIkonkaReset()
     {
         for (int j = 0; j < OponentiPouziteSprity.Count; j++) { OponentiNePouziteSprity.Add(OponentiPouziteSprity[0]); OponentiPouziteSprity.RemoveAt(0); } //smazání celého listu
