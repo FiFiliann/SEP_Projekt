@@ -8,6 +8,10 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Sprites;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+
+
 
 public class LizaniKaret : MonoBehaviour
 {
@@ -24,9 +28,11 @@ public class LizaniKaret : MonoBehaviour
     public Sprite[] KartyPiky = new Sprite[13];
     public Sprite[] KartyKrize = new Sprite[13];
     public Sprite[] KartySpecialni = new Sprite[2];
-
+    public GameObject ZnackaVyberPopUp;
     public string ZnackaOdhozenaKarta;
     public int CisloOdhozenaKarta;
+    public int pocetSedmicek = 0;
+    public bool EfektKarty = false;
     public bool HracovoKolo = true;
     public bool KonecZacatekRozdavani = false;
     private void Start()
@@ -105,13 +111,7 @@ public class LizaniKaret : MonoBehaviour
                 manager.OponentiUStolu[i].GetComponent<OponentUStolu>().OponentKarty.Clear();
             }
         }
-        while (GameObject.Find("OdhozovaciBalicek").transform.childCount != 0)
-        {
-            Destroy(GameObject.Find("OdhozovaciBalicek").transform.GetChild(0));
-        }
-        hracRuka.HracKarty.Clear();
     }
-
     public void RozmichaniKaret()
     {
         for (int i = 0; i < 50; i++)
@@ -123,7 +123,7 @@ public class LizaniKaret : MonoBehaviour
             balicek[vyberDva] = podrz;
         }
     }
-
+    //
     public void KonecAnimace()
     {
             GameObject kartadoRuky = Instantiate(KartaGo, GameObject.Find("HracovaRuka").transform);
@@ -150,24 +150,19 @@ public class LizaniKaret : MonoBehaviour
         i.GetComponent<Karta>().ZnackaKarty = balicek[0].Substring(0, 1);
         i.GetComponent<Karta>().CisloKarty = int.Parse(balicek[0].Substring(1, balicek[0].Length - 1));
     }
-    public void PocatekHry()
-    {        
-        StartCoroutine(ZacatekRozdani());        
-    }
-    public void KoloOponenti()
-    {
-        StartCoroutine(Kolo());
-    }   
+
+    //
     public IEnumerator Kolo()
     {
         for (int j = 0; j < manager.OponentiUStolu.Length; j++)
         {
             if (manager.OponentiUStolu[j] != null && manager.OponentiUStolu[j].GetComponent<OponentUStolu>().Hraje == true)
             {
-                manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OdhozeniKarty();
+                StartCoroutine(manager.OponentiUStolu[j].GetComponent<OponentUStolu>().KontrolaProOdhozeniOponent());
                 if (!manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OponentKarty.Any()) 
                 { 
                     j = manager.OponentiUStolu.Length;
+                    yield return new WaitForSeconds(1.5f);
                     manager.sazeciOkenko.SetActive(true);
                 }
                 else
@@ -178,20 +173,29 @@ public class LizaniKaret : MonoBehaviour
         }
         HracovoKolo = true;
     }
-    public void KartaOponent(int j)
+    public IEnumerator StartKolo()
     {
-        StartCoroutine(KartaOponentIE(j));
-    }
-
-
-    public IEnumerator StartRukaHrace()
-    {
-
+        PripravaBalicku();
+        KonecZacatekRozdavani = false;
+        for (int i = 0;i < 4;i++) // počet karet
+        {
+            for (int j = 0; j < manager.OponentiUStolu.Length; j++) // počet hrajících oponentů
+            {
+                if (manager.OponentiUStolu[j] != null && manager.OponentiUStolu[j].GetComponent<OponentUStolu>().Hraje == true)
+                {
+                    StartCoroutine(LiznutiKartyOponent(j));
+                    yield return new WaitForSeconds(0.5f);
+                }
+            }
             KartaProHrace();
             yield return new WaitForSeconds(1f);
-    
+        }
+        StartCoroutine(StartKartaOdhozeni());
+        yield return new WaitForSeconds(1f);
+        KonecZacatekRozdavani = true;
     }
-    public IEnumerator StartKartaOdhozeni()
+    //
+    public IEnumerator StartKartaOdhozeni() // První odhozená karta
     {
         GameObject j = Instantiate(KartaGo, GameObject.Find("OdhozovaciBalicek").transform);
         PrideleniKarty(j);
@@ -204,28 +208,7 @@ public class LizaniKaret : MonoBehaviour
         transform.Find("LizaciBalicekPocetKaret").GetComponent<TextMeshProUGUI>().text = balicek.Count + "";
         yield return new WaitForSeconds(0.5f);
     }
-    public IEnumerator ZacatekRozdani()
-    {
-        PripravaBalicku();
-        KonecZacatekRozdavani = false;
-        for (int i = 0;i < 4;i++) // počet karet
-        {
-            for (int j = 0; j < manager.OponentiUStolu.Length; j++) // počet hrajících oponentů
-            {
-                if (manager.OponentiUStolu[j] != null && manager.OponentiUStolu[j].GetComponent<OponentUStolu>().Hraje == true)
-                {
-                    KartaOponent(j);
-                    yield return new WaitForSeconds(0.5f);
-                }
-            }
-            StartCoroutine(StartRukaHrace());
-            yield return new WaitForSeconds(1f);
-        }
-        StartCoroutine(StartKartaOdhozeni());
-        yield return new WaitForSeconds(1f);
-        KonecZacatekRozdavani = true;
-    }
-    public IEnumerator KartaOponentIE(int j)
+    public IEnumerator LiznutiKartyOponent(int j) // Lízmutí karty pro oponenta
     {
         GameObject a = Instantiate(KartaGo, GameObject.Find("LizaciBalicek").transform);
         PrideleniKarty(a);
@@ -240,6 +223,40 @@ public class LizaniKaret : MonoBehaviour
         balicek.RemoveAt(0);
         transform.Find("LizaciBalicekPocetKaret").GetComponent<TextMeshProUGUI>().text = balicek.Count + "";
         yield return new WaitForSeconds(1.5f);
+    }
+    public IEnumerator OdhozeniKartyOponent(int j) // Lízmutí karty pro oponenta
+    {
+        GameObject a = Instantiate(KartaGo, GameObject.Find("LizaciBalicek").transform);
+        PrideleniKarty(a);
+        a.GetComponent<Karta>().LizaciBalicek_Hrac = false;
+        a.GetComponent<Karta>().a = false;
+        a.GetComponent<Karta>().LizaciBalicek_Oponent = true;
+        a.GetComponent<Karta>().ZnackaKarty = "J"; a.GetComponent<Karta>().CisloKarty = 3; // OTOČENÁ KARTA
+        a.GetComponent<Karta>().OponentovaRuka = manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OponentRuka;
+
+        manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OponentKarty.Add(balicek[0]);
+        manager.OponentiUStolu[j].GetComponent<OponentUStolu>().PocetKaret.text = manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OponentKarty.Count + "";
+        balicek.RemoveAt(0);
+        transform.Find("LizaciBalicekPocetKaret").GetComponent<TextMeshProUGUI>().text = balicek.Count + "";
+        yield return new WaitForSeconds(1.5f);
+    }
+    public void KontrolaProOdhozeniOponent()
+    {
+    }
+    //Specialni Karty
+    public void ZnackaVyber(int vyber)
+    {
+        switch (vyber)
+        {
+            case 0: ZnackaOdhozenaKarta = "♦"; CisloOdhozenaKarta = 14; GameObject.Find("OdhozenaKartaZvetseni").GetComponent<UnityEngine.UI.Image>().sprite = KartyKary[13]; break;
+            case 1: ZnackaOdhozenaKarta = "♣"; CisloOdhozenaKarta = 14; GameObject.Find("OdhozenaKartaZvetseni").GetComponent<UnityEngine.UI.Image>().sprite = KartyKrize[13]; break;
+            case 2: ZnackaOdhozenaKarta = "♥"; CisloOdhozenaKarta = 14; GameObject.Find("OdhozenaKartaZvetseni").GetComponent<UnityEngine.UI.Image>().sprite = KartySrdce[13]; break;
+            case 3: ZnackaOdhozenaKarta = "♠"; CisloOdhozenaKarta = 14; GameObject.Find("OdhozenaKartaZvetseni").GetComponent<UnityEngine.UI.Image>().sprite = KartyPiky[13]; break;
+            default: break;
+        }
+        ZnackaVyberPopUp.SetActive(false);
+        //KoloOponenti();
+        StartCoroutine(Kolo());
     }
 
 }

@@ -239,7 +239,7 @@ public class manager : MonoBehaviour
             OponentIkonkaReset();
             for (int i = 0; i < OponentiDohromady.Length; i++)
             {
-                int random = 0;// UnityEngine.Random.Range(0, 2);    
+                int random = UnityEngine.Random.Range(0, 2);    
                 if (random == 0 || i == 0)
                 {
                     for (int j = 0; j < OponentiDohromady.Length; j++)
@@ -304,7 +304,7 @@ public class manager : MonoBehaviour
                 if(hracSazka > nejvyssiSazka)
                 { nejvyssiSazka = hracSazka; porovnanaviSazek();}
                 else {
-                    GameObject.Find("LizaciBalicek").GetComponent<LizaniKaret>().PocatekHry();
+                    StartCoroutine(GameObject.Find("LizaciBalicek").GetComponent<LizaniKaret>().StartKolo()); 
                     sazeciOkenko.SetActive(false); zacatekSazeni = true; 
                 }
             }
