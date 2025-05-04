@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -16,7 +17,6 @@ public class OponentovaIkonka : MonoBehaviour
     public int Ikonka;
     public int Penize;
     public int Sazka;
-    public bool dovysovani = false;
     void Start()
     {
         manager = GameObject.Find("GameManager").GetComponent<manager>();
@@ -25,17 +25,19 @@ public class OponentovaIkonka : MonoBehaviour
         OponentIkonka = transform.Find("OponentVzhled").GetComponent<Image>();
         OponentiPozice = GameObject.Find("ZidleProOponenty").GetComponent<Transform>();
         //OponentIkonka.GetComponent<Image>().sprite = OponentSprity[Ikonka];
-        
+        OponentSazka.text = "";
         Penize = CelkovePenizeRandom(); OponentCelkovePenize.text = Penize + ",-";
         StartI();
-        SazkaRandom(0);
         Sazky();
+    }
+    public void VynulovaniIkonky()
+    {
+        OponentCelkovePenize.text = Penize + ",-";
     }
     public void VypsaniIkonky()
     {
         OponentCelkovePenize.text = Penize + ",-";
-        SazkaRandom(0);
-        Sazky();
+        OponentSazka.text = "";
     }
     public void StartI()
     {
@@ -54,35 +56,35 @@ public class OponentovaIkonka : MonoBehaviour
     }
 
     public int CelkovePenizeRandom()
-    {
-        
+    {      
         return Random.Range(400, 800);
     }
     public void SazkaRandom(int i)
     {
-        if(!dovysovani)
-        {
-            Sazka = Random.Range(0, Penize); dovysovani = true;
+        if (!manager.dovysovani)
+        {            
+            Sazka = Random.Range(0, Penize);
             OponentSazka.text =Sazka + ",-";
-            manager.secteni += Sazka;
             manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = true;
-
+            manager.sazky[i] = Sazka;
         }
         else
         {
             if(manager.nejvyssiSazka != Sazka)
             {
                 if(manager.nejvyssiSazka < Penize && Random.Range(0, 8)>2)
-                {                  
-                        Sazka = manager.nejvyssiSazka;
-                        OponentSazka.text =Sazka + "";
-                        manager.secteni += Sazka;
-                        manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = true;
+                {
+                    Sazka = manager.nejvyssiSazka;
+                    OponentSazka.text =Sazka + "";
+                    manager.secteni += Sazka;
+                    manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = true;
+                    manager.sazky[i] = Sazka;
                 }
                 else
                 { 
                     Sazka = 0; OponentSazka.text = "OUT";
                     manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = false;
+                    manager.sazky[i] = 0;
                     manager.OponentiUStolu[i].GetComponent<OponentUStolu>().SkrytKarty();
                 }
             }

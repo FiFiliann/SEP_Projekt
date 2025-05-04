@@ -9,7 +9,9 @@ using Unity.VisualScripting;
 using UnityEditor.Sprites;
 using UnityEngine;
 using UnityEngine.UI;
+
 using UnityEngine.EventSystems;
+using Image = UnityEngine.UI.Image;
 
 
 
@@ -103,6 +105,7 @@ public class LizaniKaret : MonoBehaviour
             balicek.Add("J2");
 
             RozmichaniKaret();
+        hracRuka.HracKarty.Clear();
     
         for(int i = 0; i < manager.OponentiUStolu.Length; i++)
         {
@@ -121,6 +124,26 @@ public class LizaniKaret : MonoBehaviour
             string podrz = balicek[vyberJedna];
             balicek[vyberJedna] = balicek[vyberDva];
             balicek[vyberDva] = podrz;
+        }
+    }
+    public void ResetRuk()
+    {
+        GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = KartySpecialni[2];
+        hracRuka.HracKarty.Clear();
+        for (int i = 0;i<manager.OponentiUStolu.Length;i++)
+        {
+            if(manager.OponentiUStolu[i] != null)
+            {
+                manager.OponentiUStolu[i].GetComponent<OponentUStolu>().OponentKarty.Clear();
+            }
+        }/*
+        while (GameObject.Find("OdhozovaciBalicek").transform.childCount > 0)
+        {
+            Destroy(GameObject.Find("OdhozovaciBalicek").transform.GetChild(0).gameObject);
+        }*/
+        while (GameObject.Find("OdhozovaciBalicek").transform.childCount > 0)
+        {
+            DestroyImmediate(GameObject.Find("OdhozovaciBalicek").transform.GetChild(0).gameObject);
         }
     }
     //
@@ -160,17 +183,18 @@ public class LizaniKaret : MonoBehaviour
             if (manager.OponentiUStolu[j] != null && manager.OponentiUStolu[j].GetComponent<OponentUStolu>().Hraje == true)
             {
                 manager.OponentiUStolu[j].transform.position += new Vector3(0, 0.3f, 0);
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(0.5f);
                 StartCoroutine(manager.OponentiUStolu[j].GetComponent<OponentUStolu>().KontrolaProOdhozeniOponent());
                 manager.OponentiUStolu[j].transform.position -= new Vector3(0, 0.3f, 0);
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(0.5f);
                 
                 if (!manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OponentKarty.Any()) 
                 { 
                     j = manager.OponentiUStolu.Length;
                     yield return new WaitForSeconds(1.5f);
                     manager.sazeciOkenko.SetActive(true);
-                    StartCoroutine(manager.PridaniAOdstraneniOponenta());
+                    //manager.OponentiDohromady[j].GetComponent<OponentovaIkonka>().Penize += manager.secteni;
+                    StartCoroutine(manager.NoveKoloPrsi());
                 }
                 else
                 {
@@ -183,6 +207,7 @@ public class LizaniKaret : MonoBehaviour
     public IEnumerator StartKolo()
     {
         PripravaBalicku();
+        ResetRuk();
         KonecZacatekRozdavani = false;
         for (int i = 0;i < 4;i++) // počet karet
         {

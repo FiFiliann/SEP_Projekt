@@ -37,13 +37,13 @@ public class OponentUStolu : MonoBehaviour
     {
         // Odhozená karta je PIKOVÝ KRÁL
         if (LizKaret.CisloOdhozenaKarta == 13 && LizKaret.ZnackaOdhozenaKarta == "♠" && LizKaret.EfektKarty)
-        {
+        {           
+            LizKaret.EfektKarty = false;
             for (int i = 0; i < 5; i++)
             {
                 StartCoroutine(LiznutiKartyOponent());//*StartCoroutine(LizKaret.LiznutiKartyOponent(CisloOponenta));
                 yield return new WaitForSeconds(0.5f);
             }
-            LizKaret.EfektKarty = false;
         }
 
         // Odhozená karta je SEDMA
@@ -60,14 +60,14 @@ public class OponentUStolu : MonoBehaviour
                 }
             }
             if(!sedmaVRuce)
-            {
+            {                
+                LizKaret.EfektKarty = false;
                 for (int i = 0; i < (LizKaret.pocetSedmicek * 3); i++)
                 {
                     StartCoroutine(LiznutiKartyOponent());//*StartCoroutine(LizKaret.LiznutiKartyOponent(CisloOponenta));
                     yield return new WaitForSeconds(0.5f);
                 }
                 LizKaret.pocetSedmicek = 1;
-                LizKaret.EfektKarty = false;
             }
         }
 
@@ -89,14 +89,14 @@ public class OponentUStolu : MonoBehaviour
 
         // Odhozená karta je ŽOLÍK
         else if (LizKaret.ZnackaOdhozenaKarta == "J" && LizKaret.EfektKarty)
-        {
+        {            
+            LizKaret.EfektKarty = false;
             for (int i = 0; i < 3; i++)
             {
                 StartCoroutine(LiznutiKartyOponent());//*StartCoroutine(LizKaret.LiznutiKartyOponent(CisloOponenta));
                 yield return new WaitForSeconds(0.5f);
 
             }
-            LizKaret.EfektKarty = false;
         }
         
         // Odhozená karta je NORMÁLNÍ
@@ -111,6 +111,7 @@ public class OponentUStolu : MonoBehaviour
                     i = OponentKarty.Count;
                     odhozenaKarta = true;
                 }
+
             }
             if (!odhozenaKarta)
             {
