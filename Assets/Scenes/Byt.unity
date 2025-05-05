@@ -626,6 +626,7 @@ MonoBehaviour:
   - {fileID: -1963909652831746515, guid: 951a5ebb18f31164a827a77d7faf6ea1, type: 3}
   - {fileID: -4390902567344959319, guid: d44d2bcc43ec3d44eb69287bf5ded2d7, type: 3}
   OponentiPouziteSprity: []
+  dovysovani: 0
   hracSazka: 0
   SazkaInput: {fileID: 1076263028}
   VrchniKarta: 
@@ -1178,7 +1179,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.4664028, y: 3.6665852}
+  m_AnchoredPosition: {x: 2.4664028, y: 4.6}
   m_SizeDelta: {x: 4, y: 4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &200622524
@@ -3903,7 +3904,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.4664028, y: 3.6923}
+  m_AnchoredPosition: {x: 2.4664028, y: 5.07}
   m_SizeDelta: {x: 4, y: 3.9797}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &656830423
@@ -8855,7 +8856,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.4664028, y: 3.6941}
+  m_AnchoredPosition: {x: 2.4664028, y: 4.79}
   m_SizeDelta: {x: 4, y: 3.9746}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1453146286
@@ -11453,7 +11454,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.4664028, y: 3.6665852}
+  m_AnchoredPosition: {x: 2.4664028, y: 5.24}
   m_SizeDelta: {x: 4, y: 4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1817414412
