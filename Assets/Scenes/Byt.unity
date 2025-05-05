@@ -6186,6 +6186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   balicek: []
+  balicekOdhozene: []
   KartaGo: {fileID: 1330085125092669727, guid: 20758ba3ede8db34ca4832ff0af4158a, type: 3}
   KartaNeviditelna: {fileID: 1330085125092669727, guid: 778f27a5fe6fbfd44ad16774ea2fa5e6, type: 3}
   a: {fileID: 0}
@@ -6309,7 +6310,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1155396550}
         m_TargetAssemblyTypeName: LizaniKaret, Assembly-CSharp
-        m_MethodName: KartaProHrace
+        m_MethodName: HracLizani
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
