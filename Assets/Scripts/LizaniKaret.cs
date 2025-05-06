@@ -241,7 +241,7 @@ public class LizaniKaret : MonoBehaviour
         }
         StartCoroutine(StartKartaOdhozeni());
         yield return new WaitForSeconds(0.5f);
-        if (manager.KartaVRukavuKoupeno) { KartaVRukavu(); }
+        //if (manager.KartaVRukavuKoupeno) { KartaVRukavu(); }
         HracovoKolo = true;
     }
     //
@@ -271,8 +271,11 @@ public class LizaniKaret : MonoBehaviour
     public  void KartaVRukavu()
     {
         GameObject kartadoRuky = Instantiate(KartaGo, GameObject.Find("KartaVRukavu").transform);
+        PrideleniKarty(kartadoRuky);
         kartadoRuky.transform.position = GameObject.Find("LizaciBalicek").transform.position;
         kartadoRuky.GetComponent<Karta>().LizaciBalicek_Rukav = true;
+        kartadoRuky.GetComponent<Karta>().KartaVRukavu = true;
+
     }
     //Specialni Karty
     public void ZnackaVyber(int vyber)

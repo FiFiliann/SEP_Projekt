@@ -28,6 +28,8 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     public bool LizaciBalicek_Rukav = false;
     public bool Rukav_Hrac = false;
     public bool Hrac_Rukav = false;
+    public bool KartaVRukavu = false;
+    public bool KartaVRukavuAktivni = false;
     public bool a = true;
     private void Start()
     {
@@ -54,7 +56,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
                 cas += Time.deltaTime * 1.5f;
                 this.transform.position = Vector3.Lerp(LizaciBalicek.transform.position, HracovaRukaPolohaProKartu.transform.position, cas);
                 this.transform.localScale = Vector3.Lerp(LizaciBalicek.transform.localScale, HracovaRukaPolohaProKartu.transform.localScale, cas);
-                if (cas > 1) { LizaciBalicek_Hrac = false; cas = 0; LizKaret.KonecAnimace(); /*if (LizKaret.KonecZacatekRozdavani == true) { StartCoroutine(LizKaret.Kolo()); }*/ }
+                if (cas > 1) { LizaciBalicek_Hrac = false; cas = 0; LizKaret.KonecAnimace();  }
             }
      
             if (Oponent_OdhazovaciBalicek)//z oponentovy ruky do odhazovazíco balíčku
@@ -62,6 +64,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
                 cas += Time.deltaTime * 1.5f;
                 this.transform.position = Vector3.Lerp(OponentovaRuka.transform.position, OdhazovaciBalicek.transform.position, cas);
                 this.transform.localScale = Vector3.Lerp(OponentovaRuka.transform.localScale, OdhazovaciBalicek.transform.localScale, cas);
+                a = true;
                 if (cas > 1) 
                 {
                     if (CisloKarty == 1 || CisloKarty == 7 || ZnackaKarty == "J") { LizKaret.EfektKarty = true; }
@@ -92,7 +95,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
                 cas += Time.deltaTime * 1.5f;
                 this.transform.position = Vector3.Lerp(LizaciBalicek.transform.position, RukavHrace.transform.position, cas);
                 this.transform.localScale = Vector3.Lerp(LizaciBalicek.transform.localScale, RukavHrace.transform.localScale, cas);
-                if (cas > 1) { LizaciBalicek_Rukav = false; cas = 0; }
+                if (cas > 1) { LizaciBalicek_Rukav = false; cas = 0; a = true; }
             }
             if (Rukav_Hrac)//z rukavu do ruky hrace
             {
@@ -126,19 +129,31 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     }
 
     public void OnPointerDown(PointerEventData eventData)
-    {    
-        if(LizKaret.HracovoKolo)
+    {
+        if (LizKaret.HracovoKolo && !KartaVRukavu)
         {
-            
-            if(ZnackaKarty == LizKaret.ZnackaOdhozenaKarta || CisloKarty == LizKaret.CisloOdhozenaKarta || ZnackaKarty == "J" || CisloKarty == 12 || LizKaret.ZnackaOdhozenaKarta=="E")
+
+            if (ZnackaKarty == LizKaret.ZnackaOdhozenaKarta || CisloKarty == LizKaret.CisloOdhozenaKarta || ZnackaKarty == "J" || CisloKarty == 12 || LizKaret.ZnackaOdhozenaKarta == "E")
             {
-                if(CisloKarty == 12 || ZnackaKarty == "J") 
-                { 
-                    if (!LizKaret.EfektKarty && LizaciBalicek_Hrac) { OdhozeniHracoviKarty(); } 
+                if (CisloKarty == 12 || ZnackaKarty == "J")
+                {
+                    if (!LizKaret.EfektKarty && LizaciBalicek_Hrac) { OdhozeniHracoviKarty(); }
                 }
                 else if (LizaciBalicek_Hrac) { OdhozeniHracoviKarty(); }
             }
+        }          
+        if (KartaVRukavu && !KartaVRukavuAktivni)
+        {
+            this.GetComponent<Image>().color = new Color(255f, 100f, 0f,255f);
+            KartaVRukavuAktivni = true; 
+        }      
+        else if (KartaVRukavu && KartaVRukavuAktivni)
+        {
+            this.GetComponent<Image>().color = new Color(255f, 255f, 255f, 255f);
+            KartaVRukavuAktivni = false;
         }
+
+
     }
     public void OdhozeniHracoviKarty()
     {
@@ -156,7 +171,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(LizKaret.HracovoKolo)
+        if(LizKaret.HracovoKolo && !KartaVRukavu)
         {
             if(a)
             {
@@ -167,7 +182,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        if(LizKaret.HracovoKolo)
+        if(LizKaret.HracovoKolo && !KartaVRukavu)
         {
             if (a)
             {
