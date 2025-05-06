@@ -8,12 +8,12 @@ public class PopisSceny : MonoBehaviour , IPointerEnterHandler, IPointerExitHand
 {
     public manager manager;
     public Image Image;
-    public GameObject[] Vlastnosti = new GameObject[4];
+    //public GameObject[] Vlastnosti = new GameObject[4];
     public Sprite ScenaPNG;
     public GameObject OtevritScenuButton;
     public Slider reputaceBar;
     public double reputaceMax;
-    public Transform vlastnostiContent;
+    //public Transform vlastnostiContent;
     public GameObject Okno;
 
     void Start()
@@ -21,14 +21,14 @@ public class PopisSceny : MonoBehaviour , IPointerEnterHandler, IPointerExitHand
         Okno.SetActive(false);
         manager = GameObject.Find("GameManager").GetComponent<manager>();
         Image.GetComponent<Image>().sprite = ScenaPNG;
-
+        /*
         for (int i = 0; i < Vlastnosti.Length; i++)
         {
             if (Vlastnosti[i] != null)
             {
             Instantiate(Vlastnosti[i], vlastnostiContent);
             }
-        }     
+        } */    
     }
 
     void Reputace()

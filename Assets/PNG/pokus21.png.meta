@@ -1,10 +1,22 @@
 fileFormatVersion: 2
-guid: c1d510c3b3c2b734596b11b86a9ba320
+guid: 5917190c846d16243b0f779e346f08d0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 9002902358118224587
-    second: Piky - 2_0
+      213: 825791748710599269
+    second: pokus21_0
+  - first:
+      213: -7963154633883998021
+    second: pokus21_1
+  - first:
+      213: 4321770183361479965
+    second: pokus21_2
+  - first:
+      213: -7957488930495333637
+    second: pokus21_3
+  - first:
+      213: -6944677860135465998
+    second: pokus21_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +58,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,13 +112,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Piky - 2_0
+      name: pokus21_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 200
-        height: 280
+        x: 26
+        y: 15
+        width: 289
+        height: 580
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +127,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bc2d92bcefbb0fc70800000000000000
-      internalID: 9002902358118224587
+      spriteID: 56a0850683dc57b00800000000000000
+      internalID: 825791748710599269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokus21_1
+      rect:
+        serializedVersion: 2
+        x: 627
+        y: 279
+        width: 40
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb8a6d31d013d7190800000000000000
+      internalID: -7963154633883998021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokus21_2
+      rect:
+        serializedVersion: 2
+        x: 651
+        y: 48
+        width: 280
+        height: 519
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d15c22485130afb30800000000000000
+      internalID: 4321770183361479965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokus21_3
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 141
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfaf8b17af1519190800000000000000
+      internalID: -7957488930495333637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokus21_4
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 63
+        width: 59
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fb0b1bd74c8f9f90800000000000000
+      internalID: -6944677860135465998
       vertices: []
       indices: 
       edges: []
@@ -125,7 +225,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +235,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Piky - 2_0: 9002902358118224587
+      pokus21_0: 825791748710599269
+      pokus21_1: -7963154633883998021
+      pokus21_2: 4321770183361479965
+      pokus21_3: -7957488930495333637
+      pokus21_4: -6944677860135465998
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 2d19434f361f8cc49af1815e1b914c53
+guid: 087c39d227d7b2d4eaa53ae4485aa1f8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2127022108625016169
-    second: Oponent 1_0
-  - first:
-      213: 851715192469537648
-    second: Oponent 1_1
+      213: 7170729733686408092
+    second: Srdce_-_Velke_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -103,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Oponent 1_0
+      name: Srdce_-_Velke_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 1117
-        width: 11
-        height: 13
+        x: 0
+        y: 0
+        width: 200
+        height: 280
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,30 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 79ae00269ac4b72e0800000000000000
-      internalID: -2127022108625016169
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Oponent 1_1
-      rect:
-        serializedVersion: 2
-        x: 43
-        y: 832
-        width: 1026
-        height: 966
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 07343f87476e1db00800000000000000
-      internalID: 851715192469537648
+      spriteID: c93b5bc53bc838360800000000000000
+      internalID: 7170729733686408092
       vertices: []
       indices: 
       edges: []
@@ -150,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -160,8 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Oponent 1_0: -2127022108625016169
-      Oponent 1_1: 851715192469537648
+      Srdce_-_Velke_0: 7170729733686408092
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

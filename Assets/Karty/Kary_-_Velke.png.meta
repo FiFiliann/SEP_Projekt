@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0e2aa793c68b5984b817004f1ea0e760
+guid: 76477e46e1b309d47baba06bef3cb54e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -896528919932267646
-    second: Krize - 2_0
+      213: -1714382174582096923
+    second: Kary_-_Velke_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Krize - 2_0
+      name: Kary_-_Velke_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 283929482b3ee83f0800000000000000
-      internalID: -896528919932267646
+      spriteID: 5ebb5c2de7a4538e0800000000000000
+      internalID: -1714382174582096923
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Krize - 2_0: -896528919932267646
+      Kary_-_Velke_0: -1714382174582096923
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

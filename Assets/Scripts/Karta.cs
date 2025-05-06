@@ -1,11 +1,11 @@
-﻿using Unity.VisualScripting;
+﻿using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
-    //public Image karta;
     public manager manager;
     public GameObject PoziceVHracoveRuce;
     public GameObject HracovaRukaPolohaProKartu;
@@ -16,68 +16,70 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
 
     public string ZnackaKarty;
     public int CisloKarty;
-
-    //public LizaniKaret lizaniKaret;
     public bool Kolo = false;
     private float cas = 0;
-    //public Image obrazek;    
 
     public bool Hrac_OdhazovaciBalicek = false;
     public bool LizaciBalicek_Hrac = false;
     public bool Oponent_OdhazovaciBalicek = false;
     public bool LizaciBalicek_Oponent = false;
     public bool LizaciBalicek_OdhazovaciBalicek = false;
-
     public bool a = true;
     private void Start()
     {
-        //lizaniKaret = GameObject.Find("HracovaRuka").GetComponent<LizaniKaret>();
         manager = GameObject.Find("GameManager").GetComponent<manager>();
         OdhazovaciBalicek = GameObject.Find("OdhozovaciBalicek");
         LizKaret = GameObject.Find("LizaciBalicek").GetComponent<LizaniKaret>();
         LizaciBalicek = GameObject.Find("LizaciBalicek");
         Obrazek();
-        //gameObject.GetComponent<Image>().sprite = LizKaret.KartySrdce[3];
     }
     private void Update()
     {
-        if(Hrac_OdhazovaciBalicek)//z ruky hráče do odhazovacího balíčku
-        {            
-            cas += Time.deltaTime*1.5f;
-            this.transform.position = Vector3.Lerp(PoziceVHracoveRuce.transform.position, OdhazovaciBalicek.transform.position, cas);
-            this.transform.localScale = Vector3.Lerp(PoziceVHracoveRuce.transform.localScale, OdhazovaciBalicek.transform.localScale, cas);
-            if (cas > 1) { Hrac_OdhazovaciBalicek = false; a = false; Kolo = true;LizKaret.posledniKartaOdhazovaciBalicek = ZnackaKarty + CisloKarty;  cas = 0;}
-        }
-        if (LizaciBalicek_Hrac && HracovaRukaPolohaProKartu != null)//Z lizacího balíčku do ruky hráče
+        if(manager.zacatekSazeni)
         {
-            cas += Time.deltaTime * 1.5f;
-            this.transform.position = Vector3.Lerp(LizaciBalicek.transform.position, HracovaRukaPolohaProKartu.transform.position, cas);
-            this.transform.localScale = Vector3.Lerp(LizaciBalicek.transform.localScale, HracovaRukaPolohaProKartu.transform.localScale, cas);
-            if (cas > 1) { LizaciBalicek_Hrac = false; cas = 0;        Debug.Log(ZnackaKarty + "" + CisloKarty);}
-        }
+            if(Hrac_OdhazovaciBalicek)//z ruky hráče do odhazovacího balíčku
+            {            
+                cas += Time.deltaTime*1.5f;
+                this.transform.position = Vector3.Lerp(PoziceVHracoveRuce.transform.position, OdhazovaciBalicek.transform.position, cas);
+                this.transform.localScale = Vector3.Lerp(PoziceVHracoveRuce.transform.localScale, OdhazovaciBalicek.transform.localScale, cas);
+                if (cas > 1) {  Hrac_OdhazovaciBalicek = false; a = false; Kolo = true;  cas = 0; HracuvTah(); }
+            }
+            if (LizaciBalicek_Hrac && HracovaRukaPolohaProKartu != null)//Z lizacího balíčku do ruky hráče
+            {
+                cas += Time.deltaTime * 1.5f;
+                this.transform.position = Vector3.Lerp(LizaciBalicek.transform.position, HracovaRukaPolohaProKartu.transform.position, cas);
+                this.transform.localScale = Vector3.Lerp(LizaciBalicek.transform.localScale, HracovaRukaPolohaProKartu.transform.localScale, cas);
+                if (cas > 1) { LizaciBalicek_Hrac = false; cas = 0; LizKaret.KonecAnimace(); /*if (LizKaret.KonecZacatekRozdavani == true) { StartCoroutine(LizKaret.Kolo()); }*/ }
+            }
      
-        if (Oponent_OdhazovaciBalicek)//z oponentovy ruky do odhazovazíco balíčku
-        {
-            cas += Time.deltaTime * 1.5f;
-            this.transform.position = Vector3.Lerp(OponentovaRuka.transform.position, OdhazovaciBalicek.transform.position, cas);
-            this.transform.localScale = Vector3.Lerp(OponentovaRuka.transform.localScale, OdhazovaciBalicek.transform.localScale, cas);
-            if (cas > 1) { Oponent_OdhazovaciBalicek = false; cas = 0; }
-        }
+            if (Oponent_OdhazovaciBalicek)//z oponentovy ruky do odhazovazíco balíčku
+            {
+                cas += Time.deltaTime * 1.5f;
+                this.transform.position = Vector3.Lerp(OponentovaRuka.transform.position, OdhazovaciBalicek.transform.position, cas);
+                this.transform.localScale = Vector3.Lerp(OponentovaRuka.transform.localScale, OdhazovaciBalicek.transform.localScale, cas);
+                if (cas > 1) 
+                {
+                    if (CisloKarty == 1 || CisloKarty == 7 || ZnackaKarty == "J") { LizKaret.EfektKarty = true; }
+                    Oponent_OdhazovaciBalicek = false; cas = 0; GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = gameObject.GetComponent<Image>().sprite;
+                }
+            }
 
-        if (LizaciBalicek_Oponent)//z lízacího balíčku do oponentovi ruky
-        {
-            cas += Time.deltaTime * 1.5f;
-            this.transform.position = Vector3.Lerp(LizaciBalicek.transform.position, OponentovaRuka.transform.position, cas);
-            this.transform.localScale = Vector3.Lerp(LizaciBalicek.transform.localScale, OponentovaRuka.transform.localScale, cas);
-            if (cas > 1) { LizaciBalicek_Oponent = false; cas = 0; Destroy(gameObject); }
-        }
+            if (LizaciBalicek_Oponent)//z lízacího balíčku do oponentovi ruky
+            {
+                cas += Time.deltaTime * 1.5f;
+                this.transform.position = Vector3.Lerp(LizaciBalicek.transform.position, OponentovaRuka.transform.position, cas);
+                this.transform.localScale = Vector3.Lerp(LizaciBalicek.transform.localScale, OponentovaRuka.transform.localScale, cas);
+                if (cas > 1) { LizaciBalicek_Oponent = false; cas = 0; Destroy(gameObject); }
+            }
 
-        if (LizaciBalicek_OdhazovaciBalicek)//z oponentovy ruky do odhazovazíco balíčku
-        {
-            cas += Time.deltaTime * 1.5f;
-            this.transform.position = Vector3.Lerp(LizaciBalicek.transform.position, OdhazovaciBalicek.transform.position, cas);
-            this.transform.localScale = Vector3.Lerp(LizaciBalicek.transform.localScale, OdhazovaciBalicek.transform.localScale, cas);
-            if (cas > 1) { LizaciBalicek_OdhazovaciBalicek = false; cas = 0; }
+            if (LizaciBalicek_OdhazovaciBalicek)//z oponentovy ruky do odhazovazíco balíčku
+            {
+                cas += Time.deltaTime * 1.5f;
+                this.transform.position = Vector3.Lerp(LizaciBalicek.transform.position, OdhazovaciBalicek.transform.position, cas);
+                this.transform.localScale = Vector3.Lerp(LizaciBalicek.transform.localScale, OdhazovaciBalicek.transform.localScale, cas);
+                if (cas > 1) { LizaciBalicek_OdhazovaciBalicek = false; cas = 0; GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = gameObject.GetComponent<Image>().sprite;
+                }
+            }
         }
     }
 
@@ -95,28 +97,77 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     }
 
     public void OnPointerDown(PointerEventData eventData)
-    {     
-        if(LizaciBalicek_Hrac)
+    {    
+        if(LizKaret.HracovoKolo)
         {
-            gameObject.transform.SetParent(OdhazovaciBalicek.transform,true);
-            Instantiate(PoziceVHracoveRuce, gameObject.transform);
-            PoziceVHracoveRuce.transform.position = this.transform.position;
-            Hrac_OdhazovaciBalicek = true;
+            
+            if(ZnackaKarty == LizKaret.ZnackaOdhozenaKarta || CisloKarty == LizKaret.CisloOdhozenaKarta || ZnackaKarty == "J" || CisloKarty == 12 || LizKaret.ZnackaOdhozenaKarta=="E")
+            {
+                if(CisloKarty == 12 || ZnackaKarty == "J") 
+                { 
+                    if (!LizKaret.EfektKarty && LizaciBalicek_Hrac) { OdhozeniHracoviKarty(); } 
+                }
+                else if (LizaciBalicek_Hrac) { OdhozeniHracoviKarty(); }
+            }
+        }
+    }
+    public void OdhozeniHracoviKarty()
+    {
+        gameObject.transform.SetParent(OdhazovaciBalicek.transform, true);
+        Instantiate(PoziceVHracoveRuce, gameObject.transform);
+        PoziceVHracoveRuce.transform.position = this.transform.position;
+        Hrac_OdhazovaciBalicek = true;
+        LizKaret.HracovoKolo = false;
+        LizKaret.balicekOdhozene.Add(GameObject.Find("HracovaRuka").GetComponent<HracRuka>().HracKarty[0]);
+        GameObject.Find("HracovaRuka").GetComponent<HracRuka>().HracKarty.RemoveAt(0);
+        if (!GameObject.Find("HracovaRuka").GetComponent<HracRuka>().HracKarty.Any())
+        {
+            manager.sazeciOkenko.SetActive(true);
         }
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(a)
+        if(LizKaret.HracovoKolo)
         {
-            gameObject.transform.position += new Vector3(0, 0.5f, 0);
+            if(a)
+            {
+                gameObject.transform.position += new Vector3(0, 0.5f, 0);
+            }
         }
-    }
 
+    }
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (a)
+        if(LizKaret.HracovoKolo)
         {
-            gameObject.transform.position -= new Vector3(0, 0.5f, 0);
+            if (a)
+            {
+                gameObject.transform.position -= new Vector3(0, 0.5f, 0);
+            }
+        }
+    }
+    public void HracuvTah()
+    {
+        if (!GameObject.Find("HracovaRuka").GetComponent<HracRuka>().HracKarty.Any())
+        {
+            manager.sazeciOkenko.SetActive(true);
+            StartCoroutine(manager.NoveKoloPrsi());
+        }
+        else
+        {
+            if (CisloKarty == 1) { LizKaret.EfektKarty = true; }
+            if (CisloKarty == 7) { LizKaret.EfektKarty = true; LizKaret.pocetSedmicek++; }
+            if (CisloKarty == 13 && ZnackaKarty == "♠") { LizKaret.EfektKarty = true; }
+            if (CisloKarty == 12) { LizKaret.ZnackaVyberPopUp.SetActive(true); LizKaret.EfektKarty = true; }
+            if (ZnackaKarty == "J") { LizKaret.ZnackaVyberPopUp.SetActive(true); LizKaret.EfektKarty = true; }
+            else
+            {
+                LizKaret.CisloOdhozenaKarta = CisloKarty;
+                LizKaret.ZnackaOdhozenaKarta = ZnackaKarty;
+                if (LizKaret.KonecZacatekRozdavani == true) { StartCoroutine(LizKaret.Kolo()); }
+                GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = gameObject.GetComponent<Image>().sprite;
+            }
+            GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = gameObject.GetComponent<Image>().sprite;
         }
     }
 }
