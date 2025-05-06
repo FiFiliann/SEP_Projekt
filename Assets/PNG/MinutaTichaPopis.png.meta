@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      MinutaTichaPopis_0: 1575906410710997827
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
