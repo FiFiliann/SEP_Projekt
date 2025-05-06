@@ -130,7 +130,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (LizKaret.HracovoKolo && !KartaVRukavu)
+        if (LizKaret.HracovoKolo && !KartaVRukavu && a)
         {
 
             if (ZnackaKarty == LizKaret.ZnackaOdhozenaKarta || CisloKarty == LizKaret.CisloOdhozenaKarta || ZnackaKarty == "J" || CisloKarty == 12 || LizKaret.ZnackaOdhozenaKarta == "E")
@@ -208,7 +208,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             {
                 LizKaret.CisloOdhozenaKarta = CisloKarty;
                 LizKaret.ZnackaOdhozenaKarta = ZnackaKarty;
-                if (LizKaret.KonecZacatekRozdavani == true) { StartCoroutine(LizKaret.Kolo()); }
+                /*if (LizKaret.KonecZacatekRozdavani == true) {*/ StartCoroutine(LizKaret.Kolo());// }
                 GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = gameObject.GetComponent<Image>().sprite;
             }
             GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = gameObject.GetComponent<Image>().sprite;

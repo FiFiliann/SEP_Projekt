@@ -130,7 +130,7 @@ public class OponentUStolu : MonoBehaviour
     {
         GameObject a = Instantiate(Karta, GameObject.Find("LizaciBalicek").transform);
         a.transform.position = GameObject.Find("LizaciBalicek").transform.position;
-        a.transform.localScale = new Vector3(0.5f, 0.5f, 0);
+        a.transform.localScale = new Vector3(0.3f, 0.3f, 0);
 
         a.GetComponent<Karta>().a = false;
         a.GetComponent<Karta>().ZnackaKarty = "J"; a.GetComponent<Karta>().CisloKarty = 3; // OTOČENÁ KARTA
@@ -142,7 +142,7 @@ public class OponentUStolu : MonoBehaviour
         LizKaret.balicek.RemoveAt(0);
         if (!LizKaret.balicek.Any()) { LizKaret.DoplneniBalicku(); }
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.3f);
     }
 
     public void OdhozeniKartyS(int i)

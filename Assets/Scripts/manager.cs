@@ -306,7 +306,15 @@ public class manager : MonoBehaviour
                 }
             }
         }
-        for (int i = 0; i < OponentiDohromady.Length; i++) // přidání oponentů
+        if (!OponentiDohromady.Any())  // pridani oponenta pokud vsichni odesli
+        {
+            OponentiDohromady[0] = Instantiate(OponentIkonka, OponentIkonkaContent);
+            OponentiDohromady[0].name = "OponentIkonka" + (1);
+            OponentiDohromady[0].GetComponent<OponentovaIkonka>().CisloOponenta = 0;
+            OponentiDohromady[0].GetComponent<OponentovaIkonka>().OponentIkonka.GetComponent<Image>().sprite = OponentIkonkaRandom();
+            yield return new WaitForSeconds(1f);
+        }
+        for (int i = 0; i < OponentiDohromady.Length - 1; i++) // přidání oponentů
         {
             if (OponentiDohromady[i] == null)
             {

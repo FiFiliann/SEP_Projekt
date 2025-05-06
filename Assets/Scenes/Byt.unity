@@ -6185,7 +6185,7 @@ MonoBehaviour:
   - {fileID: -1090427416683077779, guid: 4fe51980ea1ee994185e7a02c64023ac, type: 3}
   - {fileID: 5978229743750154016, guid: 0d6182a73af1f5142b8ae381e2839952, type: 3}
   - {fileID: -9133508320328580674, guid: 31c7a8d5955ee144db461092a8ad7d57, type: 3}
-  ZnackaVyberPopUp: {fileID: 0}
+  ZnackaVyberPopUp: {fileID: 1294622678}
   ZnackaOdhozenaKarta: 
   CisloOdhozenaKarta: 0
   pocetSedmicek: 0

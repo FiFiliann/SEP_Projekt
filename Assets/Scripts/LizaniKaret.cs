@@ -232,17 +232,18 @@ public class LizaniKaret : MonoBehaviour
                 if (manager.OponentiUStolu[j] != null && manager.OponentiUStolu[j].GetComponent<OponentUStolu>().Hraje == true)
                 {
                     StartCoroutine(manager.OponentiUStolu[j].GetComponent<OponentUStolu>().LiznutiKartyOponent());//*
-                    yield return new WaitForSeconds(0.3f);
+                    yield return new WaitForSeconds(0.5f);
                 }
             }           
             HracovoKolo = true;
-            StartCoroutine(EfektyKaretNaHrace());
-            yield return new WaitForSeconds(0.5f);
+            KartaProHrace();
+           yield return new WaitForSeconds(1f);
         }
         StartCoroutine(StartKartaOdhozeni());
         yield return new WaitForSeconds(0.5f);
-        //if (manager.KartaVRukavuKoupeno) { KartaVRukavu(); }
+        if (manager.KartaVRukavuKoupeno) { KartaVRukavu(); }
         HracovoKolo = true;
+
     }
     //
     public IEnumerator StartKartaOdhozeni() // První odhozená karta
@@ -336,9 +337,10 @@ public class LizaniKaret : MonoBehaviour
             {
                 KartaProHrace();        
                 yield return new WaitForSeconds(0.5f);
-                HracovoKolo = true;
+                
             }
         }
-        if (KonecZacatekRozdavani == true) { StartCoroutine(Kolo()); }
+        if (KonecZacatekRozdavani == false) { StartCoroutine(Kolo()); }
+        //StartCoroutine(Kolo());
     }        
 }
