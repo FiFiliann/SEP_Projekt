@@ -240,8 +240,8 @@ public class LizaniKaret : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
         StartCoroutine(StartKartaOdhozeni());
-        yield return new WaitForSeconds(1f);
-        KonecZacatekRozdavani = true;
+        yield return new WaitForSeconds(0.5f);
+        if (manager.KartaVRukavuKoupeno) { KartaVRukavu(); }
         HracovoKolo = true;
     }
     //
@@ -267,25 +267,13 @@ public class LizaniKaret : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
     }
-    /*
-    public IEnumerator LiznutiKartyOponent(int j) // Lízmutí karty pro oponenta
-    {
-        GameObject a = Instantiate(KartaGo, GameObject.Find("LizaciBalicek").transform);
-        PrideleniKarty(a);
-        a.GetComponent<Karta>().LizaciBalicek_Hrac = false;
-        a.GetComponent<Karta>().a = false;
-        a.GetComponent<Karta>().LizaciBalicek_Oponent = true;
-        a.GetComponent<Karta>().ZnackaKarty = "J"; a.GetComponent<Karta>().CisloKarty = 3; // OTOČENÁ KARTA
-        a.GetComponent<Karta>().OponentovaRuka = manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OponentRuka;
 
-        manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OponentKarty.Add(balicek[0]);
-        manager.OponentiUStolu[j].GetComponent<OponentUStolu>().PocetKaret.text = manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OponentKarty.Count + "";
-        balicek.RemoveAt(0);
-        if(!balicek.Any()) { DoplneniBalicku(); }
-        transform.Find("LizaciBalicekPocetKaret").GetComponent<TextMeshProUGUI>().text = balicek.Count + "";
-        yield return new WaitForSeconds(1.5f);
+    public  void KartaVRukavu()
+    {
+        GameObject kartadoRuky = Instantiate(KartaGo, GameObject.Find("KartaVRukavu").transform);
+        kartadoRuky.transform.position = GameObject.Find("LizaciBalicek").transform.position;
+        kartadoRuky.GetComponent<Karta>().LizaciBalicek_Rukav = true;
     }
-    */
     //Specialni Karty
     public void ZnackaVyber(int vyber)
     {

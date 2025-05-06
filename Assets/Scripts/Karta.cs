@@ -12,6 +12,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     public GameObject OdhazovaciBalicek;
     public GameObject LizaciBalicek;
     public GameObject OponentovaRuka;
+    public GameObject RukavHrace;
     public LizaniKaret LizKaret;
 
     public string ZnackaKarty;
@@ -24,6 +25,9 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     public bool Oponent_OdhazovaciBalicek = false;
     public bool LizaciBalicek_Oponent = false;
     public bool LizaciBalicek_OdhazovaciBalicek = false;
+    public bool LizaciBalicek_Rukav = false;
+    public bool Rukav_Hrac = false;
+    public bool Hrac_Rukav = false;
     public bool a = true;
     private void Start()
     {
@@ -31,6 +35,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
         OdhazovaciBalicek = GameObject.Find("OdhozovaciBalicek");
         LizKaret = GameObject.Find("LizaciBalicek").GetComponent<LizaniKaret>();
         LizaciBalicek = GameObject.Find("LizaciBalicek");
+        RukavHrace = GameObject.Find("KartaVRukavu");
         Obrazek();
     }
     private void Update()
@@ -80,6 +85,30 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
                 if (cas > 1) { LizaciBalicek_OdhazovaciBalicek = false; cas = 0; GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = gameObject.GetComponent<Image>().sprite;
                 }
             }
+
+            //Karta V rukavu
+            if (LizaciBalicek_Rukav)//z lízacího balíčku do hracoveho rukavu
+            {
+                cas += Time.deltaTime * 1.5f;
+                this.transform.position = Vector3.Lerp(LizaciBalicek.transform.position, RukavHrace.transform.position, cas);
+                this.transform.localScale = Vector3.Lerp(LizaciBalicek.transform.localScale, RukavHrace.transform.localScale, cas);
+                if (cas > 1) { LizaciBalicek_Rukav = false; cas = 0; }
+            }
+            if (Rukav_Hrac)//z rukavu do ruky hrace
+            {
+                cas += Time.deltaTime * 1.5f;
+                this.transform.position = Vector3.Lerp(LizaciBalicek.transform.position, OponentovaRuka.transform.position, cas);
+                this.transform.localScale = Vector3.Lerp(LizaciBalicek.transform.localScale, OponentovaRuka.transform.localScale, cas);
+                if (cas > 1) { LizaciBalicek_Oponent = false; cas = 0; Destroy(gameObject); }
+            }
+            if (Hrac_Rukav)//z ruky do rukavu hrace
+            {
+                cas += Time.deltaTime * 1.5f;
+                this.transform.position = Vector3.Lerp(LizaciBalicek.transform.position, OponentovaRuka.transform.position, cas);
+                this.transform.localScale = Vector3.Lerp(LizaciBalicek.transform.localScale, OponentovaRuka.transform.localScale, cas);
+                if (cas > 1) { LizaciBalicek_Oponent = false; cas = 0; Destroy(gameObject); }
+            }
+
         }
     }
 

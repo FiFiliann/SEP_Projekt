@@ -77,7 +77,9 @@ public class manager : MonoBehaviour
     //Reputace
     public Slider ReputaceSlider;
     public float ReputaceValue = 0f;
-
+     
+    //podvody
+    public bool KartaVRukavuKoupeno = true;
     private void Start()
     {
         opona = GameObject.Find("Stmivacka");
