@@ -79,7 +79,7 @@ public class manager : MonoBehaviour
     public float ReputaceValue = 0f;
 
     //podvody
-    public bool KartaVRukavuKoupeno = false;
+    public bool KartaVRukavuKoupeno = true;
     private void Start()
     {
         opona = GameObject.Find("Stmivacka");
@@ -182,7 +182,10 @@ public class manager : MonoBehaviour
     public void ZmenaSceny(int a)
     {
         novaScena = a; rychlost = 5;
-        if (GameObject.Find("KartaVRukavu").transform.childCount != 0) { Destroy(GameObject.Find("KartaVRukavu").transform.GetChild(0).gameObject); }
+        /*if(GameObject.Find("KartaVRukavu") != null)
+        {
+            if (GameObject.Find("KartaVRukavu").transform.childCount != 0) { Destroy(GameObject.Find("KartaVRukavu").transform.GetChild(0).gameObject); }
+        }*/
     }
     public void ExitGame()
     {
