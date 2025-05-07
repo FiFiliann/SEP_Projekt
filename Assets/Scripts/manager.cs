@@ -132,6 +132,10 @@ public class manager : MonoBehaviour
     public void ZmenaSceny(int a)
     {
         novaScena = a; rychlost = 5;
+        /*if(GameObject.Find("KartaVRukavu") != null)
+        {
+            if (GameObject.Find("KartaVRukavu").transform.childCount != 0) { Destroy(GameObject.Find("KartaVRukavu").transform.GetChild(0).gameObject); }
+        }*/
     }
     public void ExitGame()
     {

@@ -248,7 +248,7 @@ public class LizaniKaret : MonoBehaviour
         }
         StartCoroutine(StartKartaOdhozeni());
         yield return new WaitForSeconds(0.5f);
-        if (manager.KartaVRukavuKoupeno && GameObject.Find("KartaVRukavu").transform.childCount == 0) { KartaVRukavu(); }
+        /*if (manager.KartaVRukavuKoupeno && GameObject.Find("KartaVRukavu").transform.childCount == 0) { KartaVRukavu(); }*/
         HracovoKolo = true;
 
     }
