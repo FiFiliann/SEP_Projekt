@@ -143,13 +143,13 @@ public class LizaniKaret : MonoBehaviour
         }
         while (GameObject.Find("OdhozovaciBalicek").transform.childCount > 0) // VYMAZANI ODHAZOVACIHO BALICKU
         {
-            DestroyImmediate(GameObject.Find("OdhozovaciBalicek").transform.GetChild(0).gameObject);
+            Destroy(GameObject.Find("OdhozovaciBalicek").transform.GetChild(0).gameObject);
         }    
         
         hracRuka.HracKarty.Clear(); // VYMAZANI OBSAHU RUKY
         while (GameObject.Find("HracovaRuka").transform.childCount > 0) //  VYMAZANI OBJEKTU V RUCE HRACE
         {
-            DestroyImmediate(GameObject.Find("HracovaRuka").transform.GetChild(0).gameObject);
+            Destroy(GameObject.Find("HracovaRuka").transform.GetChild(0).gameObject);
         }
     }
     public void DoplneniBalicku()
@@ -241,9 +241,10 @@ public class LizaniKaret : MonoBehaviour
                     yield return new WaitForSeconds(0.5f);
                 }
             }           
-            HracovoKolo = true;           
+            HracovoKolo = true;            
             yield return new WaitForSeconds(0.5f);
-            KartaProHrace();
+          
+            KartaProHrace();            
         }
         StartCoroutine(StartKartaOdhozeni());
         yield return new WaitForSeconds(0.5f);
@@ -315,6 +316,7 @@ public class LizaniKaret : MonoBehaviour
         i.GetComponent<Karta>().CisloKarty = KartaVRukavuB.GetComponent<Karta>().CisloKarty;
         i.GetComponent<Karta>().Obrazek();
         Destroy(KartaVRukavuB);
+        //PRIDAT PODEZRENI!!!//
     }
     //Specialni Karty
     public void ZnackaVyber(int vyber)

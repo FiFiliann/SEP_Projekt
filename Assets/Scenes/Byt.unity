@@ -4912,15 +4912,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8308781461417649078, guid: e89631e17acfbf84c8ac370db9e84ede, type: 3}
       propertyPath: nazevText
-      value: NAZEV
+      value: "Karta V Ruk\xE1vu"
       objectReference: {fileID: 0}
     - target: {fileID: 8308781461417649078, guid: e89631e17acfbf84c8ac370db9e84ede, type: 3}
       propertyPath: popisText
-      value: Tohle je tohle
+      value: "Hr\xE1\u010D m\u016F\u017Ee p\u0159ehazovat mezi kartou v ruk\xE1vu
+        a kartou v ruce. Kdydoliv prohod\xED karty, zv\xFD\u0161\xED se mu podez\u0159en\xED.
+        Karta v Ruk\xE1vu z\u016Fst\xE1v\xE1 nap\u0159\xED\u010D dal\u0161\xED kola."
       objectReference: {fileID: 0}
     - target: {fileID: 8724947788952438486, guid: e89631e17acfbf84c8ac370db9e84ede, type: 3}
       propertyPath: m_Name
-      value: Podvod
+      value: Podvod_KartaVRukavu
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6192,6 +6194,9 @@ MonoBehaviour:
   EfektKarty: 1
   HracovoKolo: 1
   KonecZacatekRozdavani: 0
+  KartaVRukavuAktivni: 0
+  KartaVRukavuA: {fileID: 0}
+  KartaVRukavuB: {fileID: 0}
 --- !u!114 &1155396551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7951,7 +7956,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1378335927
 RectTransform:
   m_ObjectHideFlags: 0
