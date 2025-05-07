@@ -43,7 +43,7 @@ public class OponentUStolu : MonoBehaviour
             for (int i = 0; i < 5; i++)
             {
                 StartCoroutine(LiznutiKartyOponent());//*StartCoroutine(LizKaret.LiznutiKartyOponent(CisloOponenta));
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.3f);
             }
         }
         if (LizKaret.CisloOdhozenaKarta == 12 &&  LizKaret.EfektKarty)
@@ -69,7 +69,7 @@ public class OponentUStolu : MonoBehaviour
                 for (int i = 0; i < (LizKaret.pocetSedmicek * 3); i++)
                 {
                     StartCoroutine(LiznutiKartyOponent());//*StartCoroutine(LizKaret.LiznutiKartyOponent(CisloOponenta));
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(0.3f);
                 }
                 LizKaret.pocetSedmicek = 0;
             }
@@ -98,7 +98,7 @@ public class OponentUStolu : MonoBehaviour
             for (int i = 0; i < 3; i++)
             {
                 StartCoroutine(LiznutiKartyOponent());//*StartCoroutine(LizKaret.LiznutiKartyOponent(CisloOponenta));
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.3f);
 
             }
         }
@@ -120,7 +120,7 @@ public class OponentUStolu : MonoBehaviour
             if (!odhozenaKarta)
             {
                 StartCoroutine(LiznutiKartyOponent());//*StartCoroutine(LizKaret.LiznutiKartyOponent(CisloOponenta));
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.3f);
             }
 
             yield return new WaitForSeconds(0.2f);

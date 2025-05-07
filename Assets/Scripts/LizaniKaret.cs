@@ -38,11 +38,16 @@ public class LizaniKaret : MonoBehaviour
     public bool EfektKarty = true;
     public bool HracovoKolo = true;
     public bool KonecZacatekRozdavani = false;
-    private void Start()
+    //
+    public bool KartaVRukavuAktivni = false;
+    public bool KartaVRukavuA = false;
+
+    public void Start()
     {
         hracRuka = GameObject.Find("HracovaRuka").GetComponent<HracRuka>();
         manager = GameObject.Find("GameManager").GetComponent<manager>();
-    }    
+    } 
+    // BALICEK
     public void PripravaBalicku()
     {
         balicek.Clear();
@@ -161,7 +166,7 @@ public class LizaniKaret : MonoBehaviour
             DestroyImmediate(GameObject.Find("OdhozovaciBalicek").transform.GetChild(0).gameObject);
         }
     }
-    //
+    //Karty
     public void KonecAnimace()
     {
             GameObject kartadoRuky = Instantiate(KartaGo, GameObject.Find("HracovaRuka").transform);
@@ -184,6 +189,14 @@ public class LizaniKaret : MonoBehaviour
             //if (KonecZacatekRozdavani == true) { StartCoroutine(Kolo()); }
 
         }
+    }
+    public void KartaDoRukavu(GameObject i)
+    {
+        //i.transform.SetParent(GameObject.Find("OdhozovaciBalicek").transform, true);
+        i.GetComponent<Image>().color = new Color(255f, 255f, 255f, 0f);
+        GameObject j = Instantiate(i, i.transform);
+        j.GetComponent<Karta>().Hrac_Rukav = true;
+        j.GetComponent<Karta>().PoziceVHracoveRuce = i;
     }
     public void PrideleniKarty(GameObject i)
     {
@@ -232,12 +245,12 @@ public class LizaniKaret : MonoBehaviour
                 if (manager.OponentiUStolu[j] != null && manager.OponentiUStolu[j].GetComponent<OponentUStolu>().Hraje == true)
                 {
                     StartCoroutine(manager.OponentiUStolu[j].GetComponent<OponentUStolu>().LiznutiKartyOponent());//*
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(0.3f);
                 }
             }           
             HracovoKolo = true;
             KartaProHrace();
-           yield return new WaitForSeconds(1f);
+           yield return new WaitForSeconds(0.3f);
         }
         StartCoroutine(StartKartaOdhozeni());
         yield return new WaitForSeconds(0.5f);
@@ -275,7 +288,7 @@ public class LizaniKaret : MonoBehaviour
         PrideleniKarty(kartadoRuky);
         kartadoRuky.transform.position = GameObject.Find("LizaciBalicek").transform.position;
         kartadoRuky.GetComponent<Karta>().LizaciBalicek_Rukav = true;
-        kartadoRuky.GetComponent<Karta>().KartaVRukavu = true;
+        kartadoRuky.GetComponent<Karta>().TohleJeKartaVRukavu = true;
 
     }
     //Specialni Karty

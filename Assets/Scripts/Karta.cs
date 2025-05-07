@@ -2,6 +2,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.Android;
 using UnityEngine.UI;
 
 public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
@@ -11,6 +12,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     public GameObject HracovaRukaPolohaProKartu;
     public GameObject OdhazovaciBalicek;
     public GameObject LizaciBalicek;
+    public GameObject PolohaVRuce;
     public GameObject OponentovaRuka;
     public GameObject RukavHrace;
     public LizaniKaret LizKaret;
@@ -28,10 +30,10 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     public bool LizaciBalicek_Rukav = false;
     public bool Rukav_Hrac = false;
     public bool Hrac_Rukav = false;
-    public bool KartaVRukavu = false;
+    public bool TohleJeKartaVRukavu = false;
     public bool KartaVRukavuAktivni = false;
     public bool a = true;
-    private void Start()
+    public void Start()
     {
         manager = GameObject.Find("GameManager").GetComponent<manager>();
         OdhazovaciBalicek = GameObject.Find("OdhozovaciBalicek");
@@ -40,7 +42,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
         RukavHrace = GameObject.Find("KartaVRukavu");
         Obrazek();
     }
-    private void Update()
+    public void Update()
     {
         if(manager.zacatekSazeni)
         {
@@ -107,8 +109,8 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             if (Hrac_Rukav)//z ruky do rukavu hrace
             {
                 cas += Time.deltaTime * 1.5f;
-                this.transform.position = Vector3.Lerp(LizaciBalicek.transform.position, OponentovaRuka.transform.position, cas);
-                this.transform.localScale = Vector3.Lerp(LizaciBalicek.transform.localScale, OponentovaRuka.transform.localScale, cas);
+                this.transform.position = Vector3.Lerp(PoziceVHracoveRuce.transform.position, RukavHrace.transform.position, cas);
+                this.transform.localScale = Vector3.Lerp(PoziceVHracoveRuce.transform.localScale, RukavHrace.transform.localScale, cas);
                 if (cas > 1) { LizaciBalicek_Oponent = false; cas = 0; Destroy(gameObject); }
             }
 
@@ -130,9 +132,12 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (LizKaret.HracovoKolo && !KartaVRukavu && a)
+        if(LizKaret.KartaVRukavuAktivni && a && LizKaret.HracovoKolo && gameObject != TohleJeKartaVRukavu)
         {
-
+            LizKaret.KartaDoRukavu(gameObject);
+        }
+        else if (LizKaret.HracovoKolo && !LizKaret.KartaVRukavuA && a && !LizKaret.KartaVRukavuAktivni)
+        {
             if (ZnackaKarty == LizKaret.ZnackaOdhozenaKarta || CisloKarty == LizKaret.CisloOdhozenaKarta || ZnackaKarty == "J" || CisloKarty == 12 || LizKaret.ZnackaOdhozenaKarta == "E")
             {
                 if (CisloKarty == 12 || ZnackaKarty == "J")
@@ -142,15 +147,15 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
                 else if (LizaciBalicek_Hrac) { OdhozeniHracoviKarty(); }
             }
         }          
-        if (KartaVRukavu && !KartaVRukavuAktivni)
+        if (TohleJeKartaVRukavu && !KartaVRukavuAktivni)
         {
             this.GetComponent<Image>().color = new Color(255f, 100f, 0f,255f);
-            KartaVRukavuAktivni = true; 
+            LizKaret.KartaVRukavuAktivni = true; 
         }      
-        else if (KartaVRukavu && KartaVRukavuAktivni)
+        else if (TohleJeKartaVRukavu && KartaVRukavuAktivni)
         {
             this.GetComponent<Image>().color = new Color(255f, 255f, 255f, 255f);
-            KartaVRukavuAktivni = false;
+            LizKaret.KartaVRukavuAktivni = false;
         }
 
 
@@ -171,7 +176,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(LizKaret.HracovoKolo && !KartaVRukavu)
+        if(LizKaret.HracovoKolo && !TohleJeKartaVRukavu)
         {
             if(a)
             {
@@ -182,7 +187,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        if(LizKaret.HracovoKolo && !KartaVRukavu)
+        if(LizKaret.HracovoKolo && !TohleJeKartaVRukavu)
         {
             if (a)
             {
