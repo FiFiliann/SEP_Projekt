@@ -74,10 +74,7 @@ public class manager : MonoBehaviour
     public float PodezreniValue = 0f;
     public int pocetOponentu = 0;
 
-    //Reputace
-    public Slider ReputaceSlider;
-    public float ReputaceValue = 0f;
-
+     
     //podvody
     public bool KartaVRukavuKoupeno = true;
     private void Start()
@@ -96,10 +93,6 @@ public class manager : MonoBehaviour
         PodezreniSlider.minValue = 0f;
         PodezreniSlider.maxValue = 5f;
 
-        // Inicializace slideru reputace
-        ReputaceSlider.value = ReputaceValue;
-        ReputaceSlider.minValue = 0f;
-        ReputaceSlider.maxValue = 5f;
     }
     void Update()
     {
@@ -143,16 +136,10 @@ public class manager : MonoBehaviour
 
     public float ZvysitPodezreni()
     {
-        // Výpočet zvýšení podezření // Počet oponentů (1-5)
-        //float zvyseni = (5f * pocetOponentu) / 100f;
-
-        // Zvýšení hodnoty podezření
-        //PodezreniValue += zvyseni;
-        //PodezreniSlider.value = PodezreniValue;
 
         for(int i = 0; i < OponentiUStolu.Length; i++)
         {
-            if (OponentiUStolu[i] != null)
+            if (Hraje == true)
             {
                 pocetOponentu++;
             }
