@@ -40,7 +40,8 @@ public class LizaniKaret : MonoBehaviour
     public bool KonecZacatekRozdavani = false;
     //
     public bool KartaVRukavuAktivni = false;
-    public bool KartaVRukavuA = false;
+    public GameObject KartaVRukavuA;
+    public GameObject KartaVRukavuB;
 
     public void Start()
     {
@@ -190,14 +191,7 @@ public class LizaniKaret : MonoBehaviour
 
         }
     }
-    public void KartaDoRukavu(GameObject i)
-    {
-        //i.transform.SetParent(GameObject.Find("OdhozovaciBalicek").transform, true);
-        i.GetComponent<Image>().color = new Color(255f, 255f, 255f, 0f);
-        GameObject j = Instantiate(i, i.transform);
-        j.GetComponent<Karta>().Hrac_Rukav = true;
-        j.GetComponent<Karta>().PoziceVHracoveRuce = i;
-    }
+
     public void PrideleniKarty(GameObject i)
     {
         i.GetComponent<Karta>().LizaciBalicek_Hrac = true;
@@ -222,7 +216,6 @@ public class LizaniKaret : MonoBehaviour
                     j = manager.OponentiUStolu.Length;
                     yield return new WaitForSeconds(1.5f);
                     manager.sazeciOkenko.SetActive(true);
-                    //manager.OponentiDohromady[j].GetComponent<OponentovaIkonka>().Penize += manager.secteni;
                     StartCoroutine(manager.NoveKoloPrsi());
                 }
                 else
@@ -245,16 +238,16 @@ public class LizaniKaret : MonoBehaviour
                 if (manager.OponentiUStolu[j] != null && manager.OponentiUStolu[j].GetComponent<OponentUStolu>().Hraje == true)
                 {
                     StartCoroutine(manager.OponentiUStolu[j].GetComponent<OponentUStolu>().LiznutiKartyOponent());//*
-                    yield return new WaitForSeconds(0.3f);
+                    yield return new WaitForSeconds(0.5f);
                 }
             }           
-            HracovoKolo = true;
+            HracovoKolo = true;           
+            yield return new WaitForSeconds(0.5f);
             KartaProHrace();
-           yield return new WaitForSeconds(0.3f);
         }
         StartCoroutine(StartKartaOdhozeni());
         yield return new WaitForSeconds(0.5f);
-        if (manager.KartaVRukavuKoupeno) { KartaVRukavu(); }
+        if (manager.KartaVRukavuKoupeno && GameObject.Find("KartaVRukavu").transform.childCount == 0) { KartaVRukavu(); }
         HracovoKolo = true;
 
     }
@@ -282,14 +275,46 @@ public class LizaniKaret : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
     }
 
-    public  void KartaVRukavu()
+    //KARTA V RUKAVU
+    public void KartaVRukavu()
     {
-        GameObject kartadoRuky = Instantiate(KartaGo, GameObject.Find("KartaVRukavu").transform);
-        PrideleniKarty(kartadoRuky);
-        kartadoRuky.transform.position = GameObject.Find("LizaciBalicek").transform.position;
-        kartadoRuky.GetComponent<Karta>().LizaciBalicek_Rukav = true;
-        kartadoRuky.GetComponent<Karta>().TohleJeKartaVRukavu = true;
+        GameObject kartadoRukavu = Instantiate(KartaGo, GameObject.Find("KartaVRukavu").transform);
+        PrideleniKarty(kartadoRukavu);
+        kartadoRukavu.transform.position = GameObject.Find("LizaciBalicek").transform.position;
+        kartadoRukavu.GetComponent<Karta>().LizaciBalicek_Rukav = true;
+        kartadoRukavu.GetComponent<Karta>().TohleJeKartaVRukavu = true;
+        KartaVRukavuA = kartadoRukavu;
+        balicekOdhozene.Add(balicek[0]);
+        balicek.RemoveAt(0);
+    }
+    public void PodvodRukav(GameObject i)
+    {
+        GameObject j = Instantiate(KartaGo, GameObject.Find("KartaVRukavu").transform);
+        KartaVRukavuB = KartaVRukavuA;
+        KartaVRukavuA = j;
+        KartaZRukavu(i);
+        i.GetComponent<Image>().color = new Color(255f, 255f, 255f, 0f);
+        j.transform.position = i.transform.position;
+        j.GetComponent<Karta>().PoziceVHracoveRuce = i;
+        j.GetComponent<Karta>().ZnackaKarty = i.GetComponent<Karta>().ZnackaKarty;
+        j.GetComponent<Karta>().CisloKarty = i.GetComponent<Karta>().CisloKarty;
+        j.GetComponent<Karta>().Hrac_Rukav = true;
+        j.GetComponent<Karta>().TohleJeKartaVRukavu = true;
+        KartaVRukavuAktivni = false;
 
+    }
+    public void KartaZRukavu(GameObject i)
+    {
+        KartaVRukavuB.GetComponent<Karta>().Rukav_Hrac = true;
+        KartaVRukavuB.GetComponent<Karta>().PoziceVHracoveRuce = i;
+    }
+    public void PodvodRukavKonec(GameObject i) //sprite nahrazen a alpha obnovena
+    {
+        i.GetComponent<Image>().color = new Color(255f, 255, 255f, 255f);
+        i.GetComponent<Karta>().ZnackaKarty = KartaVRukavuB.GetComponent<Karta>().ZnackaKarty;
+        i.GetComponent<Karta>().CisloKarty = KartaVRukavuB.GetComponent<Karta>().CisloKarty;
+        i.GetComponent<Karta>().Obrazek();
+        Destroy(KartaVRukavuB);
     }
     //Specialni Karty
     public void ZnackaVyber(int vyber)
@@ -353,7 +378,6 @@ public class LizaniKaret : MonoBehaviour
                 
             }
         }
-        if (KonecZacatekRozdavani == false) { StartCoroutine(Kolo()); }
-        //StartCoroutine(Kolo());
+        StartCoroutine(Kolo());
     }        
 }
