@@ -42,7 +42,7 @@ public class OponentUStolu : MonoBehaviour
             LizKaret.EfektKarty = false;
             for (int i = 0; i < 5; i++)
             {
-                StartCoroutine(LiznutiKartyOponent());//*StartCoroutine(LizKaret.LiznutiKartyOponent(CisloOponenta));
+                StartCoroutine(LiznutiKartyOponent());
                 yield return new WaitForSeconds(0.3f);
             }
         }
@@ -68,7 +68,7 @@ public class OponentUStolu : MonoBehaviour
                 LizKaret.EfektKarty = false;
                 for (int i = 0; i < (LizKaret.pocetSedmicek * 3); i++)
                 {
-                    StartCoroutine(LiznutiKartyOponent());//*StartCoroutine(LizKaret.LiznutiKartyOponent(CisloOponenta));
+                    StartCoroutine(LiznutiKartyOponent());
                     yield return new WaitForSeconds(0.3f);
                 }
                 LizKaret.pocetSedmicek = 0;
@@ -97,7 +97,7 @@ public class OponentUStolu : MonoBehaviour
             LizKaret.EfektKarty = false;
             for (int i = 0; i < 3; i++)
             {
-                StartCoroutine(LiznutiKartyOponent());//*StartCoroutine(LizKaret.LiznutiKartyOponent(CisloOponenta));
+                StartCoroutine(LiznutiKartyOponent());
                 yield return new WaitForSeconds(0.3f);
 
             }
@@ -119,7 +119,7 @@ public class OponentUStolu : MonoBehaviour
             }
             if (!odhozenaKarta)
             {
-                StartCoroutine(LiznutiKartyOponent());//*StartCoroutine(LizKaret.LiznutiKartyOponent(CisloOponenta));
+                StartCoroutine(LiznutiKartyOponent());
                 yield return new WaitForSeconds(0.3f);
             }
 

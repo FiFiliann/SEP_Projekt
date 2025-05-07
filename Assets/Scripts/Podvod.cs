@@ -29,14 +29,22 @@ public class Podvod : MonoBehaviour , IPointerEnterHandler, IPointerExitHandler
             {
                 if (manager.koupenaDovednosti[cisloButonu - 1] == true)
                 { 
-                  gameObject.GetComponent<Button>().interactable = false;
-                  manager.koupenaDovednosti[cisloButonu] = true;
+                    gameObject.GetComponent<Button>().interactable = false;
+                    manager.koupenaDovednosti[cisloButonu] = true;
+                    OtevrenyPodvod();
                 } 
             }
             else {gameObject.GetComponent<Button>().interactable = false; manager.koupenaDovednosti[cisloButonu] = true; }
         }
     }
-
+    void OtevrenyPodvod()
+    {
+        switch(cisloButonu)
+        {
+            case 0: manager.KartaVRukavuKoupeno = true; break;
+            default: break;
+        }
+    }
     public void OnPointerEnter(PointerEventData eventData)
     {
         popisOkenko.SetActive(true);
