@@ -89,7 +89,6 @@ public class manager : MonoBehaviour
 
         //Inicializace slideru podezreni
         PodezreniSlider.value = 0f;
-        PodezreniSlider.value =+ ZvysitPodezreni();
         PodezreniSlider.minValue = 0f;
         PodezreniSlider.maxValue = 5f;
 
@@ -126,46 +125,10 @@ public class manager : MonoBehaviour
             }
         }
 
-        // Kontrola, jestli podezření dosáhlo maxima
-        if (PodezreniSlider.value >= 1f)
-        {
-            Debug.Log("Chytili tě!");
-            OdebratReputaci();
-        }
+       
     }
 
-    public float ZvysitPodezreni()
-    {
-
-        for(int i = 0; i < OponentiUStolu.Length; i++)
-        {
-            if (Hraje == true)
-            {
-                pocetOponentu++;
-            }
-        }
-
-        return (5f * pocetOponentu) / 100f;
-    }
-
-    public void SnizitPodezreni()
-    {
-        // Snížení podezření a zvýšení reputace
-        PodezreniSlider.value = Mathf.Max(0f, PodezreniValue - 0.1f);
-
-        BytMenuPromene(); // Aktualizace UI
-    }
-
-    private void OdebratReputaci()
-    {
-        // Odečtení reputace na základě počtu oponentů
-        //Zmeny
-        ReputaceSlider.value = ReputaceValue;
-
-        PodezreniSlider.value -= (5f * pocetOponentu) / 100f;
-
-        BytMenuPromene();
-    }
+    
     public void ZmenaSceny(int a)
     {
         novaScena = a; rychlost = 5;
