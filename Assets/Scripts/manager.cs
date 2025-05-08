@@ -77,7 +77,10 @@ public class manager : MonoBehaviour
     public TextMeshProUGUI reputaceText;
     public TextMeshProUGUI penizeText;
 
-     
+    public GameObject GameOverPopup;
+    public Slider PodezreniSlider;
+
+
     //podvody
     public bool KartaVRukavuKoupeno = true;
     private void Start()
@@ -422,6 +425,35 @@ public class manager : MonoBehaviour
         PribehovyDluh = true;
         BytMenuPromene();
     }
+
+    public void KontrolaPodezeni()
+    {
+        if (PodezreniSlider.value >= PodezreniSlider.maxValue)
+        {
+            Debug.Log("Hra ukončena! Podezreni dosáhla maxima.");
+            UkoncitHru();
+        }
+    }
+
+    public void UkoncitHru()
+    {
+        GameOverPopup.SetActive(true);
+
+        Time.timeScale = 0; // Zastaví čas ve hře
+    }
+
+    public void NavratDoBytu()
+    {
+        // Skryje pop-up okno
+        GameOverPopup.SetActive(false);
+
+        // Obnoví čas ve hře
+        Time.timeScale = 1;
+
+        // Přepne scénu na byt
+        ZmenaSceny(0); // Předpokládám, že scéna "byt" má index 0
+    }
+
     public void ExitGame()
     {
         Application.Quit();
