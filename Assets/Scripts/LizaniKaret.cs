@@ -43,6 +43,13 @@ public class LizaniKaret : MonoBehaviour
     public GameObject KartaVRukavuA;
     public GameObject KartaVRukavuB;
 
+    //Podezření
+    public Slider PodezreniSlider;
+    public float PodezreniValue = 0f;
+    public int pocetOponentu = 0;
+    public int MaxPokusyPodvadeni = 3; // Maximální počet pokusů
+    private int aktualniPokusyPodvadeni = 0; // Počet využitých pokusů
+
     public void Start()
     {
         hracRuka = GameObject.Find("HracovaRuka").GetComponent<HracRuka>();
@@ -315,6 +322,21 @@ public class LizaniKaret : MonoBehaviour
         i.GetComponent<Karta>().CisloKarty = KartaVRukavuB.GetComponent<Karta>().CisloKarty;
         i.GetComponent<Karta>().Obrazek();
         Destroy(KartaVRukavuB);
+
+        if (aktualniPokusyPodvadeni < MaxPokusyPodvadeni)
+        {
+            aktualniPokusyPodvadeni++;
+            // Zvýšení podezření o 1/3
+            float zvyseniPodezreni = PodezreniSlider.maxValue / 3f;
+            PodezreniSlider.value = Mathf.Min(PodezreniSlider.maxValue, PodezreniSlider.value + zvyseniPodezreni);
+
+
+            Debug.Log($"Podvádíš! Podezření zvýšeno o {zvyseniPodezreni}. Zbývající pokusy: {MaxPokusyPodvadeni - aktualniPokusyPodvadeni}");
+        }
+        else
+        {
+            Debug.Log("Vyčerpal jsi všechny pokusy na podvádění!");
+        }
     }
     //Specialni Karty
     public void ZnackaVyber(int vyber)

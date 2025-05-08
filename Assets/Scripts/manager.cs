@@ -77,21 +77,9 @@ public class manager : MonoBehaviour
     public TextMeshProUGUI reputaceText;
     public TextMeshProUGUI penizeText;
 
-
-    // Zmeny, oponenti
-    public int numberOfObjects = 6;
-
-    //Podezreni
-    public Slider PodezreniSlider;
-    public float PodezreniValue = 0f;
-    public int pocetOponentu = 0;
-
-    //Reputace
-    public Slider ReputaceSlider;
-    public float ReputaceValue = 0f;
      
     //podvody
-    public bool KartaVRukavuKoupeno = false;
+    public bool KartaVRukavuKoupeno = true;
     private void Start()
     {
         opona = GameObject.Find("Stmivacka");
@@ -101,17 +89,6 @@ public class manager : MonoBehaviour
         for (int i = 0; i < koupenaDovednosti.Length; i++)  {koupenaDovednosti[i] = false;}
         for (int i = 0; i < BytMenuVyber.Length; i++) { BytMenuVyber[i].SetActive(false); }
         BytMenuPromene();
-
-        //Inicializace slideru podezreni
-        PodezreniSlider.value = 0f;
-        PodezreniSlider.value =+ ZvysitPodezreni();
-        PodezreniSlider.minValue = 0f;
-        PodezreniSlider.maxValue = 5f;
-
-        // Inicializace slideru reputace
-        ReputaceSlider.value = ReputaceValue;
-        ReputaceSlider.minValue = 0f;
-        ReputaceSlider.maxValue = 5f;
     }
     void Update()
     {
@@ -144,53 +121,8 @@ public class manager : MonoBehaviour
                 packa = false;
             }
         }
-
-        // Kontrola, jestli podezření dosáhlo maxima
-        if (PodezreniSlider.value >= 1f)
-        {
-            Debug.Log("Chytili tě!");
-            OdebratReputaci();
-        }
     }
 
-    public float ZvysitPodezreni()
-    {
-        // Výpočet zvýšení podezření // Počet oponentů (1-5)
-        //float zvyseni = (5f * pocetOponentu) / 100f;
-
-        // Zvýšení hodnoty podezření
-        //PodezreniValue += zvyseni;
-        //PodezreniSlider.value = PodezreniValue;
-
-        for(int i = 0; i < OponentiUStolu.Length; i++)
-        {
-            if (OponentiUStolu[i] != null)
-            {
-                pocetOponentu++;
-            }
-        }
-
-        return (5f * pocetOponentu) / 100f;
-    }
-
-    public void SnizitPodezreni()
-    {
-        // Snížení podezření a zvýšení reputace
-        PodezreniSlider.value = Mathf.Max(0f, PodezreniValue - 0.1f);
-
-        BytMenuPromene(); // Aktualizace UI
-    }
-
-    private void OdebratReputaci()
-    {
-        // Odečtení reputace na základě počtu oponentů
-        //Zmeny
-        ReputaceSlider.value = ReputaceValue;
-
-        PodezreniSlider.value -= (5f * pocetOponentu) / 100f;
-
-        BytMenuPromene();
-    }
     public void ZmenaSceny(int a)
     {
         novaScena = a; rychlost = 5;
