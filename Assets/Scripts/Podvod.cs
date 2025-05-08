@@ -27,16 +27,24 @@ public class Podvod : MonoBehaviour , IPointerEnterHandler, IPointerExitHandler
         {
             if(cisloButonu != 0) 
             {
-                if (manager.koupenaDovednosti[cisloButonu - 1] == true)
+                if (manager.koupenaDovednosti[cisloButonu - 1] == true && manager.reputace >= potrebnaReputace)
                 { 
-                  gameObject.GetComponent<Button>().interactable = false;
-                  manager.koupenaDovednosti[cisloButonu] = true;
+                    gameObject.GetComponent<Button>().interactable = false;
+                    manager.koupenaDovednosti[cisloButonu] = true;
+                    KoupenyPodvod();
                 } 
             }
-            else {gameObject.GetComponent<Button>().interactable = false; manager.koupenaDovednosti[cisloButonu] = true; }
+            else {gameObject.GetComponent<Button>().interactable = false; manager.koupenaDovednosti[cisloButonu] = true; KoupenyPodvod(); }
         }
     }
-
+    public void KoupenyPodvod()
+    {
+        switch(cisloButonu)
+        {
+            case 0: manager.KartaVRukavuKoupeno = true; break;
+            default: break;
+        }
+    }
     public void OnPointerEnter(PointerEventData eventData)
     {
         popisOkenko.SetActive(true);
