@@ -9,10 +9,14 @@ using System;
 using Mono.Cecil.Cil;
 using Unity.VisualScripting;
 using System.Linq;
+using NUnit.Framework;
 
 public class manager : MonoBehaviour
 {    
     public GameObject GameMenu;
+    public GameObject GameOverScreen;
+    public GameObject WinScreen;
+
     public spawn spawn;
 
     //Menu//
@@ -28,6 +32,10 @@ public class manager : MonoBehaviour
     public GameObject novaplatba;
     public Transform platbyContent;
     public GameObject[] PlatbyDohromady = new GameObject[5];
+    public GameObject NezaplacenyDluhPopUp;
+    public bool PribehovyDluh = true;
+
+    public GameObject PujckaOdPritelePopUp;
 
     //OponentiIkonka//
     public GameObject OponentIkonka;
@@ -65,6 +73,10 @@ public class manager : MonoBehaviour
     public int den = 2;
     public int reputace = 1069;
     public int penize = 1000;
+    public TextMeshProUGUI denText;
+    public TextMeshProUGUI reputaceText;
+    public TextMeshProUGUI penizeText;
+
 
     // Zmeny, oponenti
     public int numberOfObjects = 6;
@@ -79,7 +91,7 @@ public class manager : MonoBehaviour
     public float ReputaceValue = 0f;
      
     //podvody
-    public bool KartaVRukavuKoupeno = true;
+    public bool KartaVRukavuKoupeno = false;
     private void Start()
     {
         opona = GameObject.Find("Stmivacka");
@@ -182,14 +194,24 @@ public class manager : MonoBehaviour
     public void ZmenaSceny(int a)
     {
         novaScena = a; rychlost = 5;
+        if(GameObject.Find("KartaVRukavu")  != null) 
+        {
+            if (GameObject.Find("KartaVRukavu").transform.childCount > 0)
+                DestroyImmediate(GameObject.Find("KartaVRukavu").transform.GetChild(0).gameObject);
+        }
+        if(novaScena == 0) { }
     }
-    public void ExitGame()
-    {
-        Application.Quit();
-    }
+
     public void ExitMainMenu()
     {
         GameMenu.SetActive(false);
+        if (PribehovyDluh)
+        {
+            PlatbyDohromady[0] = Instantiate(novaplatba, platbyContent);
+            PlatbyDohromady[0].GetComponent<Platba>().PribehovyDluh();
+            PlatbyDohromady[0].name = "PribehovyDluh";
+            PribehovyDluh = false;
+        }
     }
     public void OpenMinMenu()
     {
@@ -212,7 +234,7 @@ public class manager : MonoBehaviour
             GameObject.Find("CelkovaSazka").GetComponent<TextMeshProUGUI>().text = "nej: " + nejvyssiSazka + "  celkem: " + secteni;
             SazkaInput.text = "";
         }
-        else {  UI[0].SetActive(true); UI[1].SetActive(false); /*spawn.coz = true;*/ VytvoreniPlatby(); }
+        else {  UI[0].SetActive(true); UI[1].SetActive(false);}
     }
     public void MenuButtony(int a) // zjist�, kter� tla��tko v bytov�m menu jde stisknout
     {
@@ -222,19 +244,73 @@ public class manager : MonoBehaviour
             else { BytMenuVyber[i].SetActive(false); BytButtons[i].GetComponent<Button>().interactable = true; }
         }
     }
-    public void VytvoreniPlatby() //vytvo�en� nov� platby
+    //
+    public void NezaplacenyDluhKontrola(int a)
     {
+        bool vseVPohode = true;
+        for (int i = 0; i < PlatbyDohromady.Length; i++)
+        {
+            if (PlatbyDohromady[i] != null)
+            {
+                if(PlatbyDohromady[i].GetComponent<Platba>()._cas == 0)
+                {
+                    vseVPohode = false;
+                    GameObject upominkaPopUp = Instantiate(NezaplacenyDluhPopUp,GameObject.Find("HlavniMenu").transform);
+                    upominkaPopUp.transform.position = new Vector3(0,0,9);
+                    GameObject dluh = Instantiate(PlatbyDohromady[i], upominkaPopUp.transform);
+                    dluh.transform.localScale = new Vector3(0.8f, 0.8f); 
+                    dluh.transform.position = upominkaPopUp.GetComponent<NezaplacenyDluh>().NezaplacenyDluhPoloha.transform.position;
+                    //dluh.GetComponent<NezaplacenyDluh>().cisloDluhu = 2;  ?
+                    i = PlatbyDohromady.Length;
+                }
+            }
+        }
+        if(vseVPohode) { ZmenaSceny(a); }
+    }
+    public void VytvoreniPlatby() //vytvo�en� nov� platby
+    {        
         for (int i = 0; i < PlatbyDohromady.Length; i++)
         {
             if (PlatbyDohromady[i] == null)
             {
                 PlatbyDohromady[i] = Instantiate(novaplatba, platbyContent);
+                PlatbyDohromady[i].GetComponent<Platba>().VedlejsiDluh();
                 PlatbyDohromady[i].name = "platba" + i;
                 i = PlatbyDohromady.Length;
             }
         }
     }
+    public void NovyDen()
+    {
+        den++;
+        if (PujckaOdPritelePopUp.GetComponent<DluhOdPritele>().dalsiPujckaZa != 0) 
+            {PujckaOdPritelePopUp.GetComponent<DluhOdPritele>().dalsiPujckaZa -= 1; }
+        for (int i = 0; i < PlatbyDohromady.Length; i++)
+        {
+            if (PlatbyDohromady[i] != null)
+            {
 
+                PlatbyDohromady[i].GetComponent<Platba>()._cas -= 1;
+                PlatbyDohromady[i].GetComponent<Platba>().cas.text = PlatbyDohromady[i].GetComponent<Platba>()._cas + "";
+            }
+        }
+        for(int i = 0;i<2;i++)// VYTVORENI NOVE PLATBY
+        {
+            if(UnityEngine.Random.Range(0, 4) == 0) 
+            {VytvoreniPlatby(); } 
+        }
+
+        BytMenuPromene();
+
+    }
+
+    public void OtevritPujckuOdPritele()
+    {
+        PujckaOdPritelePopUp.SetActive(true);
+        PujckaOdPritelePopUp.GetComponent<DluhOdPritele>().PodTextPriPrichodu();
+    }
+
+    //OPONENTI
     IEnumerator VytvoreniOponenta()
     {
         if (PrichodDoNoveSceny)
@@ -396,11 +472,32 @@ public class manager : MonoBehaviour
             }
         }
     }
-
+    public void ResetHry()
+    {
+        GameMenu.SetActive(true);
+        GameOverScreen.SetActive(false);
+        WinScreen.SetActive(false);
+        KartaVRukavuKoupeno = false;
+        reputace = 0;
+        penize = 100;
+        for (int i = 0; i < PlatbyDohromady.Length; i++)
+        {
+            if (PlatbyDohromady[i] != null)
+            {
+                Destroy(PlatbyDohromady[i]);
+            }
+        }
+        PribehovyDluh = true;
+        BytMenuPromene();
+    }
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
     public void BytMenuPromene() //vyps�n� zm�ny variabilit v menu
     {
-        GameObject.Find("Penize").GetComponent<TextMeshProUGUI>().text = penize.ToString() + " K�";
-        GameObject.Find("Datum").GetComponent<TextMeshProUGUI>().text = den.ToString() + datum;
-        GameObject.Find("Reputace").GetComponent<TextMeshProUGUI>().text = reputace.ToString();
+        penizeText.text = penize.ToString() + " Kc";
+        denText.text = den.ToString() + datum;
+        reputaceText.text = reputace.ToString();
     }
 }

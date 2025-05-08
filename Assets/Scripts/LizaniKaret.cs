@@ -242,8 +242,8 @@ public class LizaniKaret : MonoBehaviour
                 }
             }           
             HracovoKolo = true;           
+            KartaProHrace();            
             yield return new WaitForSeconds(0.5f);
-            KartaProHrace();
         }
         StartCoroutine(StartKartaOdhozeni());
         yield return new WaitForSeconds(0.5f);
