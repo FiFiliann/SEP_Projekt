@@ -10,6 +10,7 @@ public class DluhOdPritele : MonoBehaviour
     public TextMeshProUGUI vratitKolikText;
     public TextMeshProUGUI vratitZaText;
     public TextMeshProUGUI PodtextText;
+    public GameObject DluhOdKamaradaPopUp;
     public int dalsiPujckaZa;
     public int vratitKolik;
     public int vratitZa;
@@ -18,6 +19,7 @@ public class DluhOdPritele : MonoBehaviour
 
     public void Start()
     {
+        manager = GameObject.Find("GameManager").GetComponent<manager>();
         manager = GameObject.Find("GameManager").GetComponent<manager>();
     }
     public void odejit()
@@ -34,17 +36,18 @@ public class DluhOdPritele : MonoBehaviour
 
             if(vratitZa != 0 && vratitKolik != 0)
             {
+                PodtextText.text = "JO, TO BY SLO.";
                 vratitKolik += pujcitSI;
                 spravnaPujcka = true;
                 dalsiPujckaZa = vratitZa + 2;            
             }
-            else if (vratitZa < 0 && vratitKolik < 0)
+            else if (pujcitSI < 0)
             {
-                PodtextText.text = "Velice humorne.";
+                PodtextText.text = "VELICE HUMORNE.";
             }
-            else if(vratitZa == 0 && vratitKolik == 0) { PodtextText.text = "Tolik nemam, kamarade."; }
+            else if(vratitZa == 0 && vratitKolik == 0) { PodtextText.text = "TOLIK NEMAM, KAMARADE.\n PUJCUJI DO 1400"; }
         }
-        else { PodtextText.text = "coze?"; }
+        else { PodtextText.text = "COZE?"; }
     }
     public void PotvrzeniPujcky()
     {
@@ -61,25 +64,29 @@ public class DluhOdPritele : MonoBehaviour
                     i = manager.PlatbyDohromady.Length;
                     manager.BytMenuPromene();
                     spravnaPujcka = false;
-                    PodtextText.text = "Super. Vrat se za " + dalsiPujckaZa + " dny, pak zase pujcim.";
+                    PodtextText.text = "SUPER. VRAT SE ZA " + dalsiPujckaZa + " DNY, PAK ZASE PUJCIM.";
                 }
             }
         }
-        else { PodtextText.text = "Nevim co chces, kamarade"; }
+        else { PodtextText.text = "NEVIM CO CHCES, KAMARADE"; }
     }
     public void Cas()
     {
         if(pujcitSI > 0 && pujcitSI < 199) { vratitZa = 1; vratitKolik = 100; }
         else if (pujcitSI >= 200 && pujcitSI < 449) { vratitZa = 2; vratitKolik = 150; }
         else if (pujcitSI >= 450 && pujcitSI < 799) { vratitZa = 3; vratitKolik = 250; }
-        else if (pujcitSI >= 800 && pujcitSI > 1399) { vratitZa = 4; vratitKolik = 400; }
+        else if (pujcitSI >= 800 && pujcitSI < 1401) { vratitZa = 4; vratitKolik = 400; }
         else { vratitZa = 0; vratitKolik = 0; }
     }
     public void PodTextPriPrichodu()
     {
         if (dalsiPujckaZa == 0)
-        { PodtextText.text = "Je libo pujcka?"; }
+        { PodtextText.text = "JE LIBO PUJCKA?"; }
         else
-        { PodtextText.text = "Vrat se za " + dalsiPujckaZa + " dny, pak zase pujcim."; }
+        { PodtextText.text = "VRAT SE ZA " + dalsiPujckaZa + " DNY, PAK ZASE PUJCIM."; }
+    }
+    public void PujckaOdKamarada()
+    {
+        DluhOdKamaradaPopUp.SetActive(true);
     }
 }

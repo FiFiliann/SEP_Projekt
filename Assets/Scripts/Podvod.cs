@@ -12,14 +12,14 @@ public class Podvod : MonoBehaviour , IPointerEnterHandler, IPointerExitHandler
     //--//
     public int cisloButonu;
     public int potrebnaReputace;
-    public string popisText;
-    public string nazevText;
+    //public string popisText;
+    //public string nazevText;
     void Start()
     {
         manager = GameObject.Find("GameManager").GetComponent<manager>();
         popisOkenko.SetActive(false);
-        ObsahNazev.GetComponent<TextMeshProUGUI>().text = nazevText;
-        ObsahPopisu.GetComponent<TextMeshProUGUI>().text = popisText;
+        //ObsahNazev.GetComponent<TextMeshProUGUI>().text = nazevText;
+        //ObsahPopisu.GetComponent<TextMeshProUGUI>().text = popisText;
     }
     public void Zaplaceni()
     {

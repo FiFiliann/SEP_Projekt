@@ -335,6 +335,8 @@ public class LizaniKaret : MonoBehaviour
         }
         else
         {
+            manager.ZmenaSceny(0);
+            manager.NovyDen();
             Debug.Log("Vyčerpal jsi všechny pokusy na podvádění!");
         }
     }

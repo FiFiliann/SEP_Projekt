@@ -16,4 +16,8 @@ public class NezaplacenyDluh : MonoBehaviour
         manager.GameOverScreen.SetActive(true);        
         Destroy(gameObject);
     }
+    public void DluhOdKamarada()
+    {
+        manager.OtevritPujckuOdPritele();
+    }
 }
