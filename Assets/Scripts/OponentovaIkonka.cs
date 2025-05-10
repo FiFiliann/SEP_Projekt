@@ -24,7 +24,6 @@ public class OponentovaIkonka : MonoBehaviour
         OponentSazka = transform.Find("OponentovaSazka").GetComponent<TextMeshProUGUI>();
         OponentIkonka = transform.Find("OponentVzhled").GetComponent<Image>();
         OponentiPozice = GameObject.Find("ZidleProOponenty").GetComponent<Transform>();
-        //OponentIkonka.GetComponent<Image>().sprite = OponentSprity[Ikonka];
         OponentSazka.text = "";
         Penize = CelkovePenizeRandom(); OponentCelkovePenize.text = Penize + ",-";
         StartI();
@@ -65,7 +64,8 @@ public class OponentovaIkonka : MonoBehaviour
         {            
             Sazka = Random.Range(0, Penize);
             OponentSazka.text =Sazka + ",-";
-            manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = true;
+            if (manager.OponentiUStolu[i] != null) 
+            {manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = true; }
             manager.sazky[i] = Sazka;
         }
         else
@@ -77,21 +77,24 @@ public class OponentovaIkonka : MonoBehaviour
                     Sazka = manager.nejvyssiSazka;
                     OponentSazka.text =Sazka + "";
                     manager.secteni += Sazka;
-                    manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = true;
+                    if (manager.OponentiUStolu[i] != null)
+                    { manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = true; }
                     manager.sazky[i] = Sazka;
                 }
                 else
                 { 
                     Sazka = 0; OponentSazka.text = "OUT";
-                    manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = false;
+                    if (manager.OponentiUStolu[i] != null)
+                    { manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = false; }
                     manager.sazky[i] = 0;
                     manager.OponentiUStolu[i].GetComponent<OponentUStolu>().SkrytKarty();
                 }
             }
             else 
             { 
-                manager.secteni += Sazka; 
-                manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = true;
+                manager.secteni += Sazka;
+                if (manager.OponentiUStolu[i] != null)
+                { manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = true; }
             }
         }
     }

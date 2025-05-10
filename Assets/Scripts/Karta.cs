@@ -198,7 +198,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
         if (!GameObject.Find("HracovaRuka").GetComponent<HracRuka>().HracKarty.Any())
         {
             manager.sazeciOkenko.SetActive(true);            
-            manager.penize += manager.secteni;
+            manager.penize += manager.secteni - manager.hracSazka;
             GameObject.Find("HracovaSazka").GetComponent<TextMeshProUGUI>().text = manager.penize + "KC";
             StartCoroutine(manager.NoveKoloPrsi());
 

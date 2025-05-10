@@ -219,10 +219,16 @@ public class LizaniKaret : MonoBehaviour
                 
                 if (!manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OponentKarty.Any()) 
                 { 
-                    manager.OponentiUStolu[j].GetComponent<OponentUStolu>().PrideleniPenezOponentovy();
-                    
-                    yield return new WaitForSeconds(1.5f);
                     manager.sazeciOkenko.SetActive(true);
+
+                    for (int a = 0; a < manager.OponentiUStolu.Length; a++) // rozdeleni Penez
+                    {
+                        if (manager.OponentiUStolu[a] != null && manager.OponentiUStolu[a].GetComponent<OponentUStolu>().Hraje == true && j != a)
+                            { manager.OponentiUStolu[a].GetComponent<OponentUStolu>().OdecteniPenezOponentovy(); }
+                        else if(manager.OponentiUStolu[a] != null && manager.OponentiUStolu[a].GetComponent<OponentUStolu>().Hraje == true && j == a)
+                            { manager.OponentiUStolu[a].GetComponent<OponentUStolu>().PrideleniPenezOponentovy(); }
+                        yield return new WaitForSeconds(0.5f);
+                    }
                     
                     manager.penize -= manager.nejvyssiSazka;
                     GameObject.Find("HracovaSazka").GetComponent<TextMeshProUGUI>().text = manager.penize + "KC";
@@ -364,7 +370,37 @@ public class LizaniKaret : MonoBehaviour
     public void HracLizani()
     {
         StartCoroutine(EfektyKaretNaHrace());
+    }
+    public void VynechatKoloButton()
+    {
+        bool neco = true;
+        int vyherce = 0;
+        while(neco)
+        {
+            for (int j = 0; j < manager.OponentiUStolu.Length; j++) // počet hrajících oponentů
+            {
+                int i = UnityEngine.Random.Range(0, 1);
+                if (manager.OponentiUStolu[j] != null && manager.OponentiUStolu[j].GetComponent<OponentUStolu>().Hraje == true && i == 0)
+                {
+                    manager.OponentiUStolu[j].GetComponent<OponentUStolu>().PrideleniPenezOponentovy();
+                    vyherce = j;
+                    j = manager.OponentiUStolu.Length;
+                    neco = false;
+                }
+            }/*
+            if(!neco)
+            {
+                for (int j = 0; j < manager.OponentiUStolu.Length; j++) // počet hrajících oponentů
+                {
+                    if (manager.OponentiUStolu[j] != manager.OponentiUStolu[vyherce] && manager.OponentiUStolu[j].GetComponent<OponentUStolu>().Hraje == true)
+                    {
+                        manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OdecteniPenezOponentovy();
+                    }
+                }
+            }*/
+        }
 
+        StartCoroutine(manager.NoveKoloPrsi());
     }
     public IEnumerator EfektyKaretNaHrace()
     {      

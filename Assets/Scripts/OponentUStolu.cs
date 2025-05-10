@@ -217,7 +217,12 @@ public class OponentUStolu : MonoBehaviour
     }
     public void PrideleniPenezOponentovy()
     {
-        manager.OponentiDohromady[CisloOponenta].GetComponent<OponentovaIkonka>().Penize += manager.secteni;
-        manager.OponentiDohromady[CisloOponenta].GetComponent<OponentovaIkonka>().OponentCelkovePenize.text = manager.OponentiDohromady[1].GetComponent<OponentovaIkonka>().Penize + ",-";
+        manager.OponentiDohromady[CisloOponenta].GetComponent<OponentovaIkonka>().Penize += manager.secteni - manager.sazky[CisloOponenta];
+        manager.OponentiDohromady[CisloOponenta].GetComponent<OponentovaIkonka>().OponentCelkovePenize.text = manager.OponentiDohromady[CisloOponenta].GetComponent<OponentovaIkonka>().Penize + ",-";
+    }
+    public void OdecteniPenezOponentovy()
+    {
+        manager.OponentiDohromady[CisloOponenta].GetComponent<OponentovaIkonka>().Penize -= manager.sazky[CisloOponenta] ;
+        manager.OponentiDohromady[CisloOponenta].GetComponent<OponentovaIkonka>().OponentCelkovePenize.text = manager.OponentiDohromady[CisloOponenta].GetComponent<OponentovaIkonka>().Penize + ",-";
     }
 }
