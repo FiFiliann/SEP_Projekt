@@ -80,6 +80,10 @@ public class manager : MonoBehaviour
     public GameObject GameOverPopup;
     public Slider PodezreniSlider;
 
+    public Button[] lokaceTlacitka;         // Tlačítka pro lokace
+    public int[] lokaceReputace;            // Potřebná reputace pro každou lokaci
+    public GameObject[] lokaceZamky;        // Ikonky zámků pro každou lokaci
+
 
     //podvody
     public bool KartaVRukavuKoupeno = true;
@@ -471,10 +475,22 @@ public class manager : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void AktualizovatLokaceVMenu()
+    {
+        for (int i = 0; i < lokaceTlacitka.Length; i++)
+        {
+            bool dostupna = reputace >= lokaceReputace[i];
+            lokaceTlacitka[i].interactable = dostupna;
+            if (lokaceZamky[i] != null)
+                lokaceZamky[i].SetActive(!dostupna);
+        }
+    }
     public void BytMenuPromene() //vyps�n� zm�ny variabilit v menu
     {
         penizeText.text = penize.ToString() + " Kc";
         denText.text = den.ToString() + datum;
         reputaceText.text = reputace.ToString();
+        AktualizovatLokaceVMenu();
     }
 }

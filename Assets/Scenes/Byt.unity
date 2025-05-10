@@ -882,6 +882,9 @@ MonoBehaviour:
   penizeText: {fileID: 541581536}
   GameOverPopup: {fileID: 0}
   PodezreniSlider: {fileID: 0}
+  lokaceTlacitka: []
+  lokaceReputace: 
+  lokaceZamky: []
   KartaVRukavuKoupeno: 1
 --- !u!4 &120449549
 Transform:
