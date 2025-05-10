@@ -157,7 +157,7 @@ public class manager : MonoBehaviour
         if (novaScena != 0) 
         {
             UI[0].SetActive(false); UI[1].SetActive(true); sazeciOkenko.SetActive(true) /*BUDE SE HODIT DO BUDOUCNA*/;
-            GameObject.Find("HracovaSazka").GetComponent<TextMeshProUGUI>().text = penize + "K�";          
+            GameObject.Find("HracovaSazka").GetComponent<TextMeshProUGUI>().text = penize + "KC";          
             for (int j = 0; j < OponentiDohromady.Length; j++)
             {
                 Destroy(OponentiUStolu[j]);
@@ -192,6 +192,8 @@ public class manager : MonoBehaviour
                     vseVPohode = false;
                     GameObject upominkaPopUp = Instantiate(NezaplacenyDluhPopUp,GameObject.Find("HlavniMenu").transform);
                     upominkaPopUp.transform.position = new Vector3(0,0,9);
+                    upominkaPopUp.name = "NzDh";
+                    upominkaPopUp.GetComponent<NezaplacenyDluh>().cisloDluhu = i;
                     GameObject dluh = Instantiate(PlatbyDohromady[i], upominkaPopUp.transform);
                     dluh.transform.localScale = new Vector3(0.8f, 0.8f); 
                     dluh.transform.position = upominkaPopUp.GetComponent<NezaplacenyDluh>().NezaplacenyDluhPoloha.transform.position;
@@ -248,6 +250,14 @@ public class manager : MonoBehaviour
     //OPONENTI
     IEnumerator VytvoreniOponenta()
     {
+        dovysovani = false;
+        SazkaInput.text = null;
+        secteni = 0;
+        nejvyssiSazka = 0;
+        hracSazka = 0;
+        for (int i = 0; i < sazky.Length; i++)
+        { sazky[i] = 0; }
+
         if (PrichodDoNoveSceny)
         {          
             OponentIkonkaReset();
@@ -291,6 +301,8 @@ public class manager : MonoBehaviour
         secteni = 0;
         nejvyssiSazka = 0;
         hracSazka = 0;
+        for (int i = 0; i < sazky.Length; i++)
+        { sazky[i] = 0;}
         GameObject.Find("CelkovaSazka").GetComponent<TextMeshProUGUI>().text = "nej: " + nejvyssiSazka + "  celkem: " + secteni;
 
         for (int i = 0; i < OponentiDohromady.Length; i++) // reset původních oponentů
@@ -365,7 +377,6 @@ public class manager : MonoBehaviour
         OponentiNePouziteSprity.RemoveAt(a);
         return OponentiPouziteSprity.LastOrDefault();
     }
-
     public IEnumerator porovnanaviSazek()
     {
         secteni = 0;

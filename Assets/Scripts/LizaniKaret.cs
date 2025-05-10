@@ -206,7 +206,6 @@ public class LizaniKaret : MonoBehaviour
         i.GetComponent<Karta>().ZnackaKarty = balicek[0].Substring(0, 1);
         i.GetComponent<Karta>().CisloKarty = int.Parse(balicek[0].Substring(1, balicek[0].Length - 1));
     }
-
     //
     public IEnumerator Kolo()
     {
@@ -220,10 +219,16 @@ public class LizaniKaret : MonoBehaviour
                 
                 if (!manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OponentKarty.Any()) 
                 { 
-                    j = manager.OponentiUStolu.Length;
+                    manager.OponentiUStolu[j].GetComponent<OponentUStolu>().PrideleniPenezOponentovy();
+                    
                     yield return new WaitForSeconds(1.5f);
                     manager.sazeciOkenko.SetActive(true);
+                    
+                    manager.penize -= manager.nejvyssiSazka;
+                    GameObject.Find("HracovaSazka").GetComponent<TextMeshProUGUI>().text = manager.penize + "KC";
+                    
                     StartCoroutine(manager.NoveKoloPrsi());
+                    j = manager.OponentiUStolu.Length;
                 }
                 else
                 {
@@ -337,6 +342,8 @@ public class LizaniKaret : MonoBehaviour
         {
             manager.ZmenaSceny(0);
             manager.NovyDen();
+            manager.penize -= manager.nejvyssiSazka;
+            manager.BytMenuPromene();
             Debug.Log("Vyčerpal jsi všechny pokusy na podvádění!");
         }
     }

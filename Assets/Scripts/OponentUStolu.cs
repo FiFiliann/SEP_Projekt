@@ -9,6 +9,7 @@ using System.Collections;
 
 public class OponentUStolu : MonoBehaviour
 {
+    public manager manager;
     public TextMeshProUGUI PocetKaret;
     public GameObject Karta;
     public GameObject OdhozenaKarta;
@@ -23,6 +24,7 @@ public class OponentUStolu : MonoBehaviour
     public int CisloOponenta;
     private void Start()
     {
+        manager = GameObject.Find("GameManager").GetComponent<manager>();
         if (gameObject.name == "Oponent3" || gameObject.name == "Oponent4")
         {
             gameObject.transform.localScale = new Vector3(-1, 1, 1); 
@@ -212,5 +214,10 @@ public class OponentUStolu : MonoBehaviour
             OdhozenaKarta.GetComponent<Karta>().ZnackaKarty = OponentKarty[i].Substring(0, 1);
             OdhozenaKarta.GetComponent<Karta>().CisloKarty = int.Parse(OponentKarty[i].Substring(1, OponentKarty[i].Length - 1));
         }
+    }
+    public void PrideleniPenezOponentovy()
+    {
+        manager.OponentiDohromady[CisloOponenta].GetComponent<OponentovaIkonka>().Penize += manager.secteni;
+        manager.OponentiDohromady[CisloOponenta].GetComponent<OponentovaIkonka>().OponentCelkovePenize.text = manager.OponentiDohromady[1].GetComponent<OponentovaIkonka>().Penize + ",-";
     }
 }

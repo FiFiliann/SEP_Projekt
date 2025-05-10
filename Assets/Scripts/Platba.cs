@@ -63,10 +63,10 @@ public class Platba : MonoBehaviour
         if (manager.penize >= _cena)
         {
             manager.penize -= _cena;
-            if(GameObject.Find("NezaplacenyDluhPripominka 1(Clone)") != null )
+            if(GameObject.Find("NzDh") != null )
             { 
-                Destroy(GameObject.Find("NezaplacenyDluhPripominka 1(Clone)"));
-                Destroy(manager.PlatbyDohromady[GameObject.Find("NezaplacenyDluhPripominka 1(Clone)").GetComponent<NezaplacenyDluh>().cisloDluhu]);
+                Destroy(manager.PlatbyDohromady[GameObject.Find("NzDh").GetComponent<NezaplacenyDluh>().cisloDluhu]);
+                Destroy(GameObject.Find("NzDh"));             
             }            
             if(gameObject == manager.PlatbyDohromady[0])
             {
