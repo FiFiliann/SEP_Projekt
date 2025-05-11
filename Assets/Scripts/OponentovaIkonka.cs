@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class OponentovaIkonka : MonoBehaviour
 {
     public manager manager;
@@ -25,7 +24,7 @@ public class OponentovaIkonka : MonoBehaviour
         OponentIkonka = transform.Find("OponentVzhled").GetComponent<Image>();
         OponentiPozice = GameObject.Find("ZidleProOponenty").GetComponent<Transform>();
         OponentSazka.text = "";
-        Penize = CelkovePenizeRandom(); OponentCelkovePenize.text = Penize + ",-";
+        Penize = CelkovePenizeRandom(manager.novaScena); OponentCelkovePenize.text = Penize + ",-";
         StartI();
         Sazky();
     }
@@ -54,15 +53,23 @@ public class OponentovaIkonka : MonoBehaviour
         }
     }
 
-    public int CelkovePenizeRandom()
-    {      
-        return Random.Range(400, 800);
+    public int CelkovePenizeRandom(int i)
+    {
+        
+        switch(i)
+        {
+            case 1: return Random.Range(200, 300);
+            case 2: return Random.Range(300, 500); 
+            case 3: return Random.Range(500, 750); 
+            case 4: return Random.Range(750, 1000);
+            default: return Random.Range(400, 800);
+        }
     }
     public void SazkaRandom(int i)
     {
         if (!manager.dovysovani)
-        {            
-            Sazka = Random.Range(0, Penize);
+        {
+            Sazka = Random.Range(Mathf.FloorToInt((Penize/100)*12), Mathf.FloorToInt((Penize / 100) * 30));
             OponentSazka.text =Sazka + ",-";
             if (manager.OponentiUStolu[i] != null) 
             {manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = true; }

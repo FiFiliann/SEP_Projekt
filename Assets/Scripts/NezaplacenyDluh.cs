@@ -18,6 +18,6 @@ public class NezaplacenyDluh : MonoBehaviour
     }
     public void DluhOdKamarada()
     {
-        manager.OtevritPujckuOdPritele();
+        manager.GetComponent<manager>().OtevritPujckuOdPritele();
     }
 }

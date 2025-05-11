@@ -53,7 +53,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
                 this.transform.localScale = Vector3.Lerp(PoziceVHracoveRuce.transform.localScale, OdhazovaciBalicek.transform.localScale, cas);
                 if (cas > 1) {  Hrac_OdhazovaciBalicek = false; a = false; Kolo = true;  cas = 0; HracuvTah(); }
             }
-            if (LizaciBalicek_Hrac && HracovaRukaPolohaProKartu != null)//Z lizacího balíčku do ruky hráče
+            if (LizaciBalicek_Hrac)//Z lizacího balíčku do ruky hráče
             {
                 cas += Time.deltaTime * 1.5f;
                 this.transform.position = Vector3.Lerp(LizaciBalicek.transform.position, HracovaRukaPolohaProKartu.transform.position, cas);
@@ -70,7 +70,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
                 if (cas > 1) 
                 {
                     if (CisloKarty == 1 || CisloKarty == 7 || ZnackaKarty == "J") { LizKaret.EfektKarty = true; }
-                    Oponent_OdhazovaciBalicek = false; cas = 0; GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = gameObject.GetComponent<Image>().sprite;
+                    Oponent_OdhazovaciBalicek = false; cas = 0; a = false; GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = gameObject.GetComponent<Image>().sprite;
                 }
             }
 
@@ -87,7 +87,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
                 cas += Time.deltaTime * 1.5f;
                 this.transform.position = Vector3.Lerp(LizaciBalicek.transform.position, OdhazovaciBalicek.transform.position, cas);
                 this.transform.localScale = Vector3.Lerp(LizaciBalicek.transform.localScale, OdhazovaciBalicek.transform.localScale, cas);
-                if (cas > 1) { LizaciBalicek_OdhazovaciBalicek = false; cas = 0; GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = gameObject.GetComponent<Image>().sprite;
+                if (cas > 1) { LizaciBalicek_OdhazovaciBalicek = false; a = false; cas = 0; GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = gameObject.GetComponent<Image>().sprite;
                 }
             }
 
@@ -132,41 +132,43 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        //KartaVRuce
-        if(LizKaret.KartaVRukavuAktivni && a && LizKaret.HracovoKolo && !TohleJeKartaVRukavu)
+        if(LizKaret.HracovoKolo)
         {
-            LizKaret.PodvodRukav(gameObject);
-        }
-        else if (LizKaret.HracovoKolo && a && !LizKaret.KartaVRukavuAktivni && !TohleJeKartaVRukavu)
-        {
-            if (ZnackaKarty == LizKaret.ZnackaOdhozenaKarta || CisloKarty == LizKaret.CisloOdhozenaKarta || ZnackaKarty == "J" || CisloKarty == 12 || LizKaret.ZnackaOdhozenaKarta == "E")
+            //kartaVRukavu
+            if(!TohleJeKartaVRukavu && LizKaret.KartaVRukavuAktivni ) // ProhozeniSKartvouVRukavu
             {
-                if (CisloKarty == 12 || ZnackaKarty == "J")
-                {
-                    if (!LizKaret.EfektKarty && LizaciBalicek_Hrac) { OdhozeniHracoviKarty(); }
-                }
-                else if (LizaciBalicek_Hrac) { OdhozeniHracoviKarty(); }
+                LizKaret.PodvodRukav(gameObject);
             }
-        }          
-        //KartaVRukavu
-        if (TohleJeKartaVRukavu && !LizKaret.KartaVRukavuAktivni)
-        {
-            this.GetComponent<Image>().color = new Color(255f, 100f, 0f,255f);
-            LizKaret.KartaVRukavuAktivni = true; 
-        }      
-        else if (TohleJeKartaVRukavu && LizKaret.KartaVRukavuAktivni)
-        {
-            this.GetComponent<Image>().color = new Color(255f, 255f, 255f, 255f);
-            LizKaret.KartaVRukavuAktivni = false;
+            else if (!TohleJeKartaVRukavu && !LizKaret.KartaVRukavuAktivni ) // OdhozeniKarty
+            {
+                if (ZnackaKarty == LizKaret.ZnackaOdhozenaKarta || CisloKarty == LizKaret.CisloOdhozenaKarta || ZnackaKarty == "J" || CisloKarty == 12 || LizKaret.ZnackaOdhozenaKarta == "E")
+                {
+                    if (CisloKarty == 12 || ZnackaKarty == "J")
+                    {
+                        if (!LizKaret.EfektKarty) { OdhozeniHracoviKarty(); }
+                    }
+                    else { OdhozeniHracoviKarty(); }
+                }
+            }          
+            //KartaVRukavu
+            if (TohleJeKartaVRukavu && !LizKaret.KartaVRukavuAktivni)
+            {
+                this.GetComponent<Image>().color = new Color(255f, 100f, 0f,255f);
+                LizKaret.KartaVRukavuAktivni = true; 
+            }      
+            else if (TohleJeKartaVRukavu && LizKaret.KartaVRukavuAktivni )
+            {
+                this.GetComponent<Image>().color = new Color(255f, 255f, 255f, 255f);
+                LizKaret.KartaVRukavuAktivni = false;
+            }
         }
-
 
     }
     public void OdhozeniHracoviKarty()
     {
         gameObject.transform.SetParent(OdhazovaciBalicek.transform, true);
-        Instantiate(PoziceVHracoveRuce, gameObject.transform);
-        PoziceVHracoveRuce.transform.position = this.transform.position;
+        //Instantiate(PoziceVHracoveRuce, gameObject.transform);
+        //PoziceVHracoveRuce.transform.position = this.transform.position;
         Hrac_OdhazovaciBalicek = true;
         LizKaret.HracovoKolo = false;
         LizKaret.balicekOdhozene.Add(GameObject.Find("HracovaRuka").GetComponent<HracRuka>().HracKarty[0]);
@@ -208,8 +210,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             if (CisloKarty == 1) { LizKaret.EfektKarty = true; }
             if (CisloKarty == 7) { LizKaret.EfektKarty = true; LizKaret.pocetSedmicek++; }
             if (CisloKarty == 13 && ZnackaKarty == "♠") { LizKaret.EfektKarty = true; }
-            if (CisloKarty == 12) { LizKaret.ZnackaVyberPopUp.SetActive(true); LizKaret.EfektKarty = true; }
-            if (ZnackaKarty == "J") { LizKaret.ZnackaVyberPopUp.SetActive(true); LizKaret.EfektKarty = true; }
+            if (ZnackaKarty == "J" || CisloKarty == 12) { LizKaret.ZnackaVyberPopUp.SetActive(true); LizKaret.EfektKarty = true; }
             else
             {
                 LizKaret.CisloOdhozenaKarta = CisloKarty;

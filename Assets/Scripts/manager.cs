@@ -35,8 +35,9 @@ public class manager : MonoBehaviour
     public GameObject NezaplacenyDluhPopUp;
     public bool PribehovyDluh = true;
 
+    public GameObject PujckaOdPritelePopUpPrefab;
     public GameObject PujckaOdPritelePopUp;
-
+    public int DalsiPujckaOdPriteleZa = 0;
     //OponentiIkonka//
     public GameObject OponentIkonka;
     public Transform OponentIkonkaContent;
@@ -80,10 +81,13 @@ public class manager : MonoBehaviour
     public GameObject GameOverPopup;
     public Slider PodezreniSlider;
 
+   
+
     public Button[] lokaceTlacitka;         // Tlačítka pro lokace
     public int[] lokaceReputace;            // Potřebná reputace pro každou lokaci
     public GameObject[] lokaceZamky;        // Ikonky zámků pro každou lokaci
 
+    public Slider[] SeznamReputaceMapa;           // Seznam slideru na mape 
 
     //podvody
     public bool KartaVRukavuKoupeno = true;
@@ -132,13 +136,14 @@ public class manager : MonoBehaviour
 
     public void ZmenaSceny(int a)
     {
-        novaScena = a; rychlost = 5;
-        if(GameObject.Find("KartaVRukavu")  != null) 
-        {
-            if (GameObject.Find("KartaVRukavu").transform.childCount > 0)
-                DestroyImmediate(GameObject.Find("KartaVRukavu").transform.GetChild(0).gameObject);
-        }
-        if(novaScena == 0) { }
+
+            novaScena = a; rychlost = 5;
+            if(GameObject.Find("KartaVRukavu")  != null) 
+            {
+                if (GameObject.Find("KartaVRukavu").transform.childCount > 0)
+                    DestroyImmediate(GameObject.Find("KartaVRukavu").transform.GetChild(0).gameObject);
+            }
+
     }
 
     public void ExitMainMenu()
@@ -224,8 +229,8 @@ public class manager : MonoBehaviour
     public void NovyDen()
     {
         den++;
-        if (PujckaOdPritelePopUp.GetComponent<DluhOdPritele>().dalsiPujckaZa != 0) 
-            {PujckaOdPritelePopUp.GetComponent<DluhOdPritele>().dalsiPujckaZa -= 1; }
+        if (DalsiPujckaOdPriteleZa != 0) 
+            {DalsiPujckaOdPriteleZa -= 1; }
         for (int i = 0; i < PlatbyDohromady.Length; i++)
         {
             if (PlatbyDohromady[i] != null)
@@ -247,7 +252,7 @@ public class manager : MonoBehaviour
 
     public void OtevritPujckuOdPritele()
     {
-        PujckaOdPritelePopUp.SetActive(true);
+        PujckaOdPritelePopUp = Instantiate(PujckaOdPritelePopUpPrefab,GameObject.Find("HlavniMenu").transform);
         PujckaOdPritelePopUp.GetComponent<DluhOdPritele>().PodTextPriPrichodu();
     }
 
@@ -330,7 +335,7 @@ public class manager : MonoBehaviour
                     sazky[i] = 0;
                     Destroy(OponentiDohromady[i]);
                     Destroy(OponentiUStolu[i]);
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(0.5f);
                 }
             }
         }
@@ -340,7 +345,7 @@ public class manager : MonoBehaviour
             OponentiDohromady[0].name = "OponentIkonka" + (1);
             OponentiDohromady[0].GetComponent<OponentovaIkonka>().CisloOponenta = 0;
             OponentiDohromady[0].GetComponent<OponentovaIkonka>().OponentIkonka.GetComponent<Image>().sprite = OponentIkonkaRandom();
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
         }
         dovysovani = false;
         for (int i = 0; i < OponentiDohromady.Length; i++) // přidání oponentů

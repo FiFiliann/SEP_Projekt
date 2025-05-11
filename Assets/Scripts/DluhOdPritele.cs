@@ -12,9 +12,9 @@ public class DluhOdPritele : MonoBehaviour
     public TextMeshProUGUI PodtextText;
     public GameObject DluhOdKamaradaPopUp;
     public int dalsiPujckaZa;
-    public int vratitKolik;
+    public double vratitKolik;
     public int vratitZa;
-    public int pujcitSI;
+    public double pujcitSI;
     private bool spravnaPujcka = false;
 
     public void Start()
@@ -28,10 +28,10 @@ public class DluhOdPritele : MonoBehaviour
     }
     public void VlozeniPujcky() // hráè potvrdí sázku
     {
-        if (Int32.TryParse(PujckaInput.text, out pujcitSI))
+        if (double.TryParse(PujckaInput.text, out pujcitSI))
         {
             Cas();
-            vratitKolikText.text = vratitKolik.ToString();
+            vratitKolikText.text = pujcitSI.ToString() + "+" + vratitKolik.ToString();
             vratitZaText.text = vratitZa.ToString();
 
             if(vratitZa != 0 && vratitKolik != 0)
@@ -39,7 +39,7 @@ public class DluhOdPritele : MonoBehaviour
                 PodtextText.text = "JO, TO BY SLO.";
                 vratitKolik += pujcitSI;
                 spravnaPujcka = true;
-                dalsiPujckaZa = vratitZa + 2;            
+                manager.DalsiPujckaOdPriteleZa = vratitZa + 2;            
             }
             else if (pujcitSI < 0)
             {
@@ -53,13 +53,13 @@ public class DluhOdPritele : MonoBehaviour
     {
         if(spravnaPujcka)
         {
-            manager.penize += pujcitSI;
+            manager.penize += Mathf.FloorToInt((float)pujcitSI);
             for (int i = 0; i < manager.PlatbyDohromady.Length; i++)
             {
                 if (manager.PlatbyDohromady[i] == null)
                 {
                     manager.PlatbyDohromady[i] = Instantiate(manager.novaplatba, manager.platbyContent);
-                    manager.PlatbyDohromady[i].GetComponent<Platba>().PriteluvDluh(vratitKolik, vratitZa);
+                    manager.PlatbyDohromady[i].GetComponent<Platba>().PriteluvDluh(Mathf.FloorToInt((float)vratitKolik), vratitZa);
                     manager.PlatbyDohromady[i].name = "platba" + i;
                     i = manager.PlatbyDohromady.Length;
                     manager.BytMenuPromene();
@@ -72,10 +72,11 @@ public class DluhOdPritele : MonoBehaviour
     }
     public void Cas()
     {
-        if(pujcitSI > 0 && pujcitSI < 199) { vratitZa = 1; vratitKolik = 100; }
-        else if (pujcitSI >= 200 && pujcitSI < 449) { vratitZa = 2; vratitKolik = 150; }
-        else if (pujcitSI >= 450 && pujcitSI < 799) { vratitZa = 3; vratitKolik = 250; }
-        else if (pujcitSI >= 800 && pujcitSI < 1401) { vratitZa = 4; vratitKolik = 400; }
+        vratitKolik = Mathf.FloorToInt((float)((pujcitSI / 100) * 21));
+        if(pujcitSI > 0 && pujcitSI < 199) { vratitZa = 1;}
+        else if (pujcitSI >= 200 && pujcitSI < 449) { vratitZa = 2;}
+        else if (pujcitSI >= 450 && pujcitSI < 799) { vratitZa = 3;}
+        else if (pujcitSI >= 800 && pujcitSI < 1401) { vratitZa = 4;}
         else { vratitZa = 0; vratitKolik = 0; }
     }
     public void PodTextPriPrichodu()
@@ -87,6 +88,7 @@ public class DluhOdPritele : MonoBehaviour
     }
     public void PujckaOdKamarada()
     {
-        DluhOdKamaradaPopUp.SetActive(true);
+        manager.PujckaOdPritelePopUp = Instantiate(manager.PujckaOdPritelePopUpPrefab, GameObject.Find("HlavniMenu").transform);
+        manager.PujckaOdPritelePopUp.GetComponent<DluhOdPritele>().PodTextPriPrichodu();
     }
 }

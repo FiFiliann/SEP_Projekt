@@ -177,25 +177,25 @@ public class LizaniKaret : MonoBehaviour
     //Karty
     public void KonecAnimace()
     {
-            GameObject kartadoRuky = Instantiate(KartaGo, GameObject.Find("HracovaRuka").transform);
-            PrideleniKarty(kartadoRuky);
-            hracRuka.HracKarty.Add(balicek[0]);
-            balicek.RemoveAt(0);
-            if (!balicek.Any()) {DoplneniBalicku(); }
             transform.Find("LizaciBalicekPocetKaret").GetComponent<TextMeshProUGUI>().text = balicek.Count + "";
-            Destroy(coze);
+            coze.GetComponent<Image>().color = new Color(255f, 255f, 255f, 255f);
             Destroy(a);
     }
     public void KartaProHrace()
     {
-        if (a == null && HracovoKolo)
-        {           
-            a = Instantiate(KartaGo, GameObject.Find("LizaciBalicek").transform);
-            coze = Instantiate(KartaNeviditelna, GameObject.Find("HracovaRuka").transform);
-            PrideleniKarty(a);
-            HracovoKolo = false;
-            //if (KonecZacatekRozdavani == true) { StartCoroutine(Kolo()); }
+        if (HracovoKolo)
+        {               
 
+            HracovoKolo = false;        
+            a = Instantiate(KartaGo, GameObject.Find("LizaciBalicek").transform);
+            coze = Instantiate(KartaGo, GameObject.Find("HracovaRuka").transform);
+            coze.GetComponent<Image>().color = new Color(255f, 255f, 255f, 0f);
+            PrideleniKarty(a);
+            PrideleniKarty(coze);           
+            coze.GetComponent<Karta>().LizaciBalicek_Hrac = false; 
+            hracRuka.HracKarty.Add(balicek[0]);
+            balicek.RemoveAt(0);
+            if (!balicek.Any()) {DoplneniBalicku(); }
         }
     }
 
@@ -227,7 +227,7 @@ public class LizaniKaret : MonoBehaviour
                             { manager.OponentiUStolu[a].GetComponent<OponentUStolu>().OdecteniPenezOponentovy(); }
                         else if(manager.OponentiUStolu[a] != null && manager.OponentiUStolu[a].GetComponent<OponentUStolu>().Hraje == true && j == a)
                             { manager.OponentiUStolu[a].GetComponent<OponentUStolu>().PrideleniPenezOponentovy(); }
-                        yield return new WaitForSeconds(0.5f);
+                        yield return new WaitForSeconds(0.2f);
                     }
                     
                     manager.penize -= manager.nejvyssiSazka;
@@ -256,16 +256,23 @@ public class LizaniKaret : MonoBehaviour
                 if (manager.OponentiUStolu[j] != null && manager.OponentiUStolu[j].GetComponent<OponentUStolu>().Hraje == true)
                 {
                     StartCoroutine(manager.OponentiUStolu[j].GetComponent<OponentUStolu>().LiznutiKartyOponent());//*
+                    transform.Find("LizaciBalicekPocetKaret").GetComponent<TextMeshProUGUI>().text = balicek.Count + "";
                     yield return new WaitForSeconds(0.5f);
                 }
             }           
             HracovoKolo = true;           
-            KartaProHrace();            
+            KartaProHrace();
+            transform.Find("LizaciBalicekPocetKaret").GetComponent<TextMeshProUGUI>().text = balicek.Count + "";
             yield return new WaitForSeconds(0.5f);
         }
         StartCoroutine(StartKartaOdhozeni());
+        transform.Find("LizaciBalicekPocetKaret").GetComponent<TextMeshProUGUI>().text = balicek.Count + "";
         yield return new WaitForSeconds(0.5f);
-        if (manager.KartaVRukavuKoupeno && GameObject.Find("KartaVRukavu").transform.childCount == 0) { KartaVRukavu(); }
+        if (manager.KartaVRukavuKoupeno && GameObject.Find("KartaVRukavu").transform.childCount == 0) 
+        { 
+            KartaVRukavu(); 
+            transform.Find("LizaciBalicekPocetKaret").GetComponent<TextMeshProUGUI>().text = balicek.Count + ""; 
+        }
         HracovoKolo = true;
 
     }
@@ -284,11 +291,10 @@ public class LizaniKaret : MonoBehaviour
         transform.Find("LizaciBalicekPocetKaret").GetComponent<TextMeshProUGUI>().text = balicek.Count + "";
 
         if (CisloOdhozenaKarta == 7) { EfektKarty = true; pocetSedmicek++; }
-        if (CisloOdhozenaKarta == 13 && ZnackaOdhozenaKarta == "♠") { EfektKarty = true; }
         if (CisloOdhozenaKarta == 1) { EfektKarty = true;}
         if (ZnackaOdhozenaKarta == "J") { EfektKarty = true;}
         if (ZnackaOdhozenaKarta == "J" || CisloOdhozenaKarta == 13) { ZnackaOdhozenaKarta = "E"; }
-
+        if (CisloOdhozenaKarta == 13 && ZnackaOdhozenaKarta == "♠") { EfektKarty = true; }
 
         yield return new WaitForSeconds(0.5f);
     }
@@ -299,10 +305,11 @@ public class LizaniKaret : MonoBehaviour
         GameObject kartadoRukavu = Instantiate(KartaGo, GameObject.Find("KartaVRukavu").transform);
         PrideleniKarty(kartadoRukavu);
         kartadoRukavu.transform.position = GameObject.Find("LizaciBalicek").transform.position;
+        kartadoRukavu.GetComponent<Karta>().LizaciBalicek_Hrac = false;
         kartadoRukavu.GetComponent<Karta>().LizaciBalicek_Rukav = true;
         kartadoRukavu.GetComponent<Karta>().TohleJeKartaVRukavu = true;
         KartaVRukavuA = kartadoRukavu;
-        balicekOdhozene.Add(balicek[0]);
+        //balicekOdhozene.Add(balicek[0]);
         balicek.RemoveAt(0);
     }
     public void PodvodRukav(GameObject i)
@@ -371,36 +378,32 @@ public class LizaniKaret : MonoBehaviour
     {
         StartCoroutine(EfektyKaretNaHrace());
     }
-    public void VynechatKoloButton()
+   public void VynechatKoloButton()
     {
-        bool neco = true;
-        int vyherce = 0;
-        while(neco)
+        StartCoroutine(VynechatKolo());
+        
+    }
+    public IEnumerator VynechatKolo()
+    {
+        List<int> hraciOponenti = new List<int>();
+        for (int a = 0; a < manager.OponentiUStolu.Length; a++) // rozdeleni Penez
         {
-            for (int j = 0; j < manager.OponentiUStolu.Length; j++) // počet hrajících oponentů
-            {
-                int i = UnityEngine.Random.Range(0, 1);
-                if (manager.OponentiUStolu[j] != null && manager.OponentiUStolu[j].GetComponent<OponentUStolu>().Hraje == true && i == 0)
-                {
-                    manager.OponentiUStolu[j].GetComponent<OponentUStolu>().PrideleniPenezOponentovy();
-                    vyherce = j;
-                    j = manager.OponentiUStolu.Length;
-                    neco = false;
-                }
-            }/*
-            if(!neco)
-            {
-                for (int j = 0; j < manager.OponentiUStolu.Length; j++) // počet hrajících oponentů
-                {
-                    if (manager.OponentiUStolu[j] != manager.OponentiUStolu[vyherce] && manager.OponentiUStolu[j].GetComponent<OponentUStolu>().Hraje == true)
-                    {
-                        manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OdecteniPenezOponentovy();
-                    }
-                }
-            }*/
+            if (manager.OponentiUStolu[a] != null && manager.OponentiUStolu[a].GetComponent<OponentUStolu>().Hraje == true)
+            { hraciOponenti.Add(manager.OponentiUStolu[a].GetComponent<OponentUStolu>().CisloOponenta); }
         }
-
+        int j = UnityEngine.Random.Range(0, hraciOponenti.Count);
+        Debug.Log(j);
+        for (int a = 0; a < manager.OponentiUStolu.Length; a++) // rozdeleni Penez
+        {
+            if (manager.OponentiUStolu[a] != null && manager.OponentiUStolu[a].GetComponent<OponentUStolu>().Hraje == true && a != hraciOponenti[j])
+            { manager.OponentiUStolu[a].GetComponent<OponentUStolu>().OdecteniPenezOponentovy(); }
+            else if (manager.OponentiUStolu[a] != null && manager.OponentiUStolu[a].GetComponent<OponentUStolu>().Hraje == true && j == hraciOponenti[j])
+            { manager.OponentiUStolu[a].GetComponent<OponentUStolu>().PrideleniPenezOponentovy(); }
+            yield return new WaitForSeconds(0.2f);
+        }
         StartCoroutine(manager.NoveKoloPrsi());
+
+        
     }
     public IEnumerator EfektyKaretNaHrace()
     {      
@@ -436,15 +439,16 @@ public class LizaniKaret : MonoBehaviour
         }
         else{pocetLiznutychKaret = 1;}
 
-        if(pocetLiznutychKaret != 0)
+        if (pocetLiznutychKaret != 0)
         {
             for(int i = 0; i < pocetLiznutychKaret; i++)
             {
-                KartaProHrace();        
-                yield return new WaitForSeconds(0.5f);
-                
+                KartaProHrace();
+                HracovoKolo = true;
+                yield return new WaitForSeconds(1f);               
             }
         }
+        HracovoKolo = false;
         StartCoroutine(Kolo());
     }        
 }

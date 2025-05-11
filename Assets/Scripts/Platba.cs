@@ -36,7 +36,7 @@ public class Platba : MonoBehaviour
     {
         Odkazy();
 
-        _cena = 3000;
+        _cena = 2000;
         _duvod = "DLUH// MAFIA";
         _cas = 13;
 
