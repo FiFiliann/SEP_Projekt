@@ -27,10 +27,12 @@ public class Podvod : MonoBehaviour , IPointerEnterHandler, IPointerExitHandler
         {
             if(cisloButonu != 0) 
             {
-                if (manager.koupenaDovednosti[cisloButonu - 1] == true && manager.reputace >= potrebnaReputace)
+                if (manager.koupenaDovednosti[cisloButonu - 1] == true)
                 { 
+                    Debug.Log("jE TO TADY");
                     gameObject.GetComponent<Button>().interactable = false;
                     manager.koupenaDovednosti[cisloButonu] = true;
+                    
                     KoupenyPodvod();
                 } 
             }
@@ -42,6 +44,9 @@ public class Podvod : MonoBehaviour , IPointerEnterHandler, IPointerExitHandler
         switch(cisloButonu)
         {
             case 0: manager.KartaVRukavuKoupeno = true; break;
+            case 1: manager.Kecanikoupeno = true; Debug.Log("1"); break;
+            case 2: manager.Kecanikoupeno = true; Debug.Log("2"); break;
+            case 3: manager.Kecanikoupeno = true; Debug.Log("3"); break;
             default: break;
         }
     }

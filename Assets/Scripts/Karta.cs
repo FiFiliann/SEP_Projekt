@@ -176,7 +176,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(LizKaret.HracovoKolo && !TohleJeKartaVRukavu)
+        if(!TohleJeKartaVRukavu)
         {
             if(a)
             {
@@ -187,7 +187,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        if(LizKaret.HracovoKolo && !TohleJeKartaVRukavu)
+        if(!TohleJeKartaVRukavu)
         {
             if (a)
             {
@@ -207,10 +207,10 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
         }
         else
         {
-            if (CisloKarty == 1) { LizKaret.EfektKarty = true; }
-            if (CisloKarty == 7) { LizKaret.EfektKarty = true; LizKaret.pocetSedmicek++; }
-            if (CisloKarty == 13 && ZnackaKarty == "♠") { LizKaret.EfektKarty = true; }
-            if (ZnackaKarty == "J" || CisloKarty == 12) { LizKaret.ZnackaVyberPopUp.SetActive(true); LizKaret.EfektKarty = true; }
+            if (CisloKarty == 1) { LizKaret.EfektKarty = true; LizKaret.DialogHrac("A STOP!"); }
+            if (CisloKarty == 7) { LizKaret.EfektKarty = true; LizKaret.pocetSedmicek++; LizKaret.DialogHrac("SEDMA KAMARADE!"); }
+            if (CisloKarty == 13 && ZnackaKarty == "♠") { LizKaret.EfektKarty = true; LizKaret.DialogHrac("LIZEJ, KAMARADE, LIZEJ!"); }
+            if (ZnackaKarty == "J" || CisloKarty == 12) { LizKaret.ZnackaVyberPopUp.SetActive(true); LizKaret.EfektKarty = true; LizKaret.DialogHrac("POJDME TO TROCHU ZMENIT, CO VY NA TO!"); }
             else
             {
                 LizKaret.CisloOdhozenaKarta = CisloKarty;

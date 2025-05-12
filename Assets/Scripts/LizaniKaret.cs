@@ -38,17 +38,21 @@ public class LizaniKaret : MonoBehaviour
     public bool EfektKarty = true;
     public bool HracovoKolo = true;
     public bool KonecZacatekRozdavani = false;
-    //
+
+    //KARTA V RUKAVU
     public bool KartaVRukavuAktivni = false;
     public GameObject KartaVRukavuA;
     public GameObject KartaVRukavuB;
-
+    //DIALOG
+    public GameObject KecaniButton;
+    public GameObject DialogPrefab;
+    public GameObject DialogPoloha;
     //Podezření
     public Slider PodezreniSlider;
     public float PodezreniValue = 0f;
     public int pocetOponentu = 0;
     public int MaxPokusyPodvadeni = 3; // Maximální počet pokusů
-    private int aktualniPokusyPodvadeni = 0; // Počet využitých pokusů
+    public int aktualniPokusyPodvadeni = 0; // Počet využitých pokusů
 
     public void Start()
     {
@@ -248,7 +252,8 @@ public class LizaniKaret : MonoBehaviour
     {
         PripravaBalicku();
         ResetRuk();
-        KonecZacatekRozdavani = false;
+        KonecZacatekRozdavani = false; 
+        if (manager.Kecanikoupeno) { KecaniButton.SetActive(true); }
         for (int i = 0;i < 4;i++) // počet karet
         {
             for (int j = 0; j < manager.OponentiUStolu.Length; j++) // počet hrajících oponentů
@@ -359,6 +364,23 @@ public class LizaniKaret : MonoBehaviour
             manager.BytMenuPromene();
             Debug.Log("Vyčerpal jsi všechny pokusy na podvádění!");
         }
+    }
+    // DIALOG
+    public void DialogButton()
+    {
+        GameObject HracDialog = Instantiate(DialogPrefab,DialogPoloha.transform);
+        HracDialog.GetComponent<Dialog>().HracDialog.SetActive(true);
+        HracDialog.GetComponent<Dialog>().OponentDialog.SetActive(false);
+        HracDialog.GetComponent<Dialog>().TohleJe = "Hrac";
+
+    }
+    public void DialogHrac(string text)
+    {
+        GameObject OponentDialog = Instantiate(DialogPrefab, DialogPoloha.transform);
+        OponentDialog.GetComponent<Dialog>().OponentDialog.SetActive(false);
+        OponentDialog.GetComponent<Dialog>().HracDialog.SetActive(true);
+        OponentDialog.GetComponent<Dialog>().TohleJe = "Oponent";
+        OponentDialog.GetComponent<Dialog>().OponentDialogText.text = text;
     }
     //Specialni Karty
     public void ZnackaVyber(int vyber)

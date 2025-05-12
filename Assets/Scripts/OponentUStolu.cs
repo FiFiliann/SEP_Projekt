@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Linq;
 using System.Collections;
@@ -191,7 +192,8 @@ public class OponentUStolu : MonoBehaviour
     public void SpecialniKartyOponent(int i)
     {
         if (int.Parse(OponentKarty[i].Substring(1, OponentKarty[i].Length - 1)) == 12 || OponentKarty[i].Substring(0,1) == "J") //Výběr znaku 
-        {            
+        {
+            DialogOponent("TROCHU TO ZMENIZE! CO VY NA TO?");
             LizKaret.CisloOdhozenaKarta = 14;
             LizKaret.ZnackaOdhozenaKarta = SecteniZnacek();
             OdhozenaKarta.GetComponent<Karta>().ZnackaKarty = LizKaret.ZnackaOdhozenaKarta;
@@ -201,15 +203,15 @@ public class OponentUStolu : MonoBehaviour
         {
             if (int.Parse(OponentKarty[i].Substring(1, OponentKarty[i].Length - 1)) == 7) //SEDMA
             { 
-                LizKaret.EfektKarty = true; LizKaret.pocetSedmicek++;
+                LizKaret.EfektKarty = true; LizKaret.pocetSedmicek++; DialogOponent("SEDMA KAMARADE!");
             }
             else if (int.Parse(OponentKarty[i].Substring(1, OponentKarty[i].Length - 1)) == 13 && OponentKarty[i].Substring(0, 1) == "♠")  //PIKOVÝ KRÁL
             { 
-                LizKaret.EfektKarty = true;
+                LizKaret.EfektKarty = true; DialogOponent("LIZEJ, KAMARADE, LIZEJ");
             }
             else if (int.Parse(OponentKarty[i].Substring(1, OponentKarty[i].Length - 1)) == 1)  // ESO
             { 
-                LizKaret.EfektKarty = true;
+                LizKaret.EfektKarty = true; DialogOponent("A STOP!");
             }
             OdhozenaKarta.GetComponent<Karta>().ZnackaKarty = OponentKarty[i].Substring(0, 1);
             OdhozenaKarta.GetComponent<Karta>().CisloKarty = int.Parse(OponentKarty[i].Substring(1, OponentKarty[i].Length - 1));
@@ -224,5 +226,14 @@ public class OponentUStolu : MonoBehaviour
     {
         manager.OponentiDohromady[CisloOponenta].GetComponent<OponentovaIkonka>().Penize -= manager.sazky[CisloOponenta] ;
         manager.OponentiDohromady[CisloOponenta].GetComponent<OponentovaIkonka>().OponentCelkovePenize.text = manager.OponentiDohromady[CisloOponenta].GetComponent<OponentovaIkonka>().Penize + ",-";
+    }
+    public void DialogOponent(string text)
+    {
+        GameObject OponentDialog = Instantiate(LizKaret.DialogPrefab, LizKaret.DialogPoloha.transform);
+        OponentDialog.GetComponent<Dialog>().OponentDialogIkonka.GetComponent<Image>().sprite = manager.OponentiDohromady[CisloOponenta].GetComponent<OponentovaIkonka>().OponentIkonka.GetComponent<Image>().sprite;
+        OponentDialog.GetComponent<Dialog>().OponentDialog.SetActive(true);
+        OponentDialog.GetComponent<Dialog>().HracDialog.SetActive(false);
+        OponentDialog.GetComponent<Dialog>().TohleJe = "Oponent";
+        OponentDialog.GetComponent<Dialog>().OponentDialogText.text = text;
     }
 }

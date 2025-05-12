@@ -91,6 +91,7 @@ public class manager : MonoBehaviour
 
     //podvody
     public bool KartaVRukavuKoupeno = true;
+    public bool Kecanikoupeno = true;
     private void Start()
     {
         opona = GameObject.Find("Stmivacka");
