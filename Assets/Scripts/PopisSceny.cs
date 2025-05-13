@@ -20,15 +20,7 @@ public class PopisSceny : MonoBehaviour , IPointerEnterHandler, IPointerExitHand
     {
         Okno.SetActive(false);
         manager = GameObject.Find("GameManager").GetComponent<manager>();
-        Image.GetComponent<Image>().sprite = ScenaPNG;
-        /*
-        for (int i = 0; i < Vlastnosti.Length; i++)
-        {
-            if (Vlastnosti[i] != null)
-            {
-            Instantiate(Vlastnosti[i], vlastnostiContent);
-            }
-        } */    
+        Image.GetComponent<Image>().sprite = ScenaPNG;   
     }
 
     void Reputace()

@@ -35,7 +35,7 @@ public class LizaniKaret : MonoBehaviour
     public string ZnackaOdhozenaKarta;
     public int CisloOdhozenaKarta;
     public int pocetSedmicek = 0;
-    public bool EfektKarty = true;
+    public bool EfektKarty = false;
     public bool HracovoKolo = true;
     public bool KonecZacatekRozdavani = false;
 
@@ -47,6 +47,7 @@ public class LizaniKaret : MonoBehaviour
     public GameObject KecaniButton;
     public GameObject DialogPrefab;
     public GameObject DialogPoloha;
+    public bool KecaniSpustene;
     //Podezření
     public Slider PodezreniSlider;
     public float PodezreniValue = 0f;
@@ -368,7 +369,9 @@ public class LizaniKaret : MonoBehaviour
     // DIALOG
     public void DialogButton()
     {
+        KecaniSpustene = true;
         GameObject HracDialog = Instantiate(DialogPrefab,DialogPoloha.transform);
+        GameObject.Find("KecaniButton").GetComponent<Button>().interactable = false;
         HracDialog.GetComponent<Dialog>().HracDialog.SetActive(true);
         HracDialog.GetComponent<Dialog>().OponentDialog.SetActive(false);
         HracDialog.GetComponent<Dialog>().TohleJe = "Hrac";
@@ -376,11 +379,11 @@ public class LizaniKaret : MonoBehaviour
     }
     public void DialogHrac(string text)
     {
-        GameObject OponentDialog = Instantiate(DialogPrefab, DialogPoloha.transform);
-        OponentDialog.GetComponent<Dialog>().OponentDialog.SetActive(false);
-        OponentDialog.GetComponent<Dialog>().HracDialog.SetActive(true);
-        OponentDialog.GetComponent<Dialog>().TohleJe = "Oponent";
-        OponentDialog.GetComponent<Dialog>().OponentDialogText.text = text;
+        GameObject HracDialog = Instantiate(DialogPrefab, DialogPoloha.transform);
+        HracDialog.GetComponent<Dialog>().OponentDialog.SetActive(false);
+        HracDialog.GetComponent<Dialog>().HracDialog.SetActive(true);
+        HracDialog.GetComponent<Dialog>().TohleJe = "HracKteryNechceMluvit";
+        HracDialog.GetComponent<Dialog>().HracDialogText.text = text;
     }
     //Specialni Karty
     public void ZnackaVyber(int vyber)
@@ -402,6 +405,9 @@ public class LizaniKaret : MonoBehaviour
     }
    public void VynechatKoloButton()
     {
+        GameObject.Find("Vynechat").GetComponent<Button>().interactable = false;
+        GameObject.Find("Odejit").GetComponent<Button>().interactable = false;
+        GameObject.Find("PotvrditSazku").GetComponent<Button>().interactable = false;
         StartCoroutine(VynechatKolo());
         
     }
@@ -425,7 +431,7 @@ public class LizaniKaret : MonoBehaviour
         }
         StartCoroutine(manager.NoveKoloPrsi());
 
-        
+
     }
     public IEnumerator EfektyKaretNaHrace()
     {      

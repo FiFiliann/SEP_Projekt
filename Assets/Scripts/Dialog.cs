@@ -61,15 +61,16 @@ public class Dialog : MonoBehaviour
         rychlost = -10;
 
         //ODEBRANI PODEZRENI
-        if (LizKaret.aktualniPokusyPodvadeni != 0)
+        if (LizKaret.aktualniPokusyPodvadeni != 0 && TohleJe == "Hrac")
         {
             LizKaret.aktualniPokusyPodvadeni--;
             float zvyseniPodezreni = LizKaret.PodezreniSlider.maxValue / 3f;
-            LizKaret.PodezreniSlider.value = Mathf.Min(LizKaret.PodezreniSlider.maxValue, LizKaret.PodezreniSlider.value - zvyseniPodezreni);
+            LizKaret.PodezreniSlider.value = zvyseniPodezreni;//Mathf.Min(LizKaret.PodezreniSlider.maxValue, LizKaret.PodezreniSlider.value - zvyseniPodezreni);
         }
     }
     public IEnumerator OdpovediOponenti()
     {
+        LizKaret.KecaniSpustene = false;
         for (int a = 0; a < manager.OponentiUStolu.Length; a++)
         {
             if (manager.OponentiUStolu[a] != null)
@@ -79,6 +80,8 @@ public class Dialog : MonoBehaviour
                 yield return new WaitForSeconds(3f);
             }
         }
+        GameObject.Find("KecaniButton").GetComponent<Button>().interactable = true;
+        
         Destroy(gameObject);
     }
 }

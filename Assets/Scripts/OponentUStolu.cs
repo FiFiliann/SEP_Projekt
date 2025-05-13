@@ -49,7 +49,7 @@ public class OponentUStolu : MonoBehaviour
                 yield return new WaitForSeconds(0.3f);
             }
         }
-        if (LizKaret.CisloOdhozenaKarta == 12 &&  LizKaret.EfektKarty)
+        else if (LizKaret.CisloOdhozenaKarta == 12 &&  LizKaret.EfektKarty)
         {
             LizKaret.EfektKarty = false;
         }
@@ -98,7 +98,7 @@ public class OponentUStolu : MonoBehaviour
         else if (LizKaret.ZnackaOdhozenaKarta == "J" && LizKaret.EfektKarty)
         {
             LizKaret.EfektKarty = false;
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 1; i++)
             {
                 StartCoroutine(LiznutiKartyOponent());
                 yield return new WaitForSeconds(0.3f);
@@ -112,12 +112,13 @@ public class OponentUStolu : MonoBehaviour
             bool odhozenaKarta = false;
             for (int i = 0; i < OponentKarty.Count; i++)
             {
-                if (OponentKarty[i].Substring(0, 1) == LizKaret.ZnackaOdhozenaKarta || int.Parse(OponentKarty[i].Substring(1, OponentKarty[i].Length - 1)) == LizKaret.CisloOdhozenaKarta || LizKaret.ZnackaOdhozenaKarta == "E")
+                if (OponentKarty[i].Substring(0, 1) == LizKaret.ZnackaOdhozenaKarta || int.Parse(OponentKarty[i].Substring(1, OponentKarty[i].Length - 1)) == LizKaret.CisloOdhozenaKarta || LizKaret.ZnackaOdhozenaKarta == "E" || OponentKarty[i].Substring(0, 1) == "J" || int.Parse(OponentKarty[i].Substring(1, OponentKarty[i].Length - 1)) == 12)
                 {
                     OdhozeniKartyS(i);
                     i = OponentKarty.Count;
                     odhozenaKarta = true;
                 }
+
 
             }
             if (!odhozenaKarta)
@@ -144,6 +145,7 @@ public class OponentUStolu : MonoBehaviour
         PocetKaret.text = OponentKarty.Count + "";
         LizKaret.balicek.RemoveAt(0);
         if (!LizKaret.balicek.Any()) { LizKaret.DoplneniBalicku(); }
+        GameObject.Find("LizaciBalicekPocetKaret").GetComponent<TextMeshProUGUI>().text = LizKaret.balicek.Count + "";
 
         yield return new WaitForSeconds(0.3f);
     }
@@ -156,8 +158,8 @@ public class OponentUStolu : MonoBehaviour
 
         SpecialniKartyOponent(i);
 
-        LizKaret.ZnackaOdhozenaKarta = OdhozenaKarta.GetComponent<Karta>().ZnackaKarty;
-        LizKaret.CisloOdhozenaKarta = OdhozenaKarta.GetComponent<Karta>().CisloKarty;
+        //LizKaret.ZnackaOdhozenaKarta = OdhozenaKarta.GetComponent<Karta>().ZnackaKarty;
+        //LizKaret.CisloOdhozenaKarta = OdhozenaKarta.GetComponent<Karta>().CisloKarty;
 
         OdhozenaKarta.GetComponent<Karta>().OponentovaRuka = OponentRuka;
         OdhozenaKarta.GetComponent<Karta>().Oponent_OdhazovaciBalicek = true;
@@ -176,7 +178,7 @@ public class OponentUStolu : MonoBehaviour
                 case "♣":znacky[1]++; break;
                 case "♥":znacky[2]++; break;
                 case "♠":znacky[3]++; break;
-                default:Debug.Log("Chyba - secteniZnacek"); break;
+                default:Debug.Log("jok"); break;
             }
         }
         if (znacky[0] == znacky.Max()) { Debug.Log("♦"); return "♦"; }
@@ -193,29 +195,52 @@ public class OponentUStolu : MonoBehaviour
     {
         if (int.Parse(OponentKarty[i].Substring(1, OponentKarty[i].Length - 1)) == 12 || OponentKarty[i].Substring(0,1) == "J") //Výběr znaku 
         {
-            DialogOponent("TROCHU TO ZMENIZE! CO VY NA TO?");
+            DialogOponent("TROCHU TO ZMENIME! CO VY NA TO?");
+            if (OponentKarty[i].Substring(0, 1) == "J") { LizKaret.EfektKarty = true; }
+            OdhozenaKarta.GetComponent<Karta>().ZnackaKarty = OponentKarty[i].Substring(0, 1);
+            OdhozenaKarta.GetComponent<Karta>().CisloKarty = int.Parse(OponentKarty[i].Substring(1, OponentKarty[i].Length - 1));
             LizKaret.CisloOdhozenaKarta = 14;
             LizKaret.ZnackaOdhozenaKarta = SecteniZnacek();
-            OdhozenaKarta.GetComponent<Karta>().ZnackaKarty = LizKaret.ZnackaOdhozenaKarta;
-            OdhozenaKarta.GetComponent<Karta>().CisloKarty = LizKaret.CisloOdhozenaKarta;
+
+            switch (LizKaret.ZnackaOdhozenaKarta)
+            {
+                case "♣": Debug.Log("KRIZ"); GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = LizKaret.KartyKrize[13]; break;
+                case "♦": Debug.Log("KAR"); GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = LizKaret.KartyKary[13]; break;
+                case "♥": Debug.Log("SRDCE"); GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = LizKaret.KartySrdce[13]; break;
+                case "♠": Debug.Log("PIK"); GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = LizKaret.KartyPiky[13]; break;
+                default: Debug.Log("CHYBA"); break;
+            }
         }
         else
         {
             if (int.Parse(OponentKarty[i].Substring(1, OponentKarty[i].Length - 1)) == 7) //SEDMA
             { 
                 LizKaret.EfektKarty = true; LizKaret.pocetSedmicek++; DialogOponent("SEDMA KAMARADE!");
+                //KartaOznaceni(i);
+
             }
             else if (int.Parse(OponentKarty[i].Substring(1, OponentKarty[i].Length - 1)) == 13 && OponentKarty[i].Substring(0, 1) == "♠")  //PIKOVÝ KRÁL
             { 
                 LizKaret.EfektKarty = true; DialogOponent("LIZEJ, KAMARADE, LIZEJ");
+                //KartaOznaceni(i);
             }
             else if (int.Parse(OponentKarty[i].Substring(1, OponentKarty[i].Length - 1)) == 1)  // ESO
             { 
                 LizKaret.EfektKarty = true; DialogOponent("A STOP!");
+                //KartaOznaceni(i);
             }
-            OdhozenaKarta.GetComponent<Karta>().ZnackaKarty = OponentKarty[i].Substring(0, 1);
-            OdhozenaKarta.GetComponent<Karta>().CisloKarty = int.Parse(OponentKarty[i].Substring(1, OponentKarty[i].Length - 1));
+            //else { KartaOznaceni(i); }
+            KartaOznaceni(i);
         }
+    }
+    private void KartaOznaceni(int i)
+    {
+        OdhozenaKarta.GetComponent<Karta>().ZnackaKarty = OponentKarty[i].Substring(0, 1);
+        OdhozenaKarta.GetComponent<Karta>().CisloKarty = int.Parse(OponentKarty[i].Substring(1, OponentKarty[i].Length - 1));
+        //OdhozenaKarta.GetComponent<Karta>().Obrazek();
+        //GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = OdhozenaKarta.GetComponent<Image>().sprite;
+        LizKaret.ZnackaOdhozenaKarta = OdhozenaKarta.GetComponent<Karta>().ZnackaKarty;
+        LizKaret.CisloOdhozenaKarta = OdhozenaKarta.GetComponent<Karta>().CisloKarty;
     }
     public void PrideleniPenezOponentovy()
     {
@@ -229,11 +254,16 @@ public class OponentUStolu : MonoBehaviour
     }
     public void DialogOponent(string text)
     {
-        GameObject OponentDialog = Instantiate(LizKaret.DialogPrefab, LizKaret.DialogPoloha.transform);
-        OponentDialog.GetComponent<Dialog>().OponentDialogIkonka.GetComponent<Image>().sprite = manager.OponentiDohromady[CisloOponenta].GetComponent<OponentovaIkonka>().OponentIkonka.GetComponent<Image>().sprite;
-        OponentDialog.GetComponent<Dialog>().OponentDialog.SetActive(true);
-        OponentDialog.GetComponent<Dialog>().HracDialog.SetActive(false);
-        OponentDialog.GetComponent<Dialog>().TohleJe = "Oponent";
-        OponentDialog.GetComponent<Dialog>().OponentDialogText.text = text;
+        if(!LizKaret.KecaniSpustene)
+        {
+            GameObject OponentDialog = Instantiate(LizKaret.DialogPrefab, LizKaret.DialogPoloha.transform);
+            OponentDialog.GetComponent<Dialog>().OponentDialogIkonka.GetComponent<Image>().sprite = manager.OponentiDohromady[CisloOponenta].GetComponent<OponentovaIkonka>().OponentIkonka.GetComponent<Image>().sprite;
+            OponentDialog.GetComponent<Dialog>().OponentDialog.SetActive(true);
+            OponentDialog.GetComponent<Dialog>().HracDialog.SetActive(false);
+            OponentDialog.GetComponent<Dialog>().TohleJe = "Oponent";
+            OponentDialog.GetComponent<Dialog>().OponentDialogText.text = text; 
+        }
+        
+
     }
 }

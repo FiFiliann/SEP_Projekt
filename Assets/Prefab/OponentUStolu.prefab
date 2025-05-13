@@ -89,15 +89,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 744d1d3d168800a489c63eba681a5dd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 0}
   PocetKaret: {fileID: 495634250726727148}
   Karta: {fileID: 1330085125092669727, guid: 20758ba3ede8db34ca4832ff0af4158a, type: 3}
   OdhozenaKarta: {fileID: 0}
   LizaciBalicek: {fileID: 0}
   OponentRuka: {fileID: 2630879444346191700}
   KartyGUI: {fileID: 5944993178916497477}
-  KartyVizual1: {fileID: 1752625089460340858}
-  KartyVizual2: {fileID: 4477456462116407724}
-  KartyVizual3: {fileID: 745713749518179520}
   kartasc: {fileID: 0}
   LizKaret: {fileID: 0}
   OponentKarty: []
@@ -170,8 +168,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 50
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e6c8a44149e449a48989962b6a31891b, type: 2}
+  m_sharedMaterial: {fileID: -1963842327068627975, guid: e6c8a44149e449a48989962b6a31891b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

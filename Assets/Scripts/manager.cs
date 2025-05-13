@@ -229,6 +229,7 @@ public class manager : MonoBehaviour
     }
     public void NovyDen()
     {
+        spawn.coz = true;
         den++;
         if (DalsiPujckaOdPriteleZa != 0) 
             {DalsiPujckaOdPriteleZa -= 1; }
@@ -260,6 +261,9 @@ public class manager : MonoBehaviour
     //OPONENTI
     IEnumerator VytvoreniOponenta()
     {
+        GameObject.Find("Vynechat").GetComponent<Button>().interactable = false;
+        GameObject.Find("Odejit").GetComponent<Button>().interactable = false;
+        GameObject.Find("PotvrditSazku").GetComponent<Button>().interactable = false;
         dovysovani = false;
         SazkaInput.text = null;
         secteni = 0;
@@ -300,6 +304,7 @@ public class manager : MonoBehaviour
                 }
             }
             dovysovani = true;
+            
             yield return new WaitForSeconds(0.5f);
             StartCoroutine(porovnanaviSazek());
         }
@@ -307,6 +312,9 @@ public class manager : MonoBehaviour
     
     public IEnumerator NoveKoloPrsi()
     {
+        GameObject.Find("Vynechat").GetComponent<Button>().interactable = false;
+        GameObject.Find("Odejit").GetComponent<Button>().interactable = false;
+        GameObject.Find("PotvrditSazku").GetComponent<Button>().interactable = false;
         SazkaInput.text = null;
         secteni = 0;
         nejvyssiSazka = 0;
@@ -404,13 +412,19 @@ public class manager : MonoBehaviour
             if (OponentiDohromady[i] != null)
                 {
                     OponentiDohromady[i].GetComponent<OponentovaIkonka>().SazkaRandom(i);
-                    yield return new WaitForSeconds(0.2f);
+                //GameObject.Find("Vynechat").GetComponent<Button>().interactable = true;
+                yield return new WaitForSeconds(0.2f);
                 }
             //else { i = sazky.Length; }
         }
 
         secteni += hracSazka;
         GameObject.Find("CelkovaSazka").GetComponent<TextMeshProUGUI>().text = "nej: " + nejvyssiSazka + "  celkem: " + secteni;
+
+        GameObject.Find("Vynechat").GetComponent<Button>().interactable = true;
+        GameObject.Find("Odejit").GetComponent<Button>().interactable = true;
+        GameObject.Find("PotvrditSazku").GetComponent<Button>().interactable = true;
+
         yield return new WaitForSeconds(0.1f);
 
     }
@@ -424,8 +438,16 @@ public class manager : MonoBehaviour
                 if(hracSazka > nejvyssiSazka)
                 { nejvyssiSazka = hracSazka; StartCoroutine(porovnanaviSazek()); }
                 else {
-                    StartCoroutine(GameObject.Find("LizaciBalicek").GetComponent<LizaniKaret>().StartKolo()); 
-                    sazeciOkenko.SetActive(false); zacatekSazeni = true; 
+                    for(int i = 0; i < sazky.Length; i++) 
+                    {
+                        if (sazky[i] != 0)
+                        {
+                            StartCoroutine(GameObject.Find("LizaciBalicek").GetComponent<LizaniKaret>().StartKolo()); 
+                            sazeciOkenko.SetActive(false); zacatekSazeni = true;
+                            i = sazky.Length;
+                        }
+                    }
+
                 }
             }
         }

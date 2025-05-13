@@ -70,7 +70,8 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
                 if (cas > 1) 
                 {
                     if (CisloKarty == 1 || CisloKarty == 7 || ZnackaKarty == "J") { LizKaret.EfektKarty = true; }
-                    Oponent_OdhazovaciBalicek = false; cas = 0; a = false; GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = gameObject.GetComponent<Image>().sprite;
+                    if(LizKaret.CisloOdhozenaKarta != 14) {GameObject.Find("OdhozenaKartaZvetseni").GetComponent<Image>().sprite = gameObject.GetComponent<Image>().sprite; }
+                    Oponent_OdhazovaciBalicek = false; cas = 0; a = false; 
                 }
             }
 
@@ -210,7 +211,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             if (CisloKarty == 1) { LizKaret.EfektKarty = true; LizKaret.DialogHrac("A STOP!"); }
             if (CisloKarty == 7) { LizKaret.EfektKarty = true; LizKaret.pocetSedmicek++; LizKaret.DialogHrac("SEDMA KAMARADE!"); }
             if (CisloKarty == 13 && ZnackaKarty == "♠") { LizKaret.EfektKarty = true; LizKaret.DialogHrac("LIZEJ, KAMARADE, LIZEJ!"); }
-            if (ZnackaKarty == "J" || CisloKarty == 12) { LizKaret.ZnackaVyberPopUp.SetActive(true); LizKaret.EfektKarty = true; LizKaret.DialogHrac("POJDME TO TROCHU ZMENIT, CO VY NA TO!"); }
+            if (ZnackaKarty == "J" || CisloKarty == 12) { LizKaret.ZnackaVyberPopUp.SetActive(true); LizKaret.EfektKarty = true; LizKaret.DialogHrac("POJDME TO TROCHU ZMENIT, CO VY NA TO!"); if (CisloKarty == 12) { LizKaret.EfektKarty = false; } }
             else
             {
                 LizKaret.CisloOdhozenaKarta = CisloKarty;
