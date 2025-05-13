@@ -3416,7 +3416,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1077882999704735431, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1.2013595
       objectReference: {fileID: 0}
     - target: {fileID: 2352050635797094664, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
       propertyPath: ScenaPNG
@@ -3570,7 +3570,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1077882999704735431, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1.2013595
       objectReference: {fileID: 0}
     - target: {fileID: 2352050635797094664, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
       propertyPath: ScenaPNG
@@ -9652,7 +9652,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1077882999704735431, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1.2013595
       objectReference: {fileID: 0}
     - target: {fileID: 2352050635797094664, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
       propertyPath: ScenaPNG
@@ -13106,7 +13106,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1077882999704735431, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1.2013595
       objectReference: {fileID: 0}
     - target: {fileID: 2352050635797094664, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
       propertyPath: ScenaPNG
@@ -14260,14 +14260,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 8927461075014998590, guid: cc2076a4f9953164c98b54c5477b5e51, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
