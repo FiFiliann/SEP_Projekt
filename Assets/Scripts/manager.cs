@@ -72,7 +72,7 @@ public class manager : MonoBehaviour
     //Prom�n�//
     public string datum = ".1.1998";
     public int den = 2;
-    public int reputace = 1069;
+    public int reputace = 50;
     public int penize = 1000;
     public TextMeshProUGUI denText;
     public TextMeshProUGUI reputaceText;
@@ -512,7 +512,23 @@ public class manager : MonoBehaviour
             lokaceTlacitka[i].interactable = dostupna;
             if (lokaceZamky[i] != null)
                 lokaceZamky[i].SetActive(!dostupna);
+
+
+            // Otevření slideru až od určité reputace (např. 10)
+            if (SeznamReputaceMapa.Length > i && SeznamReputaceMapa[i] != null)
+            {
+                if (reputace >= 10)
+                {
+                    SeznamReputaceMapa[i].gameObject.SetActive(true);
+                    SeznamReputaceMapa[i].value = reputace;
+                }
+                else
+                {
+                    SeznamReputaceMapa[i].gameObject.SetActive(false);
+                }
+            }
         }
+
     }
     public void BytMenuPromene() //vyps�n� zm�ny variabilit v menu
     {

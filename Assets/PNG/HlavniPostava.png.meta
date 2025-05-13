@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      HlavniPostava_0: 6533742253887099202
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
