@@ -508,25 +508,27 @@ public class manager : MonoBehaviour
     {
         for (int i = 0; i < lokaceTlacitka.Length; i++)
         {
+            SeznamReputaceMapa[i].value = reputace;
+
             bool dostupna = reputace >= lokaceReputace[i];
             lokaceTlacitka[i].interactable = dostupna;
             if (lokaceZamky[i] != null)
                 lokaceZamky[i].SetActive(!dostupna);
 
-
+            /*
             // Otevření slideru až od určité reputace (např. 10)
             if (SeznamReputaceMapa.Length > i && SeznamReputaceMapa[i] != null)
             {
                 if (reputace >= 10)
                 {
-                    SeznamReputaceMapa[i].gameObject.SetActive(true);
-                    SeznamReputaceMapa[i].value = reputace;
+                    //SeznamReputaceMapa[i].gameObject.SetActive(true);
+                    
                 }
                 else
                 {
-                    SeznamReputaceMapa[i].gameObject.SetActive(false);
+                    //SeznamReputaceMapa[i].gameObject.SetActive(false);
                 }
-            }
+            }*/
         }
 
     }

@@ -800,7 +800,7 @@ MonoBehaviour:
   packa: 1
   datum: .1.1998
   den: 2
-  reputace: 3
+  reputace: 10
   penize: 300
   denText: {fileID: 2046823738}
   reputaceText: {fileID: 1074847295}
@@ -809,8 +809,15 @@ MonoBehaviour:
   PodezreniSlider: {fileID: 0}
   lokaceTlacitka:
   - {fileID: 987651696}
-  lokaceReputace: 0a000000
-  lokaceZamky: []
+  - {fileID: 1799322844}
+  - {fileID: 222978851}
+  - {fileID: 860251459}
+  lokaceReputace: 0a000000140000001e00000028000000
+  lokaceZamky:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   SeznamReputaceMapa:
   - {fileID: 1371503051}
   - {fileID: 1829267792}
@@ -1168,6 +1175,17 @@ Transform:
   - {fileID: 1817414411}
   m_Father: {fileID: 1936742233}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &222978851 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9159969754770047362, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
+  m_PrefabInstance: {fileID: 702138913}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &275034359
 GameObject:
   m_ObjectHideFlags: 0
@@ -3423,6 +3441,10 @@ PrefabInstance:
       propertyPath: ScenaPNG
       value: 
       objectReference: {fileID: 9174464535701837248, guid: 13419ef493c3a6e48b45d521aa98f7c0, type: 3}
+    - target: {fileID: 2352050635797094664, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
+      propertyPath: reputaceMax
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 3396558225654730942, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
       propertyPath: m_Name
       value: KasinoOskarSlider
@@ -3430,6 +3452,10 @@ PrefabInstance:
     - target: {fileID: 4324775015560675552, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
       propertyPath: m_Name
       value: KasinoOskarPopis
+      objectReference: {fileID: 0}
+    - target: {fileID: 4651280275904467123, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
+      propertyPath: m_Name
+      value: KasinoOskarButton
       objectReference: {fileID: 0}
     - target: {fileID: 9159969754770047362, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -3577,6 +3603,10 @@ PrefabInstance:
       propertyPath: ScenaPNG
       value: 
       objectReference: {fileID: 7868572143962850627, guid: 3723068bd9f7ec545bd05f9f7b55303d, type: 3}
+    - target: {fileID: 2352050635797094664, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
+      propertyPath: reputaceMax
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 3396558225654730942, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
       propertyPath: m_Name
       value: DumURozumnychSlider
@@ -3584,6 +3614,10 @@ PrefabInstance:
     - target: {fileID: 4324775015560675552, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
       propertyPath: m_Name
       value: DumURozumnychStrycuPopis
+      objectReference: {fileID: 0}
+    - target: {fileID: 4651280275904467123, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
+      propertyPath: m_Name
+      value: DumURozumnychStrycuButton
       objectReference: {fileID: 0}
     - target: {fileID: 9159969754770047362, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -4775,6 +4809,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 854567498}
   m_CullTransparentMesh: 1
+--- !u!114 &860251459 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9159969754770047362, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
+  m_PrefabInstance: {fileID: 699187071}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &874912055
 GameObject:
   m_ObjectHideFlags: 0
@@ -9670,6 +9715,10 @@ PrefabInstance:
       propertyPath: ScenaPNG
       value: 
       objectReference: {fileID: -8781920301999451425, guid: b5edcdbb2f3456248aab55046b73b347, type: 3}
+    - target: {fileID: 2352050635797094664, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
+      propertyPath: reputaceMax
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3396558225654730942, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
       propertyPath: m_Name
       value: StarejBarSlider
@@ -11840,6 +11889,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1784948275}
   m_CullTransparentMesh: 1
+--- !u!114 &1799322844 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9159969754770047362, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
+  m_PrefabInstance: {fileID: 1873118028}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1804834458
 GameObject:
   m_ObjectHideFlags: 0
@@ -13128,6 +13188,10 @@ PrefabInstance:
       propertyPath: ScenaPNG
       value: 
       objectReference: {fileID: 1575906410710997827, guid: 818c284e5df58614caa0105a4ab4e72a, type: 3}
+    - target: {fileID: 2352050635797094664, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
+      propertyPath: reputaceMax
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 3396558225654730942, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
       propertyPath: m_Name
       value: MinutaTichaSlider
@@ -13135,6 +13199,10 @@ PrefabInstance:
     - target: {fileID: 4324775015560675552, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
       propertyPath: m_Name
       value: MinutaTichaPopis
+      objectReference: {fileID: 0}
+    - target: {fileID: 4651280275904467123, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
+      propertyPath: m_Name
+      value: MinutaTichaButton
       objectReference: {fileID: 0}
     - target: {fileID: 9159969754770047362, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
