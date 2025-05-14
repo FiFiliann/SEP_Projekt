@@ -16,6 +16,7 @@ public class PopisSceny : MonoBehaviour , IPointerEnterHandler, IPointerExitHand
     //public Transform vlastnostiContent;
     public GameObject Okno;
 
+
     void Start()
     {
         Okno.SetActive(false);
