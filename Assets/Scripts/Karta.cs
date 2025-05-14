@@ -203,7 +203,11 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             manager.sazeciOkenko.SetActive(true);            
             manager.penize += manager.secteni - manager.hracSazka;
             GameObject.Find("HracovaSazka").GetComponent<TextMeshProUGUI>().text = manager.penize + "KC";
+            manager.reputace += 10;
+
             StartCoroutine(manager.NoveKoloPrsi());
+
+
 
         }
         else

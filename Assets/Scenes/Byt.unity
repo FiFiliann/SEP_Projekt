@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &183536 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9027136870878313364, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
+  m_PrefabInstance: {fileID: 699187071}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &209028
 GameObject:
   m_ObjectHideFlags: 0
@@ -814,10 +819,10 @@ MonoBehaviour:
   - {fileID: 860251459}
   lokaceReputace: 0a000000140000001e00000028000000
   lokaceZamky:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2049017492}
+  - {fileID: 1985952499}
+  - {fileID: 136478761}
+  - {fileID: 183536}
   SeznamReputaceMapa:
   - {fileID: 1371503051}
   - {fileID: 1829267792}
@@ -841,6 +846,11 @@ Transform:
   - {fileID: 1355613292}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &136478761 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9027136870878313364, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
+  m_PrefabInstance: {fileID: 702138913}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &140962712
 GameObject:
   m_ObjectHideFlags: 0
@@ -3618,6 +3628,10 @@ PrefabInstance:
     - target: {fileID: 4651280275904467123, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
       propertyPath: m_Name
       value: DumURozumnychStrycuButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 6242863839296651212, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
+      propertyPath: m_Name
+      value: ZamekIkonka
       objectReference: {fileID: 0}
     - target: {fileID: 9159969754770047362, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -9712,6 +9726,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2352050635797094664, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
+      propertyPath: zamek
+      value: 
+      objectReference: {fileID: 7519686498891350614, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
+    - target: {fileID: 2352050635797094664, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
       propertyPath: ScenaPNG
       value: 
       objectReference: {fileID: -8781920301999451425, guid: b5edcdbb2f3456248aab55046b73b347, type: 3}
@@ -14008,6 +14026,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1983259629}
   m_CullTransparentMesh: 1
+--- !u!1 &1985952499 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9027136870878313364, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
+  m_PrefabInstance: {fileID: 1873118028}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2001809963 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6022178262632343765, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
@@ -14505,6 +14528,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2046823736}
   m_CullTransparentMesh: 1
+--- !u!1 &2049017492 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9027136870878313364, guid: af895a0692c2f3348ac0de41420dae55, type: 3}
+  m_PrefabInstance: {fileID: 1500172567}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2064944881
 GameObject:
   m_ObjectHideFlags: 0

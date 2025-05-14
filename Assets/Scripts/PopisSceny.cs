@@ -15,6 +15,7 @@ public class PopisSceny : MonoBehaviour , IPointerEnterHandler, IPointerExitHand
     public double reputaceMax;
     //public Transform vlastnostiContent;
     public GameObject Okno;
+    public Image zamek;
 
 
     void Start()
