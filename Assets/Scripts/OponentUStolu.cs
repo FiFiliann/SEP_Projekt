@@ -95,15 +95,16 @@ public class OponentUStolu : MonoBehaviour
         }
 
         // Odhozená karta je ŽOLÍK
-        else if (LizKaret.ZnackaOdhozenaKarta == "J" && LizKaret.EfektKarty)
+        else if (LizKaret.CisloOdhozenaKarta == 14 && LizKaret.EfektKarty)
         {
-            LizKaret.EfektKarty = false;
-            for (int i = 0; i < 1; i++)
+            Debug.Log("Coze");
+            for (int i = 0; i < 3; i++)
             {
                 StartCoroutine(LiznutiKartyOponent());
                 yield return new WaitForSeconds(0.3f);
 
-            }
+            }            
+            LizKaret.EfektKarty = false;
         }
 
         // Odhozená karta je NORMÁLNÍ
@@ -137,7 +138,8 @@ public class OponentUStolu : MonoBehaviour
         a.transform.localScale = new Vector3(0.3f, 0.3f, 0);
 
         a.GetComponent<Karta>().a = false;
-        a.GetComponent<Karta>().ZnackaKarty = "J"; a.GetComponent<Karta>().CisloKarty = 3; // OTOČENÁ KARTA
+        a.GetComponent<Karta>().ZnackaKarty = "J"; 
+        a.GetComponent<Karta>().CisloKarty = 3; // OTOČENÁ KARTA
         a.GetComponent<Karta>().OponentovaRuka = OponentRuka;
         a.GetComponent<Karta>().LizaciBalicek_Oponent = true;
 

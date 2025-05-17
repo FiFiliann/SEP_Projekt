@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Hodiny_0: 2618841019039737992
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

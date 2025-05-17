@@ -135,21 +135,20 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     {
         if(LizKaret.HracovoKolo)
         {
-            //kartaVRukavu
             if(!TohleJeKartaVRukavu && LizKaret.KartaVRukavuAktivni ) // ProhozeniSKartvouVRukavu
             {
                 LizKaret.PodvodRukav(gameObject);
             }
             else if (!TohleJeKartaVRukavu && !LizKaret.KartaVRukavuAktivni ) // OdhozeniKarty
             {
-                if (ZnackaKarty == LizKaret.ZnackaOdhozenaKarta || CisloKarty == LizKaret.CisloOdhozenaKarta || ZnackaKarty == "J" || CisloKarty == 12 || LizKaret.ZnackaOdhozenaKarta == "E")
-                {
-                    if (CisloKarty == 12 || ZnackaKarty == "J")
-                    {
-                        if (!LizKaret.EfektKarty) { OdhozeniHracoviKarty(); }
-                    }
-                    else { OdhozeniHracoviKarty(); }
-                }
+                if (LizKaret.CisloOdhozenaKarta == 7 && LizKaret.EfektKarty && CisloKarty == 7)                                             { OdhozeniHracoviKarty(); }
+                else if (LizKaret.CisloOdhozenaKarta == 14 && LizKaret.EfektKarty && CisloKarty == 14)                                      { OdhozeniHracoviKarty(); }
+                else if (CisloKarty == 12  && !LizKaret.EfektKarty)                                                                         { OdhozeniHracoviKarty(); }
+                else if (ZnackaKarty == "J" && !LizKaret.EfektKarty)                                                                        { OdhozeniHracoviKarty(); }
+                else if (LizKaret.CisloOdhozenaKarta == 1 && LizKaret.EfektKarty && CisloKarty == 1)                                        { OdhozeniHracoviKarty(); }
+                else if (ZnackaKarty == LizKaret.ZnackaOdhozenaKarta && !LizKaret.EfektKarty)                                               { OdhozeniHracoviKarty(); }
+                else if (CisloKarty == LizKaret.CisloOdhozenaKarta && !LizKaret.EfektKarty)                                                 { OdhozeniHracoviKarty(); }
+                else if (LizKaret.ZnackaOdhozenaKarta == "E")                                                                               { OdhozeniHracoviKarty(); }
             }          
             //KartaVRukavu
             if (TohleJeKartaVRukavu && !LizKaret.KartaVRukavuAktivni)
@@ -215,7 +214,12 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             if (CisloKarty == 1) { LizKaret.EfektKarty = true; LizKaret.DialogHrac("A STOP!"); }
             if (CisloKarty == 7) { LizKaret.EfektKarty = true; LizKaret.pocetSedmicek++; LizKaret.DialogHrac("SEDMA KAMARADE!"); }
             if (CisloKarty == 13 && ZnackaKarty == "♠") { LizKaret.EfektKarty = true; LizKaret.DialogHrac("LIZEJ, KAMARADE, LIZEJ!"); }
-            if (ZnackaKarty == "J" || CisloKarty == 12) { LizKaret.ZnackaVyberPopUp.SetActive(true); LizKaret.EfektKarty = true; LizKaret.DialogHrac("POJDME TO TROCHU ZMENIT, CO VY NA TO!"); if (CisloKarty == 12) { LizKaret.EfektKarty = false; } }
+            if (ZnackaKarty == "J" || CisloKarty == 12) 
+            { 
+                LizKaret.ZnackaVyberPopUp.SetActive(true); 
+                LizKaret.EfektKarty = true; 
+                LizKaret.DialogHrac("POJDME TO TROCHU ZMENIT, CO VY NA TO!"); 
+                if (CisloKarty == 12) { LizKaret.EfektKarty = false; } }
             else
             {
                 LizKaret.CisloOdhozenaKarta = CisloKarty;

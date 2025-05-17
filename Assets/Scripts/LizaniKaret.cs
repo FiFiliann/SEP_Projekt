@@ -305,7 +305,7 @@ public class LizaniKaret : MonoBehaviour
         if (CisloOdhozenaKarta == 7) { EfektKarty = true; pocetSedmicek++; }
         if (CisloOdhozenaKarta == 1) { EfektKarty = true;}
         if (ZnackaOdhozenaKarta == "J") { EfektKarty = true;}
-        if (ZnackaOdhozenaKarta == "J" || CisloOdhozenaKarta == 13) { ZnackaOdhozenaKarta = "E"; }
+        if (ZnackaOdhozenaKarta == "J" || CisloOdhozenaKarta == 12) { ZnackaOdhozenaKarta = "E"; }
         if (CisloOdhozenaKarta == 13 && ZnackaOdhozenaKarta == "♠") { EfektKarty = true; }
 
         yield return new WaitForSeconds(0.5f);
@@ -447,10 +447,11 @@ public class LizaniKaret : MonoBehaviour
     public IEnumerator EfektyKaretNaHrace()
     {      
         int pocetLiznutychKaret;
+        Debug.Log("Efeck Karty");
+
         // Odhozená karta je PIKOVÝ KRÁL
         if (CisloOdhozenaKarta == 13 && ZnackaOdhozenaKarta == "♠" && EfektKarty)
         {
-            Debug.Log("KRÁL");
                 pocetLiznutychKaret = 5;
                 EfektKarty = false;
         }
@@ -470,8 +471,9 @@ public class LizaniKaret : MonoBehaviour
             EfektKarty = false;
         }
         // Odhozená karta je ŽOLÍK
-        else if (ZnackaOdhozenaKarta == "J" && EfektKarty)
+        else if (CisloOdhozenaKarta == 14 && EfektKarty)
         {
+            Debug.Log("Žolda");
             pocetLiznutychKaret = 3;
             EfektKarty = false;
 
