@@ -89,6 +89,10 @@ public class manager : MonoBehaviour
 
     public Slider[] SeznamReputaceMapa;           // Seznam slideru na mape 
 
+    public float casovac = 0f; // čas v sekundách
+    private bool casovacBezi = false;
+    public TextMeshProUGUI casovacText; 
+
     //podvody
     public bool KartaVRukavuKoupeno = true;
     public bool Kecanikoupeno = true;
@@ -101,6 +105,7 @@ public class manager : MonoBehaviour
         for (int i = 0; i < koupenaDovednosti.Length; i++)  {koupenaDovednosti[i] = false;}
         for (int i = 0; i < BytMenuVyber.Length; i++) { BytMenuVyber[i].SetActive(false); }
         BytMenuPromene();
+        SpustiCasovac();
     }
     void Update()
     {
@@ -132,6 +137,16 @@ public class manager : MonoBehaviour
                 staraScena = novaScena;
                 packa = false;
             }
+        }
+
+        if (casovacBezi)
+        {
+            casovac += Time.deltaTime;
+            int minuty = Mathf.FloorToInt(casovac / 60);
+            int sekundy = Mathf.FloorToInt(casovac % 60);
+
+            if (casovacText != null)
+                casovacText.text = minuty.ToString("00") + ":" + sekundy.ToString("00");
         }
     }
 
@@ -484,7 +499,10 @@ public class manager : MonoBehaviour
     {
         GameOverPopup.SetActive(true);
 
+        StopCasovac(); // Zastaví časovač
+        GameOverScreen.SetActive(true);
         Time.timeScale = 0; // Zastaví čas ve hře
+
     }
 
     public void NavratDoBytu()
@@ -524,5 +542,16 @@ public class manager : MonoBehaviour
         denText.text = den.ToString() + datum;
         reputaceText.text = reputace.ToString();
         AktualizovatLokaceVMenu();
+    }
+
+    public void SpustiCasovac()
+    {
+        casovac = 0f;
+        casovacBezi = true;
+    }
+
+    public void StopCasovac()
+    {
+        casovacBezi = false;
     }
 }
