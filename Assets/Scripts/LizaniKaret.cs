@@ -43,10 +43,12 @@ public class LizaniKaret : MonoBehaviour
     public bool KartaVRukavuAktivni = false;
     public GameObject KartaVRukavuA;
     public GameObject KartaVRukavuB;
+    public int hodnotaZvetseniPodezreni = 5;
     //DIALOG
     public GameObject KecaniButton;
     public GameObject DialogPrefab;
     public GameObject DialogPoloha;
+    public Slider CekaniSlider;
     public bool KecaniSpustene;
     //Podezření
     public Slider PodezreniSlider;
@@ -59,7 +61,10 @@ public class LizaniKaret : MonoBehaviour
     {
         hracRuka = GameObject.Find("HracovaRuka").GetComponent<HracRuka>();
         manager = GameObject.Find("GameManager").GetComponent<manager>();
-    } 
+        PodezreniSlider.maxValue = 10;
+        PodezreniSlider.interactable = false;
+        CekaniSlider.maxValue = 40;
+    }
     // BALICEK
     public void PripravaBalicku()
     {
@@ -253,7 +258,8 @@ public class LizaniKaret : MonoBehaviour
     {
         PripravaBalicku();
         ResetRuk();
-        KonecZacatekRozdavani = false; 
+        KonecZacatekRozdavani = false;
+        CekaniSlider.value = CekaniSlider.maxValue;
         if (manager.Kecanikoupeno) { KecaniButton.SetActive(true); }
         for (int i = 0;i < 4;i++) // počet karet
         {
@@ -347,35 +353,31 @@ public class LizaniKaret : MonoBehaviour
         i.GetComponent<Karta>().Obrazek();
         Destroy(KartaVRukavuB);
 
-        if (aktualniPokusyPodvadeni < MaxPokusyPodvadeni)
-        {
-            aktualniPokusyPodvadeni++;
-            // Zvýšení podezření o 1/3
-            float zvyseniPodezreni = PodezreniSlider.maxValue / 3f;
-            PodezreniSlider.value = Mathf.Min(PodezreniSlider.maxValue, PodezreniSlider.value + zvyseniPodezreni);
-
-
-            Debug.Log($"Podvádíš! Podezření zvýšeno o {zvyseniPodezreni}. Zbývající pokusy: {MaxPokusyPodvadeni - aktualniPokusyPodvadeni}");
-        }
-        else
-        {
-            manager.ZmenaSceny(0);
-            manager.NovyDen();
-            manager.penize -= manager.nejvyssiSazka;
-            manager.BytMenuPromene();
-            Debug.Log("Vyčerpal jsi všechny pokusy na podvádění!");
-        }
+            int randomPodezreni = UnityEngine.Random.Range(1, hodnotaZvetseniPodezreni);
+            PodezreniSlider.value += randomPodezreni;
+            if(PodezreniSlider.value == PodezreniSlider.maxValue)
+            {
+                manager.ZmenaSceny(0);
+                manager.NovyDen();
+                manager.penize -= manager.nejvyssiSazka;
+                manager.BytMenuPromene();
+                Debug.Log("Vyčerpal jsi všechny pokusy na podvádění!");
+            }
     }
     // DIALOG
     public void DialogButton()
     {
-        KecaniSpustene = true;
-        GameObject HracDialog = Instantiate(DialogPrefab,DialogPoloha.transform);
-        GameObject.Find("KecaniButton").GetComponent<Button>().interactable = false;
-        HracDialog.GetComponent<Dialog>().HracDialog.SetActive(true);
-        HracDialog.GetComponent<Dialog>().OponentDialog.SetActive(false);
-        HracDialog.GetComponent<Dialog>().TohleJe = "Hrac";
-
+        if(CekaniSlider.value == CekaniSlider.maxValue) 
+        {
+            CekaniSlider.value = CekaniSlider.minValue;
+            StartCoroutine(DoplnovaniCekani());
+            KecaniSpustene = true;
+            GameObject HracDialog = Instantiate(DialogPrefab,DialogPoloha.transform);
+            GameObject.Find("KecaniButton").GetComponent<Button>().interactable = false;
+            HracDialog.GetComponent<Dialog>().HracDialog.SetActive(true);
+            HracDialog.GetComponent<Dialog>().OponentDialog.SetActive(false);
+            HracDialog.GetComponent<Dialog>().TohleJe = "Hrac";
+        }
     }
     public void DialogHrac(string text)
     {
@@ -384,6 +386,15 @@ public class LizaniKaret : MonoBehaviour
         HracDialog.GetComponent<Dialog>().HracDialog.SetActive(true);
         HracDialog.GetComponent<Dialog>().TohleJe = "HracKteryNechceMluvit";
         HracDialog.GetComponent<Dialog>().HracDialogText.text = text;
+    }
+    public IEnumerator DoplnovaniCekani()
+    {        
+        while(CekaniSlider.value != CekaniSlider.maxValue)
+        {
+            CekaniSlider.value += 1;
+            yield return new WaitForSeconds(1f);
+        }
+        GameObject.Find("KecaniButton").GetComponent<Button>().interactable = true;
     }
     //Specialni Karty
     public void ZnackaVyber(int vyber)

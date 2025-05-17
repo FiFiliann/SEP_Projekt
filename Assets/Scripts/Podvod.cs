@@ -6,20 +6,22 @@ using TMPro;
 public class Podvod : MonoBehaviour , IPointerEnterHandler, IPointerExitHandler
 {
     public manager manager;
+    public GameObject LizKaretObj;
+    public LizaniKaret LizKaret;
+
     public GameObject popisOkenko;
     public GameObject ObsahPopisu;
     public GameObject ObsahNazev;
     //--//
     public int cisloButonu;
     public int potrebnaReputace;
-    //public string popisText;
-    //public string nazevText;
+
     void Start()
     {
         manager = GameObject.Find("GameManager").GetComponent<manager>();
+        LizKaret = LizKaretObj.GetComponent<LizaniKaret>();
         popisOkenko.SetActive(false);
-        //ObsahNazev.GetComponent<TextMeshProUGUI>().text = nazevText;
-        //ObsahPopisu.GetComponent<TextMeshProUGUI>().text = popisText;
+
     }
     public void Zaplaceni()
     {
@@ -44,9 +46,9 @@ public class Podvod : MonoBehaviour , IPointerEnterHandler, IPointerExitHandler
         switch(cisloButonu)
         {
             case 0: manager.KartaVRukavuKoupeno = true; break;
-            case 1: manager.Kecanikoupeno = true; Debug.Log("1"); break;
-            case 2: manager.Kecanikoupeno = true; Debug.Log("2"); break;
-            case 3: manager.Kecanikoupeno = true; Debug.Log("3"); break;
+            case 1: manager.Kecanikoupeno = true; break;
+            case 2: LizKaret.hodnotaZvetseniPodezreni = 4;  break;
+            case 3: LizKaret.CekaniSlider.maxValue = 30;  break;
             default: break;
         }
     }

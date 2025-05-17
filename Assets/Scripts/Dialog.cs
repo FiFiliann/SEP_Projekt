@@ -25,16 +25,13 @@ public class Dialog : MonoBehaviour
     private string[] textOponent = { "Ale opravdu", "anoano", "smysluplne", "nepobavujici" };
     public string TohleJe;
 
+    //CEKANI BAR
     void Start()
     {
         manager = GameObject.Find("GameManager").GetComponent<manager>();
         LizKaret = GameObject.Find("LizaciBalicek").GetComponent<LizaniKaret>();
         int i = Random.Range(0, textHrac.Length);
         HracDialogText.text = textHrac[i];
-    }
-    public void HracuvText()
-    {
-
     }
     private void Update()
     {
@@ -49,7 +46,7 @@ public class Dialog : MonoBehaviour
             }
             if (gameObject.transform.position.x >= 14)
             {
-                if(TohleJe == "Hrac") { pohyb = false; StartCoroutine(OdpovediOponenti()); }
+                if(TohleJe == "konec") { pohyb = false; StartCoroutine(OdpovediOponenti()); }
                 else if(TohleJe == "Oponent") {Destroy(gameObject); }
             }
         }
@@ -61,11 +58,12 @@ public class Dialog : MonoBehaviour
         rychlost = -10;
 
         //ODEBRANI PODEZRENI
-        if (LizKaret.aktualniPokusyPodvadeni != 0 && TohleJe == "Hrac")
+        if (TohleJe == "Hrac")
         {
-            LizKaret.aktualniPokusyPodvadeni--;
-            float zvyseniPodezreni = LizKaret.PodezreniSlider.maxValue / 3f;
-            LizKaret.PodezreniSlider.value = zvyseniPodezreni;//Mathf.Min(LizKaret.PodezreniSlider.maxValue, LizKaret.PodezreniSlider.value - zvyseniPodezreni);
+            int randomPodezreni = UnityEngine.Random.Range(1, 3);
+            LizKaret.PodezreniSlider.value -= 1;
+            TohleJe = "konec";
+
         }
     }
     public IEnumerator OdpovediOponenti()
@@ -80,8 +78,6 @@ public class Dialog : MonoBehaviour
                 yield return new WaitForSeconds(3f);
             }
         }
-        GameObject.Find("KecaniButton").GetComponent<Button>().interactable = true;
-        
         Destroy(gameObject);
     }
 }
