@@ -89,9 +89,10 @@ public class manager : MonoBehaviour
 
     public Slider[] SeznamReputaceMapa;           // Seznam slideru na mape 
 
-    public float casovac = 0f; // čas v sekundách
+    public float casovac = 1080f; // čas v sekundách
     private bool casovacBezi = false;
-    public TextMeshProUGUI casovacText; 
+    public TextMeshProUGUI casovacText;
+    public bool pozdniHodina = false;
 
     //podvody
     public bool KartaVRukavuKoupeno = true;
@@ -147,6 +148,8 @@ public class manager : MonoBehaviour
 
             if (casovacText != null)
                 casovacText.text = minuty.ToString("00") + ":" + sekundy.ToString("00");
+            if (casovac >= 1410f) { pozdniHodina = true; casovacText.color = Color.red; }
+            if (casovac >= 1440f) { casovac = 0f; }
         }
     }
 
@@ -259,7 +262,7 @@ public class manager : MonoBehaviour
         }
         for(int i = 0;i<2;i++)// VYTVORENI NOVE PLATBY
         {
-            if(UnityEngine.Random.Range(0, 4) == 0) 
+            if(UnityEngine.Random.Range(0, 8) > 3) 
             {VytvoreniPlatby(); } 
         }
 
@@ -353,17 +356,28 @@ public class manager : MonoBehaviour
         {
             if (OponentiDohromady[i] != null)
             {
-                int random = UnityEngine.Random.Range(0, 3);
-                if (random == 0 || i == 0)
+                if(casovac >= 1530f)
                 {
                     sazky[i] = 0;
                     Destroy(OponentiDohromady[i]);
                     Destroy(OponentiUStolu[i]);
                     yield return new WaitForSeconds(0.5f);
                 }
+                else
+                {
+                    int random = UnityEngine.Random.Range(0, 3);
+                    if (random == 0 || i == 0)
+                    {
+                        sazky[i] = 0;
+                        Destroy(OponentiDohromady[i]);
+                        Destroy(OponentiUStolu[i]);
+                        yield return new WaitForSeconds(0.5f);
+                    }
+                }
+
             }
         }
-        if (!OponentiDohromady.Any())  // pridani oponenta pokud vsichni odesli
+        if (!OponentiDohromady.Any() && pozdniHodina == false)  // pridani oponenta pokud vsichni odesli
         {
             OponentiDohromady[0] = Instantiate(OponentIkonka, OponentIkonkaContent);
             OponentiDohromady[0].name = "OponentIkonka" + (1);
@@ -372,23 +386,26 @@ public class manager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
         dovysovani = false;
-        for (int i = 0; i < OponentiDohromady.Length; i++) // přidání oponentů
+        if(pozdniHodina == false)
         {
-            if (OponentiDohromady[i] == null)
+            for (int i = 0; i < OponentiDohromady.Length; i++) // přidání oponentů
             {
-                int random = UnityEngine.Random.Range(0, 2);
-                if (random == 0 || i == 0)
+                if (OponentiDohromady[i] == null)
                 {
-                    OponentiDohromady[i] = Instantiate(OponentIkonka, OponentIkonkaContent);                    
-                    OponentiDohromady[i].name = "OponentIkonka" + (i + 1);
-                    OponentiDohromady[i].GetComponent<OponentovaIkonka>().CisloOponenta = i;
-                    OponentiDohromady[i].GetComponent<OponentovaIkonka>().OponentIkonka.GetComponent<Image>().sprite = OponentIkonkaRandom();
+                    int random = UnityEngine.Random.Range(0, 2);
+                    if (random == 0 || i == 0)
+                    {
+                        OponentiDohromady[i] = Instantiate(OponentIkonka, OponentIkonkaContent);                    
+                        OponentiDohromady[i].name = "OponentIkonka" + (i + 1);
+                        OponentiDohromady[i].GetComponent<OponentovaIkonka>().CisloOponenta = i;
+                        OponentiDohromady[i].GetComponent<OponentovaIkonka>().OponentIkonka.GetComponent<Image>().sprite = OponentIkonkaRandom();
 
-                    yield return new WaitForSeconds(1f);
+                        yield return new WaitForSeconds(1f);
+                    }
                 }
             }
         }
-        
+
         for (int i = 0; i < OponentiDohromady.Length; i++) // výpis nových sázek
         {
             if (OponentiDohromady[i] != null)
@@ -414,6 +431,7 @@ public class manager : MonoBehaviour
     }
     public IEnumerator porovnanaviSazek()
     {
+        int prazdno = 0;
         secteni = 0;
         if (zacatekSazeni) {nejvyssiSazka = sazky[0]; zacatekSazeni = false; }
         for (int i = 0; i < sazky.Length; i++) // nalezení největší sázky
@@ -430,15 +448,19 @@ public class manager : MonoBehaviour
                 //GameObject.Find("Vynechat").GetComponent<Button>().interactable = true;
                 yield return new WaitForSeconds(0.2f);
                 }
+            else { prazdno++; }
             //else { i = sazky.Length; }
         }
 
         secteni += hracSazka;
         GameObject.Find("CelkovaSazka").GetComponent<TextMeshProUGUI>().text = "nej: " + nejvyssiSazka + "  celkem: " + secteni;
 
-        GameObject.Find("Vynechat").GetComponent<Button>().interactable = true;
+        if(prazdno != 5) 
+        { 
+            GameObject.Find("PotvrditSazku").GetComponent<Button>().interactable = true;
+            GameObject.Find("Vynechat").GetComponent<Button>().interactable = true;
+        }
         GameObject.Find("Odejit").GetComponent<Button>().interactable = true;
-        GameObject.Find("PotvrditSazku").GetComponent<Button>().interactable = true;
 
         yield return new WaitForSeconds(0.1f);
 
@@ -538,15 +560,17 @@ public class manager : MonoBehaviour
     }
     public void BytMenuPromene() //vyps�n� zm�ny variabilit v menu
     {
-        penizeText.text = penize.ToString() + " Kc";
+        penizeText.text = penize.ToString() + " KC";
         denText.text = den.ToString() + datum;
-        reputaceText.text = reputace.ToString();
+        reputaceText.text = reputace.ToString() + " REP";
         AktualizovatLokaceVMenu();
     }
 
     public void SpustiCasovac()
     {
-        casovac = 0f;
+        casovacText.color = Color.white;
+        pozdniHodina = false;
+        casovac = 990f;
         casovacBezi = true;
     }
 

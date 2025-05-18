@@ -19,12 +19,15 @@ public class OponentUStolu : MonoBehaviour
     public GameObject KartyGUI;
     public Karta kartasc;
     public LizaniKaret LizKaret;
+    public vysledekPopUp vysPopUp;
+
     public List<string> OponentKarty = new List<string>();
 
     public bool Hraje = true;
     public int CisloOponenta;
     private void Start()
     {
+        vysPopUp = GameObject.Find("Vysledek").GetComponent<vysledekPopUp>();
         manager = GameObject.Find("GameManager").GetComponent<manager>();
         if (gameObject.name == "Oponent3" || gameObject.name == "Oponent4")
         {
@@ -265,7 +268,5 @@ public class OponentUStolu : MonoBehaviour
             OponentDialog.GetComponent<Dialog>().TohleJe = "Oponent";
             OponentDialog.GetComponent<Dialog>().OponentDialogText.text = text; 
         }
-        
-
     }
 }

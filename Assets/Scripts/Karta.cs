@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     public GameObject OponentovaRuka;
     public GameObject RukavHrace;
     public LizaniKaret LizKaret;
+    public vysledekPopUp vysPopUp;
 
     public string ZnackaKarty;
     public int CisloKarty;
@@ -35,6 +37,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     public bool a = true;
     public void Start()
     {
+        vysPopUp = GameObject.Find("Vysledek").GetComponent<vysledekPopUp>();
         manager = GameObject.Find("GameManager").GetComponent<manager>();
         OdhazovaciBalicek = GameObject.Find("OdhozovaciBalicek");
         LizKaret = GameObject.Find("LizaciBalicek").GetComponent<LizaniKaret>();
@@ -199,15 +202,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     {
         if (!GameObject.Find("HracovaRuka").GetComponent<HracRuka>().HracKarty.Any())
         {
-            manager.sazeciOkenko.SetActive(true);            
-            manager.penize += manager.secteni - manager.hracSazka;
-            GameObject.Find("HracovaSazka").GetComponent<TextMeshProUGUI>().text = manager.penize + "KC";
-            manager.reputace += 10;
-
-            StartCoroutine(manager.NoveKoloPrsi());
-
-
-
+            StartCoroutine(vysPopUp.Vysledky(0,0));
         }
         else
         {

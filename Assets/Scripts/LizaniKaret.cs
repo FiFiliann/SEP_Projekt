@@ -12,6 +12,7 @@ using UnityEngine.UI;
 
 using UnityEngine.EventSystems;
 using Image = UnityEngine.UI.Image;
+using static System.Net.Mime.MediaTypeNames;
 
 
 
@@ -26,6 +27,7 @@ public class LizaniKaret : MonoBehaviour
     public HracRuka hracRuka;
     public OponentUStolu oponentUStolu;
     public manager manager;
+    public vysledekPopUp vysPopUp;
     public Sprite[] KartySrdce = new Sprite[13];
     public Sprite[] KartyKary = new Sprite[13];
     public Sprite[] KartyPiky = new Sprite[13];
@@ -59,11 +61,12 @@ public class LizaniKaret : MonoBehaviour
 
     public void Start()
     {
+        vysPopUp = GameObject.Find("Vysledek").GetComponent<vysledekPopUp>();
         hracRuka = GameObject.Find("HracovaRuka").GetComponent<HracRuka>();
         manager = GameObject.Find("GameManager").GetComponent<manager>();
         PodezreniSlider.maxValue = 10;
         PodezreniSlider.interactable = false;
-        CekaniSlider.maxValue = 40;
+        CekaniSlider.maxValue = 400;
     }
     // BALICEK
     public void PripravaBalicku()
@@ -217,6 +220,8 @@ public class LizaniKaret : MonoBehaviour
         i.GetComponent<Karta>().CisloKarty = int.Parse(balicek[0].Substring(1, balicek[0].Length - 1));
     }
     //
+
+    //
     public IEnumerator Kolo()
     {
         for (int j = 0; j < manager.OponentiUStolu.Length; j++)
@@ -229,21 +234,8 @@ public class LizaniKaret : MonoBehaviour
                 
                 if (!manager.OponentiUStolu[j].GetComponent<OponentUStolu>().OponentKarty.Any()) 
                 { 
-                    manager.sazeciOkenko.SetActive(true);
+                    StartCoroutine(vysPopUp.Vysledky(1,j));
 
-                    for (int a = 0; a < manager.OponentiUStolu.Length; a++) // rozdeleni Penez
-                    {
-                        if (manager.OponentiUStolu[a] != null && manager.OponentiUStolu[a].GetComponent<OponentUStolu>().Hraje == true && j != a)
-                            { manager.OponentiUStolu[a].GetComponent<OponentUStolu>().OdecteniPenezOponentovy(); }
-                        else if(manager.OponentiUStolu[a] != null && manager.OponentiUStolu[a].GetComponent<OponentUStolu>().Hraje == true && j == a)
-                            { manager.OponentiUStolu[a].GetComponent<OponentUStolu>().PrideleniPenezOponentovy(); }
-                        yield return new WaitForSeconds(0.2f);
-                    }
-                    
-                    manager.penize -= manager.nejvyssiSazka;
-                    GameObject.Find("HracovaSazka").GetComponent<TextMeshProUGUI>().text = manager.penize + "KC";
-                    
-                    StartCoroutine(manager.NoveKoloPrsi());
                     j = manager.OponentiUStolu.Length;
                 }
                 else
@@ -253,6 +245,23 @@ public class LizaniKaret : MonoBehaviour
             }
         }
         HracovoKolo = true;
+    }
+
+    public IEnumerator OponentVyhra(int j)
+    {
+        manager.sazeciOkenko.SetActive(true);
+        for (int a = 0; a < manager.OponentiUStolu.Length; a++) // rozdeleni Penez
+        {
+            if (manager.OponentiUStolu[a] != null && manager.OponentiUStolu[a].GetComponent<OponentUStolu>().Hraje == true && j != a)
+                { manager.OponentiUStolu[a].GetComponent<OponentUStolu>().OdecteniPenezOponentovy(); }
+            else if(manager.OponentiUStolu[a] != null && manager.OponentiUStolu[a].GetComponent<OponentUStolu>().Hraje == true && j == a)
+                { manager.OponentiUStolu[a].GetComponent<OponentUStolu>().PrideleniPenezOponentovy(); }
+            yield return new WaitForSeconds(0.2f);
+        }
+        manager.penize -= manager.nejvyssiSazka;
+        GameObject.Find("HracovaSazka").GetComponent<TextMeshProUGUI>().text = manager.penize + "KC";
+                    
+        StartCoroutine(manager.NoveKoloPrsi());
     }
     public IEnumerator StartKolo()
     {
@@ -353,16 +362,25 @@ public class LizaniKaret : MonoBehaviour
         i.GetComponent<Karta>().Obrazek();
         Destroy(KartaVRukavuB);
 
-            int randomPodezreni = UnityEngine.Random.Range(1, hodnotaZvetseniPodezreni);
-            PodezreniSlider.value += randomPodezreni;
-            if(PodezreniSlider.value == PodezreniSlider.maxValue)
-            {
-                manager.ZmenaSceny(0);
-                manager.NovyDen();
-                manager.penize -= manager.nejvyssiSazka;
-                manager.BytMenuPromene();
-                Debug.Log("Vyčerpal jsi všechny pokusy na podvádění!");
-            }
+        int randomPodezreni = UnityEngine.Random.Range(1, hodnotaZvetseniPodezreni);
+        PodezreniSlider.value += randomPodezreni;
+        if(PodezreniSlider.value == PodezreniSlider.maxValue)
+        {
+            
+            StartCoroutine(vysPopUp.Vysledky(2,0)) ;
+            
+        }
+    }
+    public void RukavChycen()
+    {
+            manager.ZmenaSceny(0);
+            manager.NovyDen();
+
+            manager.penize -= manager.nejvyssiSazka;
+            manager.reputace -= 5;
+            if(manager.reputace < 10) { manager.reputace = 10; }
+
+            manager.BytMenuPromene();
     }
     // DIALOG
     public void DialogButton()
@@ -377,6 +395,7 @@ public class LizaniKaret : MonoBehaviour
             HracDialog.GetComponent<Dialog>().HracDialog.SetActive(true);
             HracDialog.GetComponent<Dialog>().OponentDialog.SetActive(false);
             HracDialog.GetComponent<Dialog>().TohleJe = "Hrac";
+            HracDialog.GetComponent<Dialog>().TextProHrace();
         }
     }
     public void DialogHrac(string text)
@@ -392,7 +411,7 @@ public class LizaniKaret : MonoBehaviour
         while(CekaniSlider.value != CekaniSlider.maxValue)
         {
             CekaniSlider.value += 1;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.1f);
         }
         GameObject.Find("KecaniButton").GetComponent<Button>().interactable = true;
     }
@@ -491,5 +510,14 @@ public class LizaniKaret : MonoBehaviour
         }
         HracovoKolo = false;
         StartCoroutine(Kolo());
-    }        
+    }
+    public void HracVyhra()
+    {
+        manager.sazeciOkenko.SetActive(true);
+        manager.penize += manager.secteni - manager.hracSazka;
+        GameObject.Find("HracovaSazka").GetComponent<TextMeshProUGUI>().text = manager.penize + "KC";
+        manager.reputace += 3;
+
+        StartCoroutine(manager.NoveKoloPrsi());
+    }
 }

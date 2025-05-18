@@ -21,8 +21,8 @@ public class Dialog : MonoBehaviour
     //VARI
     bool pohyb = true;
     int rychlost = 10;
-    private string[] textHrac = { "coze", "nene", "silene","humorne" };
-    private string[] textOponent = { "Ale opravdu", "anoano", "smysluplne", "nepobavujici" };
+    private string[] textHrac = { "Tak jak jste se dostali do hazardu vy?", "Verili byste tomu, ze nam zabili Ferdinanda?", "Jak znacku cigaret kurite vy, panove","Taky mate dluhy u mafie?" };
+    private string[] textOponent = { "Tohle je ovsem velice humorne", "Nekecej! Sam se musim soustredit", "Ja mam dluhy u mafia 2", "Coze?" };
     public string TohleJe;
 
     //CEKANI BAR
@@ -30,6 +30,10 @@ public class Dialog : MonoBehaviour
     {
         manager = GameObject.Find("GameManager").GetComponent<manager>();
         LizKaret = GameObject.Find("LizaciBalicek").GetComponent<LizaniKaret>();
+
+    }
+    public void TextProHrace()
+    {
         int i = Random.Range(0, textHrac.Length);
         HracDialogText.text = textHrac[i];
     }

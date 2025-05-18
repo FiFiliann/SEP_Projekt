@@ -48,7 +48,7 @@ public class Podvod : MonoBehaviour , IPointerEnterHandler, IPointerExitHandler
             case 0: manager.KartaVRukavuKoupeno = true; break;
             case 1: manager.Kecanikoupeno = true; break;
             case 2: LizKaret.hodnotaZvetseniPodezreni = 4;  break;
-            case 3: LizKaret.CekaniSlider.maxValue = 30;  break;
+            case 3: LizKaret.CekaniSlider.maxValue = 300;  break;
             default: break;
         }
     }

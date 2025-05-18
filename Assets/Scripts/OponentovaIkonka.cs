@@ -82,7 +82,7 @@ public class OponentovaIkonka : MonoBehaviour
                 if(manager.nejvyssiSazka < Penize && Random.Range(0, 8)>2)
                 {
                     Sazka = manager.nejvyssiSazka;
-                    OponentSazka.text =Sazka + "";
+                    OponentSazka.text =Sazka + ",-";
                     manager.secteni += Sazka;
                     if (manager.OponentiUStolu[i] != null)
                     { manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = true; }
