@@ -93,6 +93,8 @@ public class manager : MonoBehaviour
     private bool casovacBezi = false;
     public TextMeshProUGUI casovacText;
     public bool pozdniHodina = false;
+    public bool prilisPozde = false;
+
 
     //podvody
     public bool KartaVRukavuKoupeno = true;
@@ -150,6 +152,8 @@ public class manager : MonoBehaviour
                 casovacText.text = minuty.ToString("00") + ":" + sekundy.ToString("00");
             if (casovac >= 1410f) { pozdniHodina = true; casovacText.color = Color.red; }
             if (casovac >= 1440f) { casovac = 0f; }
+            if (casovac >= 60f && pozdniHodina == true) { prilisPozde = true; }
+
         }
     }
 
@@ -191,6 +195,7 @@ public class manager : MonoBehaviour
                 Destroy(OponentiUStolu[j]);
                 Destroy(OponentiDohromady[j]);
             }
+            SpustiCasovac();
             nejvyssiSazka = 0;
             secteni = 0;
             MenuButtony(10);
@@ -356,7 +361,7 @@ public class manager : MonoBehaviour
         {
             if (OponentiDohromady[i] != null)
             {
-                if(casovac >= 1530f)
+                if(prilisPozde)
                 {
                     sazky[i] = 0;
                     Destroy(OponentiDohromady[i]);
@@ -377,6 +382,7 @@ public class manager : MonoBehaviour
 
             }
         }
+
         if (!OponentiDohromady.Any() && pozdniHodina == false)  // pridani oponenta pokud vsichni odesli
         {
             OponentiDohromady[0] = Instantiate(OponentIkonka, OponentIkonkaContent);
@@ -570,6 +576,7 @@ public class manager : MonoBehaviour
     {
         casovacText.color = Color.white;
         pozdniHodina = false;
+        prilisPozde = false;
         casovac = 990f;
         casovacBezi = true;
     }
