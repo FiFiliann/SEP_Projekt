@@ -183,10 +183,13 @@ public class manager : MonoBehaviour
             PlatbyDohromady[0].name = "PribehovyDluh";
             PribehovyDluh = false;
         }
+        if (novaScena != 0) { UI[1].SetActive(true); }
+
     }
     public void OpenMinMenu()
     {
         GameMenu.SetActive(true);
+        if(novaScena != 0) { UI[1].SetActive(false); }
     }
     public void ButtonAkce() // skryt�/odkryt� tla��tek podle sc�ny
     {

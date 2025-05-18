@@ -25,7 +25,7 @@ public class LizaniKaret : MonoBehaviour
     public GameObject a;
     GameObject coze;
     public HracRuka hracRuka;
-    public OponentUStolu oponentUStolu;
+    //public OponentUStolu oponentUStolu;
     public manager manager;
     public vysledekPopUp vysPopUp;
     public Sprite[] KartySrdce = new Sprite[13];
@@ -439,7 +439,16 @@ public class LizaniKaret : MonoBehaviour
         GameObject.Find("Odejit").GetComponent<Button>().interactable = false;
         GameObject.Find("PotvrditSazku").GetComponent<Button>().interactable = false;
         StartCoroutine(VynechatKolo());
-        
+    }
+    public void VynechatKoloDolniListaButton()
+    {
+        manager.sazeciOkenko.SetActive(true);
+        manager.penize -= manager.hracSazka;
+        GameObject.Find("HracovaSazka").GetComponent<TextMeshProUGUI>().text = manager.penize + "KC";
+        GameObject.Find("Vynechat").GetComponent<Button>().interactable = false;
+        GameObject.Find("Odejit").GetComponent<Button>().interactable = false;
+        GameObject.Find("PotvrditSazku").GetComponent<Button>().interactable = false;
+        StartCoroutine(VynechatKolo());
     }
     public IEnumerator VynechatKolo()
     {
