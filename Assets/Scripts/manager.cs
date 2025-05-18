@@ -95,6 +95,10 @@ public class manager : MonoBehaviour
     public bool pozdniHodina = false;
     public bool prilisPozde = false;
 
+    public TextMeshProUGUI CelkovaSazkaText;
+
+
+
 
     //podvody
     public bool KartaVRukavuKoupeno = true;
@@ -471,30 +475,41 @@ public class manager : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
     }
+
+
     public void VlozeniSazky() // hráč potvrdí sázku
     {
         if (Int32.TryParse(SazkaInput.text, out int j))
         {
-            if(j > 0 && j >= nejvyssiSazka)
+            if (j > 0 && j >= nejvyssiSazka)
             {
                 hracSazka = j;
-                if(hracSazka > nejvyssiSazka)
-                { nejvyssiSazka = hracSazka; StartCoroutine(porovnanaviSazek()); }
-                else {
-                    for(int i = 0; i < sazky.Length; i++) 
+                // Aktualizace celkové sázky v UI
+                if (CelkovaSazkaText != null)
+                    CelkovaSazkaText.text = hracSazka + " KC";
+
+                if (hracSazka > nejvyssiSazka)
+                {
+                    nejvyssiSazka = hracSazka;
+                    StartCoroutine(porovnanaviSazek());
+                }
+                else
+                {
+                    for (int i = 0; i < sazky.Length; i++)
                     {
                         if (sazky[i] != 0)
                         {
-                            StartCoroutine(GameObject.Find("LizaciBalicek").GetComponent<LizaniKaret>().StartKolo()); 
+                            StartCoroutine(GameObject.Find("LizaciBalicek").GetComponent<LizaniKaret>().StartKolo());
                             sazeciOkenko.SetActive(false); zacatekSazeni = true;
                             i = sazky.Length;
                         }
                     }
-
                 }
             }
         }
     }
+
+
     public void ResetHry()
     {
         GameMenu.SetActive(true);
@@ -511,6 +526,14 @@ public class manager : MonoBehaviour
             }
         }
         PribehovyDluh = true;
+
+
+        if (CelkovaSazkaText != null)
+            CelkovaSazkaText.text = "Celková sázka: 0 KC";
+
+
+        VynulujPodezreni();
+
         BytMenuPromene();
     }
 
@@ -521,6 +544,8 @@ public class manager : MonoBehaviour
             Debug.Log("Hra ukončena! Podezreni dosáhla maxima.");
             UkoncitHru();
         }
+
+        VynulujPodezreni();
     }
 
     public void UkoncitHru()
@@ -531,6 +556,20 @@ public class manager : MonoBehaviour
         GameOverScreen.SetActive(true);
         Time.timeScale = 0; // Zastaví čas ve hře
 
+        VynulujPodezreni();
+
+    }
+
+    public void OdejitZeHry()
+    {
+        StopCasovac(); // Zastaví časovač
+        Time.timeScale = 1; // Obnoví čas ve hře, pokud byl zastaven
+        GameOverScreen.SetActive(false);
+        WinScreen.SetActive(false);
+        BytMenu.SetActive(true);
+        ZmenaSceny(0); // Přepne scénu na byt (index 0)
+
+        VynulujPodezreni();
     }
 
     public void NavratDoBytu()
@@ -543,6 +582,7 @@ public class manager : MonoBehaviour
 
         // Přepne scénu na byt
         ZmenaSceny(0); // Předpokládám, že scéna "byt" má index 0
+        VynulujPodezreni();
     }
 
     public void ExitGame()
@@ -584,5 +624,11 @@ public class manager : MonoBehaviour
     public void StopCasovac()
     {
         casovacBezi = false;
+    }
+
+    private void VynulujPodezreni()
+    {
+        if (PodezreniSlider != null)
+            PodezreniSlider.value = 0;
     }
 }
