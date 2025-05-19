@@ -20,13 +20,14 @@ public class OponentovaIkonka : MonoBehaviour
     {
         manager = GameObject.Find("GameManager").GetComponent<manager>();
         OponentCelkovePenize = transform.Find("OponentoviPenize").GetComponent<TextMeshProUGUI>();
-        OponentSazka = transform.Find("OponentovaSazka").GetComponent<TextMeshProUGUI>();
         OponentIkonka = transform.Find("OponentVzhled").GetComponent<Image>();
+        OponentSazka = transform.Find("OponentovaSazka").GetComponent<TextMeshProUGUI>();
         OponentiPozice = GameObject.Find("ZidleProOponenty").GetComponent<Transform>();
         OponentSazka.text = "";
         Penize = CelkovePenizeRandom(manager.novaScena); OponentCelkovePenize.text = Penize + ",-";
-        StartI();
         Sazky();
+       // StartI(0);
+
     }
     public void VynulovaniIkonky()
     {
@@ -37,20 +38,13 @@ public class OponentovaIkonka : MonoBehaviour
         OponentCelkovePenize.text = Penize + ",-";
         OponentSazka.text = "";
     }
-    public void StartI()
+    public void StartI(int j)
     {
-        for (int j = 0; j < manager.OponentiUStolu.Length; j++)
-        {
-            if (manager.OponentiUStolu[j] == null)
-            {
-                manager.OponentiUStolu[j] = Instantiate(opponentPrefabs, spawnPoints[j].position, spawnPoints[j].rotation, OponentiPozice);
-                manager.OponentiUStolu[j].GetComponent<Image>().sprite = OponentIkonka.GetComponent<Image>().sprite;
-                manager.OponentiUStolu[j].name = "Oponent" +j;
-                manager.OponentiUStolu[j].GetComponent<OponentUStolu>().CisloOponenta = CisloOponenta;
-
-                j = manager.OponentiDohromady.Length;                
-            }
-        }
+        CisloOponenta = j;
+        manager.OponentiUStolu[j] = Instantiate(opponentPrefabs, spawnPoints[j].position, spawnPoints[j].rotation, OponentiPozice);
+        manager.OponentiUStolu[j].GetComponent<Image>().sprite = OponentIkonka.GetComponent<Image>().sprite;
+        manager.OponentiUStolu[j].name = "Oponent" +j;
+        manager.OponentiUStolu[j].GetComponent<OponentUStolu>().CisloOponenta = CisloOponenta;
     }
 
     public int CelkovePenizeRandom(int i)
@@ -71,9 +65,11 @@ public class OponentovaIkonka : MonoBehaviour
         {
             Sazka = Random.Range(Mathf.FloorToInt((Penize/100)*12), Mathf.FloorToInt((Penize / 100) * 30));
             OponentSazka.text =Sazka + ",-";
-            if (manager.OponentiUStolu[i] != null) 
-            {manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = true; }
             manager.sazky[i] = Sazka;
+
+            manager.OponentiUStolu[i].GetComponent<OponentUStolu>().UkazatKarty();
+            manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = true;
+
         }
         else
         {
@@ -84,24 +80,27 @@ public class OponentovaIkonka : MonoBehaviour
                     Sazka = manager.nejvyssiSazka;
                     OponentSazka.text =Sazka + ",-";
                     manager.secteni += Sazka;
-                    if (manager.OponentiUStolu[i] != null)
-                    { manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = true; }
                     manager.sazky[i] = Sazka;
+
+                    manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = true;
+                    manager.OponentiUStolu[i].GetComponent<OponentUStolu>().UkazatKarty();
+
                 }
                 else
                 { 
                     Sazka = 0; OponentSazka.text = "OUT";
-                    if (manager.OponentiUStolu[i] != null)
-                    { manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = false; }
                     manager.sazky[i] = 0;
+
+                    manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = false;
                     manager.OponentiUStolu[i].GetComponent<OponentUStolu>().SkrytKarty();
                 }
             }
             else 
-            { 
+            {             
                 manager.secteni += Sazka;
-                if (manager.OponentiUStolu[i] != null)
-                { manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = true; }
+                manager.OponentiUStolu[i].GetComponent<OponentUStolu>().Hraje = true;
+                manager.OponentiUStolu[i].GetComponent<OponentUStolu>().UkazatKarty();
+            
             }
         }
     }

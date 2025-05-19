@@ -25,11 +25,12 @@ public class OponentUStolu : MonoBehaviour
 
     public bool Hraje = true;
     public int CisloOponenta;
+    public int otocka;
     private void Start()
     {
         vysPopUp = GameObject.Find("Vysledek").GetComponent<vysledekPopUp>();
         manager = GameObject.Find("GameManager").GetComponent<manager>();
-        if (gameObject.name == "Oponent3" || gameObject.name == "Oponent4")
+        if (otocka == 4 || otocka == 5)
         {
             gameObject.transform.localScale = new Vector3(-1, 1, 1); 
             PocetKaret.transform.localScale = new Vector3(-1, 1, 1);
@@ -195,6 +196,10 @@ public class OponentUStolu : MonoBehaviour
     public void SkrytKarty()
     {
         KartyGUI.SetActive(false);
+    }
+    public void UkazatKarty()
+    {
+        KartyGUI.SetActive(true);
     }
     public void SpecialniKartyOponent(int i)
     {

@@ -34,7 +34,7 @@ public class Karta : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     public bool Rukav_Hrac = false;
     public bool Hrac_Rukav = false;
     public bool TohleJeKartaVRukavu = false;
-    public bool a = true;
+    public bool a = false;
     public void Start()
     {
         vysPopUp = GameObject.Find("Vysledek").GetComponent<vysledekPopUp>();

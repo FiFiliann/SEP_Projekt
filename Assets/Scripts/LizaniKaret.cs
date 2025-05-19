@@ -146,9 +146,7 @@ public class LizaniKaret : MonoBehaviour
         {
             int vyberJedna = UnityEngine.Random.Range(0, balicek.Count);
             int vyberDva = UnityEngine.Random.Range(0, balicek.Count);
-            string podrz = balicek[vyberJedna];
-            balicek[vyberJedna] = balicek[vyberDva];
-            balicek[vyberDva] = podrz;
+            (balicek[vyberDva], balicek[vyberJedna]) = (balicek[vyberJedna], balicek[vyberDva]);
         }
     }
     public void ResetRuk()
@@ -224,6 +222,9 @@ public class LizaniKaret : MonoBehaviour
     //
     public IEnumerator Kolo()
     {
+        GameObject.Find("VynechatSpodniListaButton").GetComponent<Button>().interactable = false;
+        GameObject.Find("GameMenuSpodniListinaButton").GetComponent<Button>().interactable = false;
+
         for (int j = 0; j < manager.OponentiUStolu.Length; j++)
         {
             if (manager.OponentiUStolu[j] != null && manager.OponentiUStolu[j].GetComponent<OponentUStolu>().Hraje == true)
@@ -245,6 +246,10 @@ public class LizaniKaret : MonoBehaviour
             }
         }
         HracovoKolo = true;
+        GameObject.Find("VynechatSpodniListaButton").GetComponent<Button>().interactable = true;
+        GameObject.Find("GameMenuSpodniListinaButton").GetComponent<Button>().interactable = true;
+
+        gameObject.GetComponent<Button>().interactable = true;
     }
 
     public IEnumerator OponentVyhra(int j)
@@ -268,6 +273,9 @@ public class LizaniKaret : MonoBehaviour
         PripravaBalicku();
         ResetRuk();
         KonecZacatekRozdavani = false;
+        gameObject.GetComponent<Button>().interactable = false;
+        GameObject.Find("VynechatSpodniListaButton").GetComponent<Button>().interactable = false;
+        GameObject.Find("GameMenuSpodniListinaButton").GetComponent<Button>().interactable = false;
         CekaniSlider.value = CekaniSlider.maxValue;
         if (manager.Kecanikoupeno) { KecaniButton.SetActive(true); }
         for (int i = 0;i < 4;i++) // počet karet
@@ -295,6 +303,10 @@ public class LizaniKaret : MonoBehaviour
             transform.Find("LizaciBalicekPocetKaret").GetComponent<TextMeshProUGUI>().text = balicek.Count + ""; 
         }
         HracovoKolo = true;
+
+        gameObject.GetComponent<Button>().interactable = true;
+        GameObject.Find("VynechatSpodniListaButton").GetComponent<Button>().interactable = true;
+        GameObject.Find("GameMenuSpodniListinaButton").GetComponent<Button>().interactable = true;
 
     }
     //
@@ -378,7 +390,7 @@ public class LizaniKaret : MonoBehaviour
 
             manager.penize -= manager.nejvyssiSazka;
             manager.reputace -= 5;
-            if(manager.reputace < 10) { manager.reputace = 10; }
+            if(manager.reputace < 1) { manager.reputace = 1; }
 
             manager.BytMenuPromene();
     }
@@ -431,7 +443,10 @@ public class LizaniKaret : MonoBehaviour
     }
     public void HracLizani()
     {
-        StartCoroutine(EfektyKaretNaHrace());
+        GameObject.Find("VynechatSpodniListaButton").GetComponent<Button>().interactable = false;
+        GameObject.Find("GameMenuSpodniListinaButton").GetComponent<Button>().interactable = false;
+        gameObject.GetComponent<Button>().interactable = false;
+        StartCoroutine(EfektyKaretNaHrace()); 
     }
    public void VynechatKoloButton()
     {
@@ -523,7 +538,7 @@ public class LizaniKaret : MonoBehaviour
     public void HracVyhra()
     {
         manager.sazeciOkenko.SetActive(true);
-        manager.penize += manager.secteni - manager.hracSazka;
+        manager.penize = manager.penize + manager.secteni - manager.hracSazka;
         GameObject.Find("HracovaSazka").GetComponent<TextMeshProUGUI>().text = manager.penize + "KC";
         manager.reputace += 3;
 

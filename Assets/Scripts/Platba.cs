@@ -11,7 +11,7 @@ public class Platba : MonoBehaviour
     public int _cas;
     public string _duvod;
     string[] duvodString = {"potrava","najemne","dluh","podil" };
-    int[] cenaInt = {50,100,150,200,500};
+    int[] cenaInt = {50,100,150,200};
     
     private void Odkazy()
     {
@@ -36,7 +36,7 @@ public class Platba : MonoBehaviour
     {
         Odkazy();
 
-        _cena = 2000;
+        _cena = 3000;
         _duvod = "DLUH// MAFIA";
         _cas = 13;
 
@@ -59,7 +59,6 @@ public class Platba : MonoBehaviour
     }
     public void Zaplaceni()
     {
-        _cena = UrceniCeny();
         if (manager.penize >= _cena)
         {
             manager.penize -= _cena;

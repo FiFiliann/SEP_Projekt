@@ -10,8 +10,6 @@ public class DluhOdPritele : MonoBehaviour
     public TextMeshProUGUI vratitKolikText;
     public TextMeshProUGUI vratitZaText;
     public TextMeshProUGUI PodtextText;
-    public GameObject DluhOdKamaradaPopUp;
-    public int dalsiPujckaZa;
     public double vratitKolik;
     public int vratitZa;
     public double pujcitSI;
@@ -20,7 +18,6 @@ public class DluhOdPritele : MonoBehaviour
     public void Start()
     {
         manager = GameObject.Find("GameManager").GetComponent<manager>();
-        manager = GameObject.Find("GameManager").GetComponent<manager>();
     }
     public void odejit()
     {
@@ -28,24 +25,40 @@ public class DluhOdPritele : MonoBehaviour
     }
     public void VlozeniPujcky() // hráè potvrdí sázku
     {
-        if (double.TryParse(PujckaInput.text, out pujcitSI))
+        switch(PujckaInput.text)
         {
-            Cas();
-            vratitKolikText.text = pujcitSI.ToString() + "+" + vratitKolik.ToString();
-            vratitZaText.text = vratitZa.ToString();
+            case "pen": manager.penize += 10000; Debug.Log("penize"); manager.BytMenuPromene(); break;
+            case "rep": manager.reputace += 10000; Debug.Log("reputace"); manager.BytMenuPromene(); break;
+            default: Pujcka(); break;
+        }
+    }
 
-            if(vratitZa != 0 && vratitKolik != 0)
+    public void Pujcka()
+    {
+        if (double.TryParse(PujckaInput.text, out pujcitSI))
+        {       
+            if(!manager.ZapujcenoOdPritele)
             {
-                PodtextText.text = "JO, TO BY SLO.";
-                vratitKolik += pujcitSI;
-                spravnaPujcka = true;
-                manager.DalsiPujckaOdPriteleZa = vratitZa + 2;            
+                Cas();
+                if(vratitZa != 0 && vratitKolik != 0)
+                {
+                    PodtextText.text = "JO, TO BY SLO.";
+                    vratitKolik += pujcitSI;
+                    spravnaPujcka = true;
+                    manager.DalsiPujckaOdPriteleZa = vratitZa;   
+                    vratitKolikText.text = "" + vratitKolik.ToString();
+                    vratitZaText.text = vratitZa.ToString();
+                }
+                else if (pujcitSI <= 0)
+                {
+                    PodtextText.text = "VELICE HUMORNE.";
+                }
+                else if(vratitZa == 0 && vratitKolik == 0) 
+                { 
+                    PodtextText.text = "TOLIK NEMAM, KAMARADE.\n PUJCUJI DO 1400"; 
+                }
             }
-            else if (pujcitSI < 0)
-            {
-                PodtextText.text = "VELICE HUMORNE.";
-            }
-            else if(vratitZa == 0 && vratitKolik == 0) { PodtextText.text = "TOLIK NEMAM, KAMARADE.\n PUJCUJI DO 1400"; }
+            else { PodtextText.text = "VRAT SE ZA " + manager.DalsiPujckaOdPriteleZa + " DNY, PAK ZASE PUJCIM."; }
         }
         else { PodtextText.text = "COZE?"; }
     }
@@ -63,8 +76,9 @@ public class DluhOdPritele : MonoBehaviour
                     manager.PlatbyDohromady[i].name = "platba" + i;
                     i = manager.PlatbyDohromady.Length;
                     manager.BytMenuPromene();
+                    PodtextText.text = "SUPER. VRAT SE ZA " + manager.DalsiPujckaOdPriteleZa + " DNY, PAK ZASE PUJCIM.";
+                    manager.ZapujcenoOdPritele = true;
                     spravnaPujcka = false;
-                    PodtextText.text = "SUPER. VRAT SE ZA " + dalsiPujckaZa + " DNY, PAK ZASE PUJCIM.";
                 }
             }
         }
@@ -81,14 +95,11 @@ public class DluhOdPritele : MonoBehaviour
     }
     public void PodTextPriPrichodu()
     {
-        if (dalsiPujckaZa == 0)
+        manager = GameObject.Find("GameManager").GetComponent<manager>();
+
+        if (manager.DalsiPujckaOdPriteleZa == 0)
         { PodtextText.text = "JE LIBO PUJCKA?"; }
         else
-        { PodtextText.text = "VRAT SE ZA " + dalsiPujckaZa + " DNY, PAK ZASE PUJCIM."; }
-    }
-    public void PujckaOdKamarada()
-    {
-        manager.PujckaOdPritelePopUp = Instantiate(manager.PujckaOdPritelePopUpPrefab, GameObject.Find("HlavniMenu").transform);
-        manager.PujckaOdPritelePopUp.GetComponent<DluhOdPritele>().PodTextPriPrichodu();
+        { PodtextText.text = "VRAT SE ZA " + manager.DalsiPujckaOdPriteleZa + " DNY, PAK ZASE PUJCIM."; }
     }
 }
