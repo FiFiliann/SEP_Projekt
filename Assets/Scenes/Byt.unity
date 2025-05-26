@@ -1025,8 +1025,8 @@ MonoBehaviour:
   prilisPozde: 0
   CelkovaSazkaText: {fileID: 949072295}
   LizKaret: {fileID: 1155396550}
-  KartaVRukavuKoupeno: 1
-  Kecanikoupeno: 1
+  KartaVRukavuKoupeno: 0
+  Kecanikoupeno: 0
 --- !u!4 &120449549
 Transform:
   m_ObjectHideFlags: 0
@@ -12075,7 +12075,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1565030783
 RectTransform:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
-using Mono.Cecil.Cil;
+//using Mono.Cecil.Cil;
 using Unity.VisualScripting;
 using System.Linq;
 using NUnit.Framework;
@@ -270,8 +270,7 @@ public class manager : MonoBehaviour
     {
         spawn.coz = true;
         den++;
-        DalsiPujckaOdPriteleZa--; 
-        if (DalsiPujckaOdPriteleZa != 0)    {DalsiPujckaOdPriteleZa -= 1; }
+        if (DalsiPujckaOdPriteleZa != 0)    {DalsiPujckaOdPriteleZa--; }
         else                                { ZapujcenoOdPritele = false; } 
         
         for (int i = 0; i < PlatbyDohromady.Length; i++)
