@@ -11,9 +11,4 @@ public class HracRuka : MonoBehaviour
         LizKaret = GameObject.Find("LizaciBalicek").GetComponent<LizaniKaret>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
